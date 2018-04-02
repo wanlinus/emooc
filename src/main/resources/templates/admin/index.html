@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="admin/layout::adminHeaderFragment">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="admin/layout:: header"></div>
+    <div th:replace="admin/layout::side"></div>
+    <div class="layui-body" style="padding: 15px;">
+        <h2>欢迎您: <span sec:authentication="name"></span></h2>
+        <hr>
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-md6">
+                <a th:href="@{teacher-manager}">
+                    <h2><span style="color: red;">*</span>教师管理>> </h2>
+                </a>
+                <div class="layui-row">
+                    <div class="col-md12">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th> 教师姓名:</th>
+                                <th> 详情:</th>
+                                <th> 操作时间:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="teacherLog:${teacherOperaLogs}">
+                                <td th:text="${teacherLog.teacher.username}"></td>
+                                <td th:text="${teacherLog.detail}"></td>
+                                <td th:text="${#dates.format(teacherLog.time, 'yyyy-MM-dd')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-col-md6">
+                <a th:href="@{user-manager}" style="text-decoration: blink">
+                    <h2><span style="color: red;">*</span>用户管理>> </h2>
+                </a>
+                <div class="layui-row">
+                    <div class="col-md12">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>详情:</th>
+                                <th>操作设备:</th>
+                                <th>IP:</th>
+                                <th>操作时间:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="userOperaLog: ${userOperaLogs}" style="white-space:nowrap">
+                                <td th:text="${userOperaLog.user.username}"></td>
+                                <td th:text="${userOperaLog.detail}"></td>
+                                <td style="overflow:hidden;text-overflow:ellipsis;max-width: 150px"
+                                    th:text="${userOperaLog.equipment}"></td>
+                                <td th:text="${userOperaLog.ip}"></td>
+                                <td th:text="${#dates.format(userOperaLog.time, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-md8" style="border: 1px solid red; height: 300px;">
+            </div>
+            <div class="layui-col-md4" id="gender" style="height: 200px;">
+
+            </div>
+        </div>
+        <div th:replace="layout::footerFragment"></div>
+    </div>
+
+</div>
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script src="/static/layui/layui.all.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
+<script>
+    var dom = document.getElementById("gender");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: 'EMooc男女比例图',
+            subtext: '',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}人 ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['男', '女', '未知']
+        },
+        series: [{
+            name: '男女比例',
+            type: 'pie',
+            radius: '55px',
+            center: ['50%', '60%'],
+            data: null,
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+<script>
+
+
+    $(document).ready(function () {
+        $.get({
+            url: '/admin/gender-pie',
+            success: function (responseData) {
+                option.series[0].data = responseData;
+                myChart.setOption(option);
+            }
+        });
+
+        $("#logout").on('click', function () {
+            $.post({
+                url: '/logout',
+                success: function () {
+                    window.location.href = ("/login");
+                }
+            })
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,48 @@
+package cn.wanlinus.emooc.service;
+
+import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.dto.GenderPieDTO;
+import cn.wanlinus.emooc.dto.UserRegisterDTO;
+import org.springframework.validation.Errors;
+
+import java.util.List;
+
+/**
+ * @author wanli
+ * @date 2018-03-06 16:07
+ */
+public interface UserService {
+    /**
+     * 返回男女用户人数
+     *
+     * @return 男女比例
+     */
+    List<GenderPieDTO> genderPie();
+
+    /**
+     * 检查用户名是否存在
+     *
+     * @param username 需要检查的用户名
+     * @return 存在返回true, 否则返回false
+     */
+    Boolean checkName(String username);
+
+    /**
+     * 检查邮箱是否存在
+     *
+     * @param email 需要检查的邮箱
+     * @return 存在返回true, 否则返回false
+     */
+    Boolean checkEmail(String email);
+
+    /**
+     * 用户注册
+     *
+     * @param dto 用户注册数据传输对象
+     * @param uid 用户id
+     * @return 注册成功返回true否则返回false
+     */
+    boolean register(UserRegisterDTO dto, String uid);
+
+
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout::headerFragment">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:include="layout::navFragment">
+</div>
+<h3>Login with Username and Password</h3>
+<form name='f' th:action='@{login}' method='POST'>
+
+    <label for="username">用户名:
+        <input type='text' autofocus name='username' id="username" value=''/>
+    </label><br>
+    <label for="password">密码:
+        <input type='password' id="password" name='password'/>
+    </label><br>
+    <label for="role">Role:
+    </label>
+    <select name="role" id="role">
+        <option value="USER">普通用户</option>
+        <option value="TEACHER">讲师</option>
+        <option value="ADMIN" selected>超级管理员</option>
+    </select><br>
+    <input name="submit" type="submit" value="登陆"/>
+    <input type="reset" th:value="重置">
+    还没有<a th:href="@{/register}">注册</a>?
+</form>
+<div th:replace="layout::footerFragment"></div>
+</body>
+</html>

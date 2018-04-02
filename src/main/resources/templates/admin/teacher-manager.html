@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout:: adminHeaderFragment">
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+</head>
+<body>
+
+<div class="modal fade" id="addTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text" id="myModalLabel">添加教师</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-xs-3 text-right">
+                                        <label for="username">姓名:</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="username" name="username"
+                                               th:placeholder="教师姓名">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-xs-3 text-right">
+                                        <label for="password">密码:</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="password" name="password"
+                                               disabled placeholder='默认密码: 123456'>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-xs-3 text-right"><label for="gender">性别:</label></div>
+                                    <div class="col-xs-6 ">
+                                        <select name="gender" class="form-control" id="gender">
+                                            <option value="0">男</option>
+                                            <option value="1">女</option>
+                                            <option value="2">未知</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-xs-3 text-right"><label for="position">职位:</label></div>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" name="position" id="position"
+                                               th:placeholder="职位">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick=""></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h3>教师管理
+        <small>
+            <button class="btn btn-success" data-toggle="modal" data-target="#addTeacher">添加教师</button>
+        </small>
+    </h3>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <td>Id:</td>
+                    <td>名字:</td>
+                    <td>性别:</td>
+                    <td>职位:</td>
+                    <td>其他信息:</td>
+                    <td>头像:</td>
+                    <td>签名:</td>
+                    <td>状态:</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="teacher:${teachers}">
+                    <td th:text="${teacher.id}"></td>
+                    <td th:text="${teacher.username}"></td>
+                    <td th:text="${teacher.gender.name}"></td>
+                    <td th:text="${teacher.position}"></td>
+                    <td th:text="${teacher.detail}"></td>
+                    <td th:text="${teacher.avatar}"></td>
+                    <td th:text="${teacher.signature}"></td>
+                    <td th:text="${teacher.status.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div></div>
+</div>
+<div id="teacher"></div>
+</body>
+<script>
+
+    var data = {
+        content: [],
+        first: true,
+        last: true,
+        number: 0,
+        numberOfElements: 1,
+        size: 10,
+        sort: null,
+        totalElements: 1,
+        totalPages: 1
+    };
+
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://127.0.0.1/admin/teacher-info',
+            success: function (responseData) {
+                data = responseData;
+                console.log("data: " + data.first);
+                console.log(responseData);
+
+            }
+        })
+    })
+</script>
+</html>

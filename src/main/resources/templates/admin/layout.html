@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html">
+<head th:fragment="adminHeaderFragment">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title sec:authorize="isAuthenticated()" sec:authentication="name">
+    </title>
+    <title sec:authorize="isAnonymous()">欢迎来到EMooc</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/custom-style.css">
+    <link rel="stylesheet" href="/static/css/custom-style.css">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+
+<div th:fragment="header" class="layui-header header header-doc">
+    <div class="layui-logo">EMooc后台管理</div>
+    <!--头部区域-->
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a th:href="@{teacher-manager}">教师管理</a></li>
+        <li class="layui-nav-item"><a th:href="@{user-manager}">用户管理</a></li>
+        <li class="layui-nav-item"><a th:href="@{course-manager}">课程管理</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item layui-this">
+            <a><span sec:authentication="name"></span></a>
+            <dl class="layui-nav-child">
+                <dd><a href="">个人信息</a></dd>
+                <dd><a href="">更改密码</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="javascript:void(0)" id="logout">退出</a></li>
+    </ul>
+</div>
+
+<div th:fragment="side" class="layui-side layui-bg-black">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">所有商品</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="javascript:;">列表二</a></dd>
+                <dd><a href="javascript:;">列表三</a></dd>
+                <dd><a href="">超链接</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">解决方案</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="javascript:;">列表二</a></dd>
+                <dd><a href="">超链接</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">云市场</a></li>
+        <li class="layui-nav-item"><a href="">发布商品</a></li>
+    </ul>
+
+</div>
+
+
+</body>
+</html>
