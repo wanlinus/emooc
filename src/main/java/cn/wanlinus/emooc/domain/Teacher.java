@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author wanli
@@ -14,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_teacher")
-public class Teacher {
+public class Teacher implements Serializable {
     @Id
     @Column(name = "teacher_id")
     private String id;
@@ -27,6 +28,9 @@ public class Teacher {
 
     @Column(name = "teacher_gender")
     private Gender gender;
+
+    @Column(name = "teacher_email")
+    private String email;
 
     @Column(name = "teacher_position")
     private String position;
@@ -75,6 +79,14 @@ public class Teacher {
         this.gender = gender;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPosition() {
         return position;
     }
@@ -113,5 +125,21 @@ public class Teacher {
 
     public void setStatus(TeacherStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", position='" + position + '\'' +
+                ", detail='" + detail + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", signature='" + signature + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

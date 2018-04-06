@@ -32,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserDetailsServiceImpl();
     }
 
+    /**
+     * 定义密码加密Bean
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new PasswordEncoderImpl();
@@ -53,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/login?error=false")
-                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/dispatcher")
+                .failureUrl("/login")
                 .and()
                 .logout()
                 .logoutUrl("/logout")

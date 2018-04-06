@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.UserOperationLog;
+import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.persistence.UserOperationLogRepository;
 import cn.wanlinus.emooc.service.UserOperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserOperationLogServiceImpl implements UserOperationLogService {
     private UserOperationLogRepository userOperationLogRepository;
 
     @Override
-    public Page<UserOperationLog> getTopNumberOrderByTimeDesc(Integer number) {
+    public Page<UserLog> getTopNumberOrderByTimeDesc(Integer number) {
         return userOperationLogRepository.findAll(
                 new PageRequest(0, number, new Sort(Sort.Direction.DESC, "time")));
     }

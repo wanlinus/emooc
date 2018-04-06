@@ -9,8 +9,8 @@ import java.util.Date;
  * @date 2018-03-06 16:09
  */
 @Entity
-@Table(name = "tb_user_operation_log")
-public class UserOperationLog implements Serializable {
+@Table(name = "tb_user_log")
+public class UserLog implements Serializable {
     @Id
     @Column(name = "opera_id")
     private String id;
@@ -81,7 +81,7 @@ public class UserOperationLog implements Serializable {
 
     @Override
     public String toString() {
-        return "UserOperationLog{" +
+        return "UserLog{" +
                 "id='" + id + '\'' +
                 ", time=" + time +
                 ", detail='" + detail + '\'' +

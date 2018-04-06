@@ -1,7 +1,7 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.domain.UserOperationLog;
+import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.Gender;
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             user.setGender(Gender.UNDEFINE);
             user = userRepository.save(user);
             //记录日志
-            UserOperationLog log = new UserOperationLog();
+            UserLog log = new UserLog();
             log.setId(userLogId());
             log.setUser(user);
             log.setDetail("用户注册");

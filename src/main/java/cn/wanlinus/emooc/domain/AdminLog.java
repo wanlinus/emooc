@@ -5,17 +5,14 @@ import java.util.Date;
 
 /**
  * @author wanli
- * @date 2018-03-07 09:55
+ * @date 2018-04-06 21:55
  */
 @Entity
-@Table(name = "tb_teacher_operation_log")
-public class TeacherOperationLog {
+@Table(name = "tb_admin_log")
+public class AdminLog {
     @Id
     @Column(name = "opera_id")
     private String id;
-
-    @Column(name = "opera_time")
-    private Date time;
 
     @Column(name = "opera_detail")
     private String detail;
@@ -23,12 +20,15 @@ public class TeacherOperationLog {
     @Column(name = "opera_ip")
     private String ip;
 
+    @Column(name = "opera_time")
+    private Date date;
+
     @Column(name = "opera_equipment")
     private String equipment;
 
     @ManyToOne
-    @JoinColumn(name = "opera_teacher_id", referencedColumnName = "teacher_id")
-    private Teacher teacher;
+    @JoinColumn(name = "opera_admin_id")
+    private Admin admin;
 
     public String getId() {
         return id;
@@ -36,14 +36,6 @@ public class TeacherOperationLog {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getDetail() {
@@ -62,6 +54,14 @@ public class TeacherOperationLog {
         this.ip = ip;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getEquipment() {
         return equipment;
     }
@@ -70,11 +70,23 @@ public class TeacherOperationLog {
         this.equipment = equipment;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    @Override
+    public String toString() {
+        return "AdminLog{" +
+                "id='" + id + '\'' +
+                ", detail='" + detail + '\'' +
+                ", ip='" + ip + '\'' +
+                ", date=" + date +
+                ", equipment='" + equipment + '\'' +
+                ", admin=" + admin +
+                '}';
     }
 }

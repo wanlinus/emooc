@@ -1,80 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="layout::headerFragment">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title sec:authorize="isAuthenticated()" sec:authentication="name">
+    </title>
+    <title sec:authorize="isAnonymous()">欢迎来到EMooc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <link rel="stylesheet" href="../css/custom-style.css">
+    <link rel="stylesheet" href="/static/css/custom-style.css">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
 </head>
 <body>
-<div th:include="layout::navFragment">
-</div>
-这是index界面
-点击<a href="/login">登陆</a>
-<div sec:authorize='hasAuthority("ADMIN")'>
-    <p th:text="admin">Admin</p>
-    asdasdasd
-</div>
-<div sec:authorize="hasAuthority('USER')">
-    <span sec:authentication="principal.authorities"></span>
-    <p th:text="USER">User</p>
-</div>
-
-<div sec:authorize="isAuthenticated()">
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to authenticated users.
-</div>
-<div sec:authorize='hasAuthority("ADMIN")'>
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to administrators.
-</div>
-<div sec:authorize="hasAuthority('USER')">
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to users.
-</div>
-
-
-<h2>创建模态框（Modal）</h2>
-<!-- 按钮触发模态框 -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
-            </div>
-            <div class="modal-body">在这里添加一些文本</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-
-<!--下拉框-->
-<span class="glyphicon glyphicon-bell"></span>
-<div class="dropdown">
-    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">Java</a>
-        </li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
-        </li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
-        </li>
-        <li role="presentation" class="divider"></li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
-        </li>
-    </ul>
-</div>
-<button class="btn btn-success" data-toggle="modal" data-target="#addTeacher">添加教师</button>
-
 <div class="modal fade" id="addTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -83,7 +22,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text" id="myModalLabel">添加教师</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="z-index: 2000">
                 <div class="container">
                     <div class="row">
                         <div>
@@ -134,5 +73,13 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<script src="../layui/layui.all.js"></script>
+<script src="/static/layui/layui.all.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
 </body>
 </html>

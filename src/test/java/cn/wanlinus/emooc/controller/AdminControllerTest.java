@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.controller;
 
-import cn.wanlinus.emooc.domain.UserOperationLog;
+import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.persistence.UserOperationLogRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +29,10 @@ public class AdminControllerTest {
     @Test
     public void accessTeacherManager() throws Exception {
         Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "time"));
-        Page<UserOperationLog> userOperationLogs = userOperationLogRepository.findAll(pageable);
+        Page<UserLog> userOperationLogs = userOperationLogRepository.findAll(pageable);
         System.out.println("-------------------------------------------");
         System.out.println(userOperationLogs.getTotalElements());
-        for (UserOperationLog log : userOperationLogs) {
+        for (UserLog log : userOperationLogs) {
             System.out.println(log);
         }
         System.out.println("-------------------------------------------");

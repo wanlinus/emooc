@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.TeacherOperationLog;
+import cn.wanlinus.emooc.domain.TeacherLog;
 import org.springframework.data.domain.Page;
 
 /**
@@ -14,5 +14,5 @@ public interface TeacherOperationLogService {
      * @param number 指定个数
      * @return 返回分页列表, 由于人笨不好写, 就返回这个类型了哈
      */
-    Page<TeacherOperationLog> getTopNumberOrderByTimeDesc(Integer number);
+    Page<TeacherLog> getTopNumberOrderByTimeDesc(Integer number);
 }

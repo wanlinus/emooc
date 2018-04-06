@@ -5,9 +5,8 @@ package cn.wanlinus.emooc.enums;
  * @date 2018-03-07 09:52
  */
 public enum TeacherStatus {
-    A("0"),
-    B("1")
-    ;
+    A("启用"),
+    B("应用");
     private String name;
 
     TeacherStatus(String name) {

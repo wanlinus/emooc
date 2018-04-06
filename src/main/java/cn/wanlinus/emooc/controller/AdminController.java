@@ -2,6 +2,9 @@ package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
+import cn.wanlinus.emooc.dto.LayuiPagination;
+import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
+import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.service.TeacherOperationLogService;
 import cn.wanlinus.emooc.service.TeacherService;
 import cn.wanlinus.emooc.service.UserOperationLogService;
@@ -11,15 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +57,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
      * @param model
      * @return
      */
-    @RequestMapping(value = {"/", "/index", "index.html"})
+    @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
         model.addAttribute("userOperaLogs", userOperationLogService.getTopNumberOrderByTimeDesc(10));
         model.addAttribute("teacherOperaLogs", teacherOperationLogService.getTopNumberOrderByTimeDesc(10));
@@ -64,13 +67,16 @@ public class AdminController extends WebMvcConfigurerAdapter {
     /**
      * 教师管理模块
      *
-     * @param model
      * @return
      */
     @GetMapping("/teacher-manager")
-    public String teacherManager(Model model) {
-        model.addAttribute("teachers", teacherService.pageTeacher(new PageRequest(0, 20)));
+    public String teacherManager() {
         return "admin/teacher-manager";
+    }
+
+    @GetMapping("/teacher-add")
+    public String teacherAdd() {
+        return "admin/teacher-add";
     }
 
     /**
@@ -78,12 +84,28 @@ public class AdminController extends WebMvcConfigurerAdapter {
      *
      * @return 教师信息列表
      */
-    @GetMapping("/teacher")
+    @GetMapping("teacher")
     @ResponseBody
-    public Page<Teacher> teacherPage() {
-        System.out.println(teacherService.pageTeacher(new PageRequest(0, 10)));
-        return teacherService.pageTeacher(new PageRequest(0, 10));
+    public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPagination layuiPagination) {
+        Page<Teacher> page = teacherService.pageTeacher(new PageRequest(layuiPagination.getPage() - 1, layuiPagination.getLimit()));
+        List<TeacherDetailsDTO> list = new ArrayList<>();
+        for (Teacher t : page.getContent()) {
+            list.add(new TeacherDetailsDTO(t));
+        }
+        return new LayuiPaginationDataDTO<>(0, "", page.getSize(), list);
     }
+
+    @PostMapping("teacher")
+    public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
+
+        if (teacherService.addTeacher(dto)) {
+            redirectAttributes.addFlashAttribute("msg", "添加成功");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "添加失败");
+        }
+        return "admin/teacher-add";
+    }
+
 
     /**
      * 获取的单个教师信息
@@ -91,7 +113,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
      * @param id
      * @return
      */
-    @GetMapping("/teacher/{id}")
+    @GetMapping("teacher/{id}")
     @ResponseBody
     public Teacher teacherDetail(@PathVariable String id) {
         return null;
@@ -99,16 +121,19 @@ public class AdminController extends WebMvcConfigurerAdapter {
 
 
     /**
-     * 性别饼状图返回数据
+     * 性别饼状图
      *
-     * @return
+     * @return GenderPieDTO
      */
     @GetMapping("/gender-pie")
     @ResponseBody
-
     public List<GenderPieDTO> genderPie() {
-
-
         return userService.genderPie();
     }
+
+    @GetMapping("teacher-info")
+    public String teacherInfo() {
+        return null;
+    }
+
 }

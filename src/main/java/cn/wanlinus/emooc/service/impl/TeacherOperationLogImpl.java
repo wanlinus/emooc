@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.TeacherOperationLog;
+import cn.wanlinus.emooc.domain.TeacherLog;
 import cn.wanlinus.emooc.persistence.TeacherOperationLogRepository;
 import cn.wanlinus.emooc.service.TeacherOperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class TeacherOperationLogImpl implements TeacherOperationLogService {
     TeacherOperationLogRepository teacherOperationLogRepository;
 
     @Override
-    public Page<TeacherOperationLog> getTopNumberOrderByTimeDesc(Integer number) {
+    public Page<TeacherLog> getTopNumberOrderByTimeDesc(Integer number) {
         return teacherOperationLogRepository.findAll(
                 new PageRequest(0, number, new Sort(Sort.Direction.DESC, "time")));
     }

@@ -3,11 +3,10 @@ package cn.wanlinus.emooc.controller;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.service.UserService;
+import cn.wanlinus.emooc.utils.AuthUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.validation.Valid;
 
@@ -43,28 +44,31 @@ public class HomeController extends WebMvcConfigurerAdapter {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/register").setViewName("register");
+        registry.addViewController("/try").setViewName("try");
     }
 
     @GetMapping("/login")
-    public String login(@RequestParam(defaultValue = "false") Boolean error, Model model) {
-        String page = "login";
-        if (error) {
-            model.addAttribute("msg", "登陆名或密码错误");
-        } else {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String role = auth.getAuthorities().toString();
-            if (ROLE_USER.equals(role)) {
-                page = "redirect:/user/index";
-            } else if (ROLE_TEACHER.equals(role)) {
-                page = "redirect:/teacher/index";
-            } else if (ROLE_ADMIN.equals(role)) {
-                page = "redirect:/admin/index";
-            } else if (role != null) {
-                model.addAttribute("msg", "登陆过期,请重新登陆");
-            }
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/dispatcher")
+    public String dispatcher(RedirectAttributes redirect) {
+        String page = null;
+        String role = AuthUtils.getRole();
+        if (ROLE_USER.equals(role)) {
+            page = "redirect:/user/index";
+        } else if (ROLE_TEACHER.equals(role)) {
+            page = "redirect:/teacher/index";
+        } else if (ROLE_ADMIN.equals(role)) {
+            page = "redirect:/admin/index";
+        } else if (role != null) {
+            redirect.addFlashAttribute("msg", "登陆过期,请重新登陆");
+            page = "redirect:/index";
         }
         return page;
     }
+
 
     @GetMapping("/register")
     public String registerUI() {

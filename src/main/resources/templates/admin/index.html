@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="admin/layout::adminHeaderFragment">
+<head th:include="admin/layout::adminHead">
 </head>
 
 <body class="layui-layout-body">
@@ -74,10 +74,9 @@
             <div class="layui-col-md8" style="border: 1px solid red; height: 300px;">
             </div>
             <div class="layui-col-md4" id="gender" style="height: 200px;">
-
             </div>
         </div>
-        <div th:replace="layout::footerFragment"></div>
+        <div th:replace="admin/layout::adminFooter"></div>
     </div>
 
 </div>

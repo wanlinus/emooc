@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.domain.UserOperationLog;
+import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.persistence.TeacherOperationLogRepository;
 import cn.wanlinus.emooc.persistence.UserOperationLogRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,26 +37,30 @@ public class LoggerAspect {
     /**
      * 用户注册切点
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserRegisterLogger)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserRegister)")
     private void userRegister() {
     }
 
     /**
      * 代表以UserOperationLogger注解了的切点
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserOperationLogger)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserOperation)")
     public void user() {
     }
 
     /**
      * 这个切点肯定就是表明老师的骚操作了三
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.TeacherOperationLogger)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.TeacherOperation)")
     public void teacher() {
     }
 
-    public Object userRegister(ProceedingJoinPoint joinPoint) throws Throwable {
-        return null;
+    /**
+     * 管理员的上帝视角
+     * 史上最骚的操作
+     */
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.AdminOperation)")
+    public void admin() {
     }
 
 
@@ -71,7 +75,7 @@ public class LoggerAspect {
     public Object userAround(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info(String.valueOf(joinPoint.getArgs()));
 
-        UserOperationLog log = new UserOperationLog();
+        UserLog log = new UserLog();
         log.setId(userLogId());
         //Todo
 
@@ -87,6 +91,13 @@ public class LoggerAspect {
         }
 
         Object obj = joinPoint.proceed();
+        return obj;
+    }
+
+    @Around("admin()")
+    public Object adminAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object obj = joinPoint.proceed();
+
         return obj;
     }
 

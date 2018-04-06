@@ -1,6 +1,7 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,4 +17,12 @@ public interface TeacherService {
      * @return 分页查找数据
      */
     Page<Teacher> pageTeacher(Pageable pageable);
+
+    /**
+     * 添加教师
+     *
+     * @param dto 教师数据传输对象
+     * @return
+     */
+    Boolean addTeacher(TeacherDetailsDTO dto);
 }

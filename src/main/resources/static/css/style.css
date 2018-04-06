@@ -5,3 +5,7 @@ body {
 .left-border {
     border-left: 5px solid red;
 }
+
+.modal-backdrop .fade .in {
+    z-index: 100 !important;
+}

@@ -41,6 +41,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 生成教师ID
+     *
+     * @return tid
+     */
+    public static String tid() {
+        return "T" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id

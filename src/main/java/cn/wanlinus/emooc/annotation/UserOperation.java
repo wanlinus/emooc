@@ -3,15 +3,15 @@ package cn.wanlinus.emooc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 用户注册时打的注解
+ * 用户记录用户操作的注解
  *
  * @author wanli
- * @date 2018-04-01 00:54
+ * @date 2018-03-30 20:59
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface UserRegisterLogger {
+public @interface UserOperation {
     String value() default "";
 
     /**
@@ -20,4 +20,5 @@ public @interface UserRegisterLogger {
      * @return 用于描述东西的
      */
     String descript() default "";
+
 }
