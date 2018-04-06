@@ -46,8 +46,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setDetail("");
         teacher.setPosition("讲师");
         teacher.setSignature("这位老师很懒,暂时没有签名");
-
         return teacherRepository.save(teacher) != null;
-
     }
 }

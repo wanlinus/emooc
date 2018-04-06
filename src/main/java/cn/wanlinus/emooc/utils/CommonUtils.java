@@ -67,6 +67,15 @@ public final class CommonUtils {
         return "LA" + System.currentTimeMillis();
     }
 
+    /**
+     * 系统错误主键
+     *
+     * @return error id
+     */
+    public static String errorId() {
+        return "Err" + System.currentTimeMillis();
+    }
+
 
     /**
      * md5摘要
