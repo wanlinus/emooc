@@ -6,5 +6,5 @@ import cn.wanlinus.emooc.domain.TeacherLog;
  * @author wanli
  * @date 2018-03-07 09:59
  */
-public interface TeacherOperationLogRepository extends BaseRepository<TeacherLog, String> {
+public interface TeacherLogRepository extends BaseRepository<TeacherLog, String> {
 }

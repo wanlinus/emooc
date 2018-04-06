@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
  * @date 2018-03-25 00:57
  */
 @Component
-public class AdminCustomPersistenceImpl extends BaseCustomPersistenceImpl implements AdminCustomPersistence {
+public class AdminRepositoryImpl extends BaseCustomPersistenceImpl implements AdminCustomPersistence {
 
 }

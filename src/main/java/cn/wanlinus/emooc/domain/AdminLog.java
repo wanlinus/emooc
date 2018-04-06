@@ -17,6 +17,9 @@ public class AdminLog {
     @Column(name = "opera_detail")
     private String detail;
 
+    @Column(name = "opera_result")
+    private Boolean result;
+
     @Column(name = "opera_ip")
     private String ip;
 
@@ -25,6 +28,9 @@ public class AdminLog {
 
     @Column(name = "opera_equipment")
     private String equipment;
+
+    @Column(name = "opera_comment")
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "opera_admin_id")
@@ -44,6 +50,14 @@ public class AdminLog {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Boolean getResult() {
+        return result;
+    }
+
+    public void setResult(Boolean result) {
+        this.result = result;
     }
 
     public String getIp() {
@@ -70,6 +84,14 @@ public class AdminLog {
         this.equipment = equipment;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public Admin getAdmin() {
         return admin;
     }
@@ -83,9 +105,11 @@ public class AdminLog {
         return "AdminLog{" +
                 "id='" + id + '\'' +
                 ", detail='" + detail + '\'' +
+                ", result=" + result +
                 ", ip='" + ip + '\'' +
                 ", date=" + date +
                 ", equipment='" + equipment + '\'' +
+                ", comment='" + comment + '\'' +
                 ", admin=" + admin +
                 '}';
     }

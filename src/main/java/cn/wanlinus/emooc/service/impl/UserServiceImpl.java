@@ -6,7 +6,7 @@ import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
-import cn.wanlinus.emooc.persistence.UserOperationLogRepository;
+import cn.wanlinus.emooc.persistence.UserLogRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserOperationLogRepository userOperationLogRepository;
+    private UserLogRepository userLogRepository;
 
     @Autowired
     private HttpServletRequest request;
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
             String eq = request.getHeader("User-Agent");
             System.err.println(eq);
             log.setEquipment(eq.substring(eq.indexOf("(") + 1, eq.indexOf(")")));
-            userOperationLogRepository.save(log);
+            userLogRepository.save(log);
             flag = true;
         } catch (Exception e) {
             flag = false;

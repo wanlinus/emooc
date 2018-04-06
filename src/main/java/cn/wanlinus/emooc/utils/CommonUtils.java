@@ -58,6 +58,15 @@ public final class CommonUtils {
         return "LU" + System.currentTimeMillis();
     }
 
+    /**
+     * 管理员操作主键
+     *
+     * @return admin operation log id
+     */
+    public static String adminLogId() {
+        return "LA" + System.currentTimeMillis();
+    }
+
 
     /**
      * md5摘要

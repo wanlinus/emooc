@@ -1,5 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.annotation.AdminOperation;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.enums.Gender;
@@ -29,8 +30,10 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.findAll(pageable);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+
     @Override
+    @AdminOperation(descript = "注册教师")
+    @Transactional(rollbackFor = Exception.class)
     public Boolean addTeacher(TeacherDetailsDTO dto) {
         Teacher teacher = new Teacher();
         teacher.setUsername(dto.getUsername());

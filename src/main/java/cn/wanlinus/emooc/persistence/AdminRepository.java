@@ -7,7 +7,7 @@ import cn.wanlinus.emooc.persistence.custom.AdminCustomPersistence;
  * @author wanli
  * @date 2018-02-22 13:08
  */
-public interface AdminCustomRepository extends BaseRepository<Admin, String>, AdminCustomPersistence {
+public interface AdminRepository extends BaseRepository<Admin, String>, AdminCustomPersistence {
     /**
      * 通过名字查找Admin
      *

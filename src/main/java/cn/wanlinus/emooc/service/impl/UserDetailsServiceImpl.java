@@ -2,7 +2,7 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.Admin;
 import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.persistence.AdminCustomRepository;
+import cn.wanlinus.emooc.persistence.AdminRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AdminCustomRepository adminRepository;
+    private AdminRepository adminRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

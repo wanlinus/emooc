@@ -1,8 +1,8 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.domain.UserLog;
-import cn.wanlinus.emooc.persistence.TeacherOperationLogRepository;
-import cn.wanlinus.emooc.persistence.UserOperationLogRepository;
+import cn.wanlinus.emooc.persistence.TeacherLogRepository;
+import cn.wanlinus.emooc.persistence.UserLogRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,9 +30,9 @@ public class LoggerAspect {
     @Autowired
     private HttpServletRequest request;
     @Autowired
-    private UserOperationLogRepository userOperationLogRepository;
+    private UserLogRepository userLogRepository;
     @Autowired
-    private TeacherOperationLogRepository teacherOperationLogRepository;
+    private TeacherLogRepository teacherLogRepository;
 
     /**
      * 用户注册切点
@@ -91,13 +91,6 @@ public class LoggerAspect {
         }
 
         Object obj = joinPoint.proceed();
-        return obj;
-    }
-
-    @Around("admin()")
-    public Object adminAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object obj = joinPoint.proceed();
-
         return obj;
     }
 
