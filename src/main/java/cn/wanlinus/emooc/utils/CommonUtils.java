@@ -78,6 +78,17 @@ public final class CommonUtils {
 
 
     /**
+     * 获取设备名称
+     *
+     * @param request http请求
+     * @return 设备简称
+     */
+    public static String getEquipment(HttpServletRequest request) {
+        String eq = request.getHeader("User-Agent");
+        return eq.substring(eq.indexOf("(") + 1, eq.indexOf(")"));
+    }
+
+    /**
      * md5摘要
      *
      * @param password 需要加密的原文

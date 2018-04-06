@@ -10,13 +10,13 @@ import java.util.List;
 public class LayuiPaginationDataDTO<T> implements Serializable {
     private Integer code;
     private String msg;
-    private Integer count;
+    private Long count;
     private List<T> data;
 
     public LayuiPaginationDataDTO() {
     }
 
-    public LayuiPaginationDataDTO(Integer code, String msg, Integer count, List<T> data) {
+    public LayuiPaginationDataDTO(Integer code, String msg, Long count, List<T> data) {
         this.code = code;
         this.msg = msg;
         this.count = count;
@@ -39,11 +39,11 @@ public class LayuiPaginationDataDTO<T> implements Serializable {
         this.msg = msg;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 

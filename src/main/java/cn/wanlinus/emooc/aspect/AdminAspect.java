@@ -16,6 +16,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -46,15 +47,21 @@ public class AdminAspect {
     public void admin() {
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Around("admin() && @annotation(adminOperation)")
     public Object adminAround(ProceedingJoinPoint joinPoint, AdminOperation adminOperation) throws Throwable {
         AdminLog log = new AdminLog();
         Admin admin = adminRepository.findByName(AuthUtils.getAuthentication().getName());
         log.setAdmin(admin);
         log.setDate(new Date());
-        log.setDetail(adminOperation.descript() + Arrays.toString(joinPoint.getArgs()));
-        String eq = request.getHeader("User-Agent");
-        log.setEquipment(eq.substring(eq.indexOf("(") + 1, eq.indexOf(")")));
+
+        String details = Arrays.toString(joinPoint.getArgs());
+        details = details.substring(details.indexOf("username") + 10);
+        details = details.substring(0, details.indexOf(",") - 1);
+
+        log.setDetail(adminOperation.descript() + " : " + details);
+
+        log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setId(CommonUtils.adminLogId());
         Object obj = joinPoint.proceed();
@@ -71,8 +78,9 @@ public class AdminAspect {
         return obj;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @AfterThrowing("admin()")
-    private void afterThrowing() {
+    public void afterThrowing() {
         EmoocError emoocError = new EmoocError();
         emoocError.setId(CommonUtils.errorId());
         emoocError.setTime(new Date());

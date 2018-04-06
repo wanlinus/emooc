@@ -5,16 +5,15 @@ import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.LayuiPagination;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
-import cn.wanlinus.emooc.service.TeacherOperationLogService;
+import cn.wanlinus.emooc.service.TeacherLogService;
 import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.service.UserOperationLogService;
+import cn.wanlinus.emooc.service.UserLogService;
 import cn.wanlinus.emooc.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +35,9 @@ public class AdminController extends WebMvcConfigurerAdapter {
     private static Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
-    private UserOperationLogService userOperationLogService;
+    private UserLogService userLogService;
     @Autowired
-    private TeacherOperationLogService teacherOperationLogService;
+    private TeacherLogService teacherLogService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -59,8 +58,8 @@ public class AdminController extends WebMvcConfigurerAdapter {
      */
     @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
-        model.addAttribute("userOperaLogs", userOperationLogService.getTopNumberOrderByTimeDesc(10));
-        model.addAttribute("teacherOperaLogs", teacherOperationLogService.getTopNumberOrderByTimeDesc(10));
+        model.addAttribute("userOperaLogs", userLogService.getTopNumberOrderByTimeDesc(10));
+        model.addAttribute("teacherOperaLogs", teacherLogService.getTopNumberOrderByTimeDesc(10));
         return "admin/index";
     }
 
@@ -92,7 +91,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
         for (Teacher t : page.getContent()) {
             list.add(new TeacherDetailsDTO(t));
         }
-        return new LayuiPaginationDataDTO<>(0, "", page.getSize(), list);
+        return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
     }
 
     @PostMapping("teacher")
@@ -105,7 +104,6 @@ public class AdminController extends WebMvcConfigurerAdapter {
         }
         return "admin/teacher-add";
     }
-
 
     /**
      * 获取的单个教师信息
