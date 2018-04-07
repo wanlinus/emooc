@@ -12,27 +12,27 @@ public class LayuiPaginationDTO implements Serializable {
     /**
      * 每页条数
      */
-    Integer limit;
+    private Integer limit;
     /**
      * 总数
      */
-    Integer count;
+    private Integer count;
     /**
      * 上一页
      */
-    Integer prev;
+    private Integer prev;
     /**
      * 当前页
      */
-    Integer page;
+    private Integer page;
     /**
      * 下一页
      */
-    Integer next;
+    private Integer next;
     /**
      * 跳转页
      */
-    Integer skip;
+    private Integer skip;
 
     public Integer getLimit() {
         return limit;
