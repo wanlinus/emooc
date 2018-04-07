@@ -4,6 +4,7 @@ import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
+import cn.wanlinus.emooc.dto.UserDetailsDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
@@ -100,7 +101,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User userDetails(String id) {
-        return userRepository.findOne(id);
+    public UserDetailsDTO userDetails(String id) {
+        User user = userRepository.findOne(id);
+        return user != null ? new UserDetailsDTO(user) : new UserDetailsDTO();
     }
 }

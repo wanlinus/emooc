@@ -2,3 +2,17 @@
     height: 200px;
     border: 1px solid red;
 }
+.avatar-add{position:relative; width:373px; height:373px; background-color:#F2F2F5;}
+.avatar-add .upload-img{position:absolute; left:50%; top:35px; margin:0 0 0 -56px;}
+.avatar-add img{position:absolute; left:50%; top:50%; width:168px; height:168px; margin:-50px 0 0 -84px; border-radius:100%;}
+.avatar-add .loading{display:none; position:absolute; width:100%; height:100%; left:0; top:0; padding: 0; background-color:#000; opacity:0.5; filter: Alpha(opacity=50);}
+.avatar-add p{position:absolute; top:70px; width:100%; margin-top: 10px;; font-size:12px; text-align:center; color:#999;}
+.app-bind li{margin-bottom:10px; line-height:30px; color:#999;}
+.app-bind li .iconfont{position: relative; top: 3px; margin-right: 5px; font-size:28px; }
+.app-bind .app-havebind{color:#333;}
+.app-bind .app-havebind .icon-qq{color:#7CA9C9}
+.app-bind .app-havebind .icon-weibo{color:#E6162D}
+.fly-msg, .fly-error{padding: 10px 15px; line-height: 24px;}
+.fly-msg{background-color:#F8F8F8; color:#666;}
+.fly-msg a{color:#4F99CF}
+.fly-editbox{position: relative;}

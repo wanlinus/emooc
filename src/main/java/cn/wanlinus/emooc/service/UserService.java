@@ -4,6 +4,7 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
+import cn.wanlinus.emooc.dto.UserDetailsDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,5 +65,5 @@ public interface UserService {
      * @param id 用户ID
      * @return ID相应用户
      */
-    User userDetails(String id);
+    UserDetailsDTO userDetails(String id);
 }

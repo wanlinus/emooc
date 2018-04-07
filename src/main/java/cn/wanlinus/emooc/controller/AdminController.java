@@ -80,10 +80,6 @@ public class AdminController {
         return "admin/teacher-add";
     }
 
-    @GetMapping("user-manager")
-    public String userManager() {
-        return "admin/user-manager";
-    }
 
     @GetMapping("course-manager")
     public String courseManager() {
@@ -137,6 +133,11 @@ public class AdminController {
 
     //-------------------------用户管理模块-------------------------
 
+    @GetMapping("user-manager")
+    public String userManager() {
+        return "admin/user-manager";
+    }
+
     /**
      * 用户分页组件
      *
@@ -161,7 +162,7 @@ public class AdminController {
 
     @GetMapping("user/{id}")
     public String userDetails(@PathVariable String id, Model model) {
-        User user = userService.userDetails(id);
+        model.addAttribute("user", userService.userDetails(id));
         return "admin/user-details";
     }
 }
