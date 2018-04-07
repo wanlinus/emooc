@@ -13,13 +13,15 @@
                 <thead>
                 <tr>
                     <th lay-data="{type:'checkbox'}">ID</th>
-                    <th lay-data="{field:'id', width:180, sort: true}">ID</th>
+                    <th lay-data="{field:'id', width:150, sort: true, event: 'id', style:'cursor: pointer;text-decoration:underline;color:#009688'}">
+                        ID
+                    </th>
                     <th lay-data="{field:'username', width:150, event: 'username',style:'cursor: pointer;text-decoration:underline;color:#009688'}">
                         用户名
                     </th>
                     <th lay-data="{field:'gender', width:100, sort: true}">性别</th>
-                    <th lay-data="{field: 'telephone'}">电话号码</th>
-                    <th lay-data="{field:'email'}">邮箱</th>
+                    <th lay-data="{field: 'telephone', minWidth:150}">电话号码</th>
+                    <th lay-data="{field:'email', minWidth:200}">邮箱</th>
                     <th lay-data="{field: 'experience', width: 100}">经验值</th>
                     <th lay-data="{field: 'learnTime', width: 150}">学习时长(分钟)</th>
                     <th lay-data="{field: 'integral', width: 100}">积分</th>
@@ -44,9 +46,9 @@
             let data = obj.data;
             if (obj.event === 'username') {
                 layer.prompt({
-                    formType: 2
-                    , title: '修改 ID 为 [' + data.id + '] 的用户签名'
-                    , value: data.username
+                    formType: 2,
+                    title: '修改 ID 为 [' + data.id + '] 的用户签名',
+                    value: data.username
                 }, function (value, index) {
                     layer.close(index);
 
@@ -57,6 +59,9 @@
                         username: value
                     });
                 });
+            }
+            if (obj.event === 'id') {
+                window.location.href = "/admin/user-manager/" + data.id;
             }
         })
     })

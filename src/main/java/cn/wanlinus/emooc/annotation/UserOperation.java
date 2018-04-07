@@ -15,10 +15,10 @@ public @interface UserOperation {
     String value() default "";
 
     /**
-     * 并没有什么用,知识写来耍的
+     * 用于描述相应操作
      *
-     * @return 用于描述东西的
+     * @return 操作说明
      */
-    String descript() default "";
+    String descript();
 
 }

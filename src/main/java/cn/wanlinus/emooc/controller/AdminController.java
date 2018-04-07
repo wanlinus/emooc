@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-public class AdminController extends WebMvcConfigurerAdapter {
+public class AdminController {
 
     private static Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -40,13 +40,6 @@ public class AdminController extends WebMvcConfigurerAdapter {
     private UserService userService;
     @Autowired
     private TeacherService teacherService;
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("admin/teacher-manager").setViewName("/admin/teacher-manager");
-        registry.addViewController("admin/user-manager").setViewName("/admin/user-manager");
-        registry.addViewController("admin/course-manager").setViewName("/admin/course-manager");
-    }
 
     /**
      * 管理员首页
@@ -87,6 +80,16 @@ public class AdminController extends WebMvcConfigurerAdapter {
         return "admin/teacher-add";
     }
 
+    @GetMapping("user-manager")
+    public String userManager() {
+        return "admin/user-manager";
+    }
+
+    @GetMapping("course-manager")
+    public String courseManager() {
+        return "admin/course-manager";
+    }
+
     /**
      * 教师信息
      *
@@ -104,7 +107,6 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("teacher")
-
     public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
 
         if (teacherService.addTeacher(dto)) {
@@ -150,5 +152,16 @@ public class AdminController extends WebMvcConfigurerAdapter {
             list.add(new UserSimpleDTO(u));
         }
         return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
+    }
+
+    @GetMapping("user-manager/{id}")
+    public String eUser(@PathVariable String id) {
+        return "admin/user-details";
+    }
+
+    @GetMapping("user/{id}")
+    public String userDetails(@PathVariable String id, Model model) {
+        User user = userService.userDetails(id);
+        return "admin/user-details";
     }
 }

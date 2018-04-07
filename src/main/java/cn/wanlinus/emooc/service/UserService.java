@@ -57,4 +57,12 @@ public interface UserService {
      * @return 分页数据
      */
     Page<User> pageUser(Pageable pageable);
+
+    /**
+     * 用户详情
+     *
+     * @param id 用户ID
+     * @return ID相应用户
+     */
+    User userDetails(String id);
 }

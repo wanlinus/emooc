@@ -13,4 +13,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface TeacherOperation {
     String value() default "";
+
+    /**
+     * 用于描述相应操作
+     *
+     * @return 操作说明
+     */
+    String descript();
 }

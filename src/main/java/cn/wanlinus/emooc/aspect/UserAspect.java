@@ -1,7 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.annotation.UserOperation;
-import cn.wanlinus.emooc.annotation.UserRegister;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.persistence.UserLogRepository;
