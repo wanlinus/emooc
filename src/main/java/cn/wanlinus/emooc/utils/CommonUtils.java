@@ -5,8 +5,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
+ * 公共基础工具
+ *
  * @author wanli
  * @date 2018-02-22 11:43
  */
@@ -97,5 +101,38 @@ public final class CommonUtils {
     public static String md5Encrypt(String password) {
         return DigestUtils.md5Hex(password);
     }
+
+    /**
+     * 自定义格式化日期
+     *
+     * @param date    需要格式化的日期
+     * @param pattern 格式规则
+     * @return 格式化后的字符串
+     */
+    public static String dateFormatCustom(Date date, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
+
+    /**
+     * 简单格式化日期 模板为: 年-月-日 小时(24)
+     *
+     * @param date 需要格式化的日期
+     * @return 格式化后的字符串
+     */
+    public static String dateFormatSimple(Date date) {
+        return dateFormatCustom(date, "yyyy-MM-dd");
+    }
+
+    /**
+     * 复杂格式化日期模 板为: 年-月-日 小时(24):分钟:秒钟
+     *
+     * @param date 需要格式化的日期
+     * @return 格式化后的字符串
+     */
+    public static String dateFormatComplex(Date date) {
+        return dateFormatCustom(date, "yyyy-MM-dd HH:mm:ss");
+    }
+
 
 }

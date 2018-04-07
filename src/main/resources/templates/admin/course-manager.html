@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-</head>
-<body>
-课程管理
-<table>
-    <thead>
-    <tr>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-
-    </tr>
-    </tbody>
-</table>
+<head th:include="admin/layout::adminHead"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="admin/layout::header"></div>
+    <div th:replace="admin/layout::side"></div>
+    <div class="layui-body" style="padding: 15px;">
+        课程管理
+    </div>
+</div>
 </body>
 </html>

@@ -1,8 +1,13 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.Errors;
 
 import java.util.List;
@@ -45,4 +50,11 @@ public interface UserService {
     boolean register(UserRegisterDTO dto, String uid);
 
 
+    /**
+     * 用户分页
+     *
+     * @param pageable 分页信息
+     * @return 分页数据
+     */
+    Page<User> pageUser(Pageable pageable);
 }

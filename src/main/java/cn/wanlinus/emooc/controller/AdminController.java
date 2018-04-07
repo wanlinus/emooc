@@ -1,10 +1,8 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.GenderPieDTO;
-import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
-import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
-import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
+import cn.wanlinus.emooc.domain.User;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.service.TeacherLogService;
 import cn.wanlinus.emooc.service.TeacherService;
 import cn.wanlinus.emooc.service.UserLogService;
@@ -64,6 +62,17 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     /**
+     * 性别饼状图
+     *
+     * @return GenderPieDTO
+     */
+    @GetMapping("/gender-pie")
+    @ResponseBody
+    public List<GenderPieDTO> genderPie() {
+        return userService.genderPie();
+    }
+
+    /**
      * 教师管理模块
      *
      * @return
@@ -95,6 +104,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("teacher")
+
     public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
 
         if (teacherService.addTeacher(dto)) {
@@ -118,20 +128,27 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
 
-    /**
-     * 性别饼状图
-     *
-     * @return GenderPieDTO
-     */
-    @GetMapping("/gender-pie")
-    @ResponseBody
-    public List<GenderPieDTO> genderPie() {
-        return userService.genderPie();
-    }
-
     @GetMapping("teacher-info")
     public String teacherInfo() {
         return null;
     }
 
+    //-------------------------用户管理模块-------------------------
+
+    /**
+     * 用户分页组件
+     *
+     * @param layuiPaginationDTO layui分页数据传输对象
+     * @return layui分页数据传输对象
+     */
+    @GetMapping("user")
+    @ResponseBody
+    public LayuiPaginationDataDTO<UserSimpleDTO> userPage(LayuiPaginationDTO layuiPaginationDTO) {
+        Page<User> page = userService.pageUser(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
+        List<UserSimpleDTO> list = new ArrayList<>();
+        for (User u : page.getContent()) {
+            list.add(new UserSimpleDTO(u));
+        }
+        return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
+    }
 }

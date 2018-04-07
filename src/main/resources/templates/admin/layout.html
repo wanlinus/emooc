@@ -40,21 +40,17 @@
 
 <div th:fragment="side" class="layui-side layui-bg-black">
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-            <a class="" th:href="@{teacher-manager}" ;">教师管理</a>
+        <li class="layui-nav-item "><!--layui-nav-itemed-->
+            <a href="javascript:;">教师管理</a>
             <dl class="layui-nav-child">
+                <dd><a th:href="@{teacher-manager}">总览</a></dd>
                 <dd><a th:href="@{teacher-add}">添加教师</a></dd>
-                <dd><a href="javascript:;">列表二</a></dd>
-                <dd><a href="javascript:;">列表三</a></dd>
-                <dd><a href="">超链接</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
+            <a href="javascript:;">用户管理</a>
             <dl class="layui-nav-child">
-                <dd><a href="javascript:;">列表一</a></dd>
-                <dd><a href="javascript:;">列表二</a></dd>
-                <dd><a href="">超链接</a></dd>
+                <dd><a th:href="@{user-manager}">总览</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item"><a href="">云市场</a></li>

@@ -1,5 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.domain.UserLog;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
@@ -10,6 +11,8 @@ import cn.wanlinus.emooc.persistence.UserLogRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,22 +55,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean checkName(String username) {
-        boolean flag = false;
-        if (userRepository.findByUsername(username) != null) {
-            //表示用户存在
-            flag = true;
-        }
-        return flag;
+        return userRepository.findByUsername(username) != null;
+
     }
 
     @Override
     public Boolean checkEmail(String email) {
-        boolean flag = false;
-        if (userRepository.findByEmail(email) != null) {
-            //表示存在
-            flag = true;
-        }
-        return flag;
+        return userRepository.findByEmail(email) != null;
+
     }
 
     @Override
@@ -97,5 +92,10 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    @Override
+    public Page<User> pageUser(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 }
