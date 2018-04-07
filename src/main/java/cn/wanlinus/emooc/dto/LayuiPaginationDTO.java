@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author wanli
  * @date 2018-04-06 13:41
  */
-public class LayuiPagination implements Serializable {
+public class LayuiPaginationDTO implements Serializable {
     /**
      * 每页条数
      */
@@ -84,7 +84,7 @@ public class LayuiPagination implements Serializable {
 
     @Override
     public String toString() {
-        return "LayuiPagination{" +
+        return "LayuiPaginationDTO{" +
                 "limit=" + limit +
                 ", count=" + count +
                 ", prev=" + prev +

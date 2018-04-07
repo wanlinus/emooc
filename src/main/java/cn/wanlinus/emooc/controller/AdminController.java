@@ -2,7 +2,7 @@ package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
-import cn.wanlinus.emooc.dto.LayuiPagination;
+import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.service.TeacherLogService;
@@ -85,8 +85,8 @@ public class AdminController extends WebMvcConfigurerAdapter {
      */
     @GetMapping("teacher")
     @ResponseBody
-    public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPagination layuiPagination) {
-        Page<Teacher> page = teacherService.pageTeacher(new PageRequest(layuiPagination.getPage() - 1, layuiPagination.getLimit()));
+    public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPaginationDTO layuiPaginationDTO) {
+        Page<Teacher> page = teacherService.pageTeacher(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
         List<TeacherDetailsDTO> list = new ArrayList<>();
         for (Teacher t : page.getContent()) {
             list.add(new TeacherDetailsDTO(t));
