@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link id="layuicss-layer" rel="stylesheet"
+          href="http://res.layui.com/layui/dist/css/modules/layer/default/layer.css?v=3.1.1" media="all">
+</head>
+<body>
+<div class="fly-header layui-bg-green">
+    <div class="layui-container">
+        <a class="fly-logo" href="/">
+            <img src="//res.layui.com/images/fly/logo.png" alt="layui"> </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item">
+                <a href="/">
+                    <i class="iconfont icon-jiaoliu"></i>交流</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/case/2018/">
+                    <i class="iconfont icon-iconmingxinganli"></i>案例</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="http://www.layui.com/">
+                    <i class="iconfont icon-ui"></i>框架</a>
+                <span class="layui-badge-dot" style="margin: -5px 10px 0; right: 0;"></span>
+            </li>
+            <li class="layui-nav-item">
+                <a href="https://www.huzhan.com/" target="_blank">
+                    <i class="iconfont icon-web"></i>互站</a>
+            </li>
+            <span class="layui-nav-bar" style="left: 56.5px; top: 55px; width: 0px; opacity: 0;"></span>
+        </ul>
+        <ul class="layui-nav fly-nav-user">
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="/user/" id="LAY_header_avatar">
+                    <cite class="layui-hide-xs">雎婧</cite>
+                    <img src="//res.layui.com/images/fly/avatar/11.jpg">
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                    <dd>
+                        <a href="/user/">
+                            <i class="layui-icon"></i>用户中心</a>
+                    </dd>
+                    <dd>
+                        <a href="/user/set/">
+                            <i class="layui-icon"></i>基本设置</a>
+                    </dd>
+                    <hr>
+                    <dd>
+                        <a href="/user/message/">
+                            <i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
+                    <dd>
+                        <a href="/u/13077624">
+                            <i class="layui-icon" style="margin-left: 2px; font-size: 22px;"></i>我的主页</a>
+                    </dd>
+                    <hr style="margin: 5px 0;">
+                    <dd>
+                        <a href="/user/logout/" style="text-align: center;">退出</a>
+                    </dd>
+                </dl>
+            </li>
+            <span class="layui-nav-bar" style="left: 44px; top: 55px; width: 0px; opacity: 0;"></span>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

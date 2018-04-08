@@ -156,8 +156,15 @@ public class AdminController {
     }
 
     @GetMapping("user-manager/{id}")
-    public String eUser(@PathVariable String id) {
+    public String eUser(@PathVariable String id, Model model) {
+        model.addAttribute("user", userService.userDetails(id));
         return "admin/user-details";
+    }
+
+    @PostMapping("user-manager")
+    public String updateUser(UserUpdateDTO dto) {
+        System.err.println(dto.toString());
+        return null;
     }
 
     @GetMapping("user/{id}")
