@@ -1,6 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tb_teacher_log")
-public class TeacherLog {
+public class TeacherLog implements Serializable {
     @Id
     @Column(name = "opera_id")
     private String id;
