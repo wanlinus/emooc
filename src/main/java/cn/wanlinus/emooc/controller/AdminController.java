@@ -15,8 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -52,6 +50,16 @@ public class AdminController {
         model.addAttribute("userOperaLogs", userLogService.getTopNumberOrderByTimeDesc(10));
         model.addAttribute("teacherOperaLogs", teacherLogService.getTopNumberOrderByTimeDesc(10));
         return "admin/index";
+    }
+
+    @GetMapping(value = "information")
+    public String information() {
+        return "admin/information";
+    }
+
+    @GetMapping("change-password")
+    public String chgPassword() {
+        return "admin/change-password";
     }
 
     /**
