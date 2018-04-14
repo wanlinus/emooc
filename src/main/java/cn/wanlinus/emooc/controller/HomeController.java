@@ -32,7 +32,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    private static final String ROLE_USER = "[ROLE_USER]";
+    private static final String ROLE_USER = "[USER]";
     private static final String ROLE_TEACHER = "[TEACHER]";
     private static final String ROLE_ADMIN = "[ADMIN]";
 

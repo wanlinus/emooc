@@ -23,6 +23,15 @@ public final class AuthUtils {
     }
 
     /**
+     * 获取登录用户名
+     *
+     * @return 用户名
+     */
+    public static String getUsername() {
+        return getAuthentication().getName();
+    }
+
+    /**
      * 获取身份信息
      *
      * @return role

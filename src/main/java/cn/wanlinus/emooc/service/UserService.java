@@ -73,4 +73,12 @@ public interface UserService {
      * @return 总用户数
      */
     Long countUsers();
+
+    /**
+     * 获取用户对象
+     *
+     * @param username 用户名
+     * @return 存在返回用户对象 不存在返回null
+     */
+    User getUser(String username);
 }

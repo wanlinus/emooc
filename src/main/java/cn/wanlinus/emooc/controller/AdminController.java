@@ -51,6 +51,7 @@ public class AdminController {
         model.addAttribute("teacherOperaLogs", teacherLogService.getTopNumberOrderByTimeDesc(10));
         model.addAttribute("allUsers", userService.countUsers());
         model.addAttribute("allTeachers", teacherService.countTeachers());
+        //这两个数据先写死
         model.addAttribute("allCourses", 1000);
         model.addAttribute("toDayLogin", 1000);
         return "admin/index";
