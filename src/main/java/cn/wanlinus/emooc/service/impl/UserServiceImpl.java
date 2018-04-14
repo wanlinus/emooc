@@ -105,4 +105,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findOne(id);
         return user != null ? new UserDetailsDTO(user) : new UserDetailsDTO();
     }
+
+    @Override
+    public Long countUsers() {
+        return userRepository.count();
+    }
 }

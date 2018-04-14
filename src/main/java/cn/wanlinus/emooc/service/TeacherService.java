@@ -25,4 +25,11 @@ public interface TeacherService {
      * @return
      */
     Boolean addTeacher(TeacherDetailsDTO dto);
+
+    /**
+     * 对所有教师计数
+     *
+     * @return 教师总人数
+     */
+    Long countTeachers();
 }

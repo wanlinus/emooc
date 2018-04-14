@@ -49,6 +49,10 @@ public class AdminController {
     public String home(Model model) {
         model.addAttribute("userOperaLogs", userLogService.getTopNumberOrderByTimeDesc(10));
         model.addAttribute("teacherOperaLogs", teacherLogService.getTopNumberOrderByTimeDesc(10));
+        model.addAttribute("allUsers", userService.countUsers());
+        model.addAttribute("allTeachers", teacherService.countTeachers());
+        model.addAttribute("allCourses", 1000);
+        model.addAttribute("toDayLogin", 1000);
         return "admin/index";
     }
 

@@ -66,4 +66,11 @@ public interface UserService {
      * @return ID相应用户
      */
     UserDetailsDTO userDetails(String id);
+
+    /**
+     * 对所有用户计数
+     *
+     * @return 总用户数
+     */
+    Long countUsers();
 }

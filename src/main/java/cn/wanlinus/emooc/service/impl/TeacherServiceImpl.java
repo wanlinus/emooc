@@ -48,4 +48,9 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setSignature("这位老师很懒,暂时没有签名");
         return teacherRepository.save(teacher) != null;
     }
+
+    @Override
+    public Long countTeachers() {
+        return teacherRepository.count();
+    }
 }
