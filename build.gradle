@@ -34,11 +34,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
-    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+
     compile('commons-codec:commons-codec')
 
-    // https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml
     compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+    //数据库连接池
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.9'
 
     compile group: 'org.apache.logging.log4j', name: 'log4j-core'
     runtime('mysql:mysql-connector-java')

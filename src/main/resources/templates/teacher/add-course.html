@@ -5,6 +5,76 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <form th:action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="teacherId">
+        <div>
+            <label for="name">课程名称</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div>
+            <label for="direction">方向</label>
+            <select name="direction" id="direction">
 
+            </select>
+        </div>
+        <div>
+            <label for="classification">分类</label>
+            <select name="classification" id="classification">
+
+            </select>
+        </div>
+        <div>
+            <label for="type">类型</label>
+            <select name="type" id="type">
+
+            </select>
+        </div>
+        <div>
+            <label for="tariff">资费</label>
+            <input type="number" name="tariff" id="tariff">
+        </div>
+        <div>
+            <label for="grade">难度等级</label>
+            <select name="grade" id="grade">
+                <option value="a">初级</option>
+                <option value="b">中级</option>
+                <option value="c">高级</option>
+            </select>
+        </div>
+        <div>
+            <label for="notice">课程须知</label>
+            <input type="text" id="notice" name="notice">
+        </div>
+        <div>
+            <label for="wtcanlearn">能学到什么</label>
+            <textarea name="wtcanlearn" id="wtcanlearn" cols="30" rows="10">
+                
+            </textarea>
+        </div>
+        <div>
+            <label for="pic">封面</label>
+            <input type="file" name="pic" id="pic" accept="image/*">
+        </div>
+
+        <div>
+            <input type="submit" value="提交">
+        </div>
+    </form>
+</div>
+<script>
+    $("#direction").change(function () {
+        $.ajax({
+            url: "course/list-classification?id=" + $("#direction")[0].value,
+            success: function (resposnedata) {
+                var b = eval(resposnedata);
+                $("#classification option").remove();
+                for (var i = 0; i < b.length; i++) {
+                    $("#classification").append("<option value='" + b[i].id + "'>" + b[i].name + "</option>")
+                }
+            }
+        })
+    })
+</script>
 </body>
 </html>
