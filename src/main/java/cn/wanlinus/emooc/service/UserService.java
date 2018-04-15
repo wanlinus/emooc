@@ -48,7 +48,7 @@ public interface UserService {
      * @param uid 用户id
      * @return 注册成功返回true否则返回false
      */
-    boolean register(UserRegisterDTO dto, String uid);
+    Boolean register(UserRegisterDTO dto, String uid);
 
 
     /**

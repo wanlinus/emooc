@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 权限服务类
@@ -36,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String role = CommonUtils.getRequest().getParameter("role");
+        String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (ROLE_ADMIN.equals(role)) {
             Admin admin = adminRepository.findByName(username);

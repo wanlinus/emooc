@@ -1,7 +1,7 @@
 package cn.wanlinus.emooc.config;
 
 import cn.wanlinus.emooc.service.impl.UserDetailsServiceImpl;
-import cn.wanlinus.emooc.utils.PasswordEncoderImpl;
+import cn.wanlinus.emooc.service.impl.PasswordEncoderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean register(UserRegisterDTO dto, String uid) {
+    public Boolean register(UserRegisterDTO dto, String uid) {
         boolean flag;
         try {
             User user = new User(uid(), dto.getUsername(), md5Encrypt(dto.getPassword()), dto.getEmail());

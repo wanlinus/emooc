@@ -11,7 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 group = 'cn.wanlinus'
@@ -45,4 +45,11 @@ dependencies {
     runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'cn.wanlinus.emooc.EmoocApplication'
+        attributes 'Class-Path': ''
+    }
 }

@@ -1,7 +1,6 @@
-package cn.wanlinus.emooc.utils;
+package cn.wanlinus.emooc.service.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class PasswordEncoderImpl implements PasswordEncoder {
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public String encode(CharSequence rawPassword) {
