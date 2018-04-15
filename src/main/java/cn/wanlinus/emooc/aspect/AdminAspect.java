@@ -6,7 +6,7 @@ import cn.wanlinus.emooc.domain.AdminLog;
 import cn.wanlinus.emooc.domain.EmoocError;
 import cn.wanlinus.emooc.persistence.AdminLogRepository;
 import cn.wanlinus.emooc.persistence.AdminRepository;
-import cn.wanlinus.emooc.persistence.ErrorRepository;
+import cn.wanlinus.emooc.persistence.EmoocErrorRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,7 +37,7 @@ public class AdminAspect {
     private AdminRepository adminRepository;
 
     @Autowired
-    private ErrorRepository errorRepository;
+    private EmoocErrorRepository emoocErrorRepository;
 
     @Autowired
     private HttpServletRequest request;
@@ -86,7 +86,7 @@ public class AdminAspect {
         emoocError.setTime(new Date());
         emoocError.setWho(AuthUtils.getAuthentication().getName());
         emoocError.setDetails("管理员操作异常");
-        errorRepository.save(emoocError);
+        emoocErrorRepository.save(emoocError);
     }
 
 }
