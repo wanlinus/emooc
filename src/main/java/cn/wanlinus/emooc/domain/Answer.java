@@ -3,7 +3,6 @@ package cn.wanlinus.emooc.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * 问题回答
@@ -62,24 +61,7 @@ public class Answer implements Serializable {
     public void setQuestion(Question question) {
         this.question = question;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Answer answer = (Answer) o;
-        return Objects.equals(id, answer.id) &&
-                Objects.equals(detail, answer.detail) &&
-                Objects.equals(time, answer.time) &&
-                Objects.equals(question, answer.question);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, detail, time, question);
-    }
-
+    
     @Override
     public String toString() {
         return "Answer{" +

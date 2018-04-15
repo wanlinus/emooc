@@ -3,7 +3,6 @@ package cn.wanlinus.emooc.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * 验证码
@@ -50,22 +49,6 @@ public class Captcha implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Captcha captcha = (Captcha) o;
-        return Objects.equals(id, captcha.id) &&
-                Objects.equals(time, captcha.time) &&
-                Objects.equals(user, captcha.user);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, time, user);
     }
 
     @Override

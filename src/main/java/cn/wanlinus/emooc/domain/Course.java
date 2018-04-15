@@ -39,6 +39,102 @@ public class Course implements Serializable {
     @JoinColumn(name = "course_teach_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 
-    //TODO
+    @ManyToOne
+    @JoinColumn(name = "course_classification_id", referencedColumnName = "classification_id")
+    private CourseClassification classification;
 
+    @ManyToOne
+    @JoinColumn(name = "course_type_id", referencedColumnName = "type_id")
+    private CourseType type;
+
+    public Course() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Double tariff) {
+        this.tariff = tariff;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
+    public String getWtcanlearn() {
+        return wtcanlearn;
+    }
+
+    public void setWtcanlearn(String wtcanlearn) {
+        this.wtcanlearn = wtcanlearn;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public CourseClassification getClassification() {
+        return classification;
+    }
+
+    public void setClassification(CourseClassification classification) {
+        this.classification = classification;
+    }
+
+    public CourseType getType() {
+        return type;
+    }
+
+    public void setType(CourseType type) {
+        this.type = type;
+    }
 }

@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @author wanli
@@ -13,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "tb_course_direction")
-public class Direction implements Serializable {
+public class CourseDirection implements Serializable {
     @Id
     @Column(name = "direction_id")
     private String id;
@@ -21,7 +20,7 @@ public class Direction implements Serializable {
     @Column(name = "direction_name")
     private String name;
 
-    public Direction() {
+    public CourseDirection() {
     }
 
     public String getId() {
@@ -41,23 +40,8 @@ public class Direction implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Direction direction = (Direction) o;
-        return Objects.equals(id, direction.id) &&
-                Objects.equals(name, direction.name);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name);
-    }
-
-    @Override
     public String toString() {
-        return "Direction{" +
+        return "CourseDirection{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

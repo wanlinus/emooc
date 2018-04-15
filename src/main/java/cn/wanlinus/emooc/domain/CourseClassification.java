@@ -1,9 +1,6 @@
 package cn.wanlinus.emooc.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -20,7 +17,34 @@ public class CourseClassification implements Serializable {
     @Column(name = "classification_name")
     private String name;
 
-    //TODO
+    @ManyToOne
+    @JoinColumn(name = "classification_direction_id", referencedColumnName = "direction_id")
+    private CourseDirection direction;
 
+    public CourseClassification() {
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public CourseDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(CourseDirection direction) {
+        this.direction = direction;
+    }
 }
