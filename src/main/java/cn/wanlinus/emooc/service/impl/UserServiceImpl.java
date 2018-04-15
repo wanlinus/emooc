@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<GenderPieDTO> genderPie() {
-        int total = (int) userRepository.count();
         Map<String, Integer> mm = userRepository.genderPie();
         List<GenderPieDTO> pies = new ArrayList<>();
         pies.add(new GenderPieDTO("男", mm.get("0")));
@@ -63,7 +62,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkEmail(String email) {
         return userRepository.findByEmail(email) != null;
-
     }
 
     @Override

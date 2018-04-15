@@ -1,8 +1,10 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.Admin;
+import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.persistence.AdminRepository;
+import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,11 +54,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(ROLE_USER));
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         } else if (ROLE_TEACHER.equals(role)) {
-
-            return null;
+            Teacher teacher = teacherRepository.findByUsername(username);
+            authorities.add(new SimpleGrantedAuthority(ROLE_TEACHER));
+            return new org.springframework.security.core.userdetails.User(teacher.getUsername(), teacher.getPassword(), authorities);
         } else {
             return null;
         }
-
     }
 }

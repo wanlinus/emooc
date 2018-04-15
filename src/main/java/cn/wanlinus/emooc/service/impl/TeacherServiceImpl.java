@@ -38,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = new Teacher();
         teacher.setUsername(dto.getUsername());
         teacher.setEmail(dto.getEmail());
-        teacher.setPassword(dto.getPassword());
+        teacher.setPassword(CommonUtils.md5Encrypt(dto.getPassword()));
         teacher.setId(CommonUtils.tid());
         teacher.setAvatar("");
         teacher.setGender(Gender.UNDEFINE);
