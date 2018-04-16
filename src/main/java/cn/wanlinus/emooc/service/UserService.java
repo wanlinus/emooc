@@ -45,10 +45,9 @@ public interface UserService {
      * 用户注册
      *
      * @param dto 用户注册数据传输对象
-     * @param uid 用户id
      * @return 注册成功返回true否则返回false
      */
-    Boolean register(UserRegisterDTO dto, String uid);
+    User register(UserRegisterDTO dto);
 
 
     /**

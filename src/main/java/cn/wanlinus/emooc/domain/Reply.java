@@ -1,5 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -58,5 +60,10 @@ public class Reply implements Serializable {
 
     public void setComment(CourseComment comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

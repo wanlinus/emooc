@@ -3,10 +3,7 @@ package cn.wanlinus.emooc.controller;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.*;
-import cn.wanlinus.emooc.service.TeacherLogService;
-import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.service.UserLogService;
-import cn.wanlinus.emooc.service.UserService;
+import cn.wanlinus.emooc.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +28,11 @@ public class AdminController {
     private static Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
-    private UserLogService userLogService;
-    @Autowired
-    private TeacherLogService teacherLogService;
-    @Autowired
     private UserService userService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private EmoocLogService logService;
 
     /**
      * 管理员首页
@@ -47,8 +42,8 @@ public class AdminController {
      */
     @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
-        model.addAttribute("userOperaLogs", userLogService.getTopNumberOrderByTimeDesc(10));
-        model.addAttribute("teacherOperaLogs", teacherLogService.getTopNumberOrderByTimeDesc(10));
+        model.addAttribute("userOperaLogs", logService.getTopUserLog(0, 15));
+        model.addAttribute("teacherOperaLogs", logService.getTopTeacherLog(0, 15));
         model.addAttribute("allUsers", userService.countUsers());
         model.addAttribute("allTeachers", teacherService.countTeachers());
         //这两个数据先写死

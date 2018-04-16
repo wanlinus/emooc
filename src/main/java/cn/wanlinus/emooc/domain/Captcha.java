@@ -1,5 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -53,10 +55,6 @@ public class Captcha implements Serializable {
 
     @Override
     public String toString() {
-        return "Captcha{" +
-                "id='" + id + '\'' +
-                ", time=" + time +
-                ", user=" + user +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

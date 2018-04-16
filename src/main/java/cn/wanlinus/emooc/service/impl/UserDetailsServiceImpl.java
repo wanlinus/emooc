@@ -1,8 +1,10 @@
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.annotation.LoginOperation;
 import cn.wanlinus.emooc.domain.Admin;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.AdminRepository;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
@@ -28,10 +30,6 @@ import java.util.Objects;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final String ROLE_ADMIN = "ADMIN";
-    private static final String ROLE_USER = "USER";
-    private static final String ROLE_TEACHER = "TEACHER";
-
     @Autowired
     private UserRepository userRepository;
 
@@ -41,24 +39,31 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @LoginOperation(descript = "登陆")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if (ROLE_ADMIN.equals(role)) {
+        if (EmoocRole.ROLE_ADMIN.getDesc().equals(role)) {
             Admin admin = adminRepository.findByName(username);
-            authorities.add(new SimpleGrantedAuthority(ROLE_ADMIN));
-            return new org.springframework.security.core.userdetails.User(admin.getName(), admin.getPassword(), authorities);
-        } else if (ROLE_USER.equals(role)) {
+            if (admin != null) {
+                authorities.add(new SimpleGrantedAuthority(EmoocRole.ROLE_ADMIN.getDesc()));
+                return new org.springframework.security.core.userdetails.User(admin.getName(), admin.getPassword(), authorities);
+            }
+        } else if (EmoocRole.ROLE_USER.getDesc().equals(role)) {
             User user = userRepository.findByUsername(username);
-            authorities.add(new SimpleGrantedAuthority(ROLE_USER));
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
-        } else if (ROLE_TEACHER.equals(role)) {
+            if (user != null) {
+                authorities.add(new SimpleGrantedAuthority(EmoocRole.ROLE_USER.getDesc()));
+                return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+            }
+        } else if (EmoocRole.ROLE_TEACHER.getDesc().equals(role)) {
             Teacher teacher = teacherRepository.findByUsername(username);
-            authorities.add(new SimpleGrantedAuthority(ROLE_TEACHER));
-            return new org.springframework.security.core.userdetails.User(teacher.getUsername(), teacher.getPassword(), authorities);
-        } else {
-            return null;
+            if (teacher != null) {
+                authorities.add(new SimpleGrantedAuthority(EmoocRole.ROLE_TEACHER.getDesc()));
+                return new org.springframework.security.core.userdetails.User(teacher.getUsername(), teacher.getPassword(), authorities);
+            }
         }
+        return null;
+
     }
 }

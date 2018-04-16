@@ -63,6 +63,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 教师操作生成主键
+     *
+     * @return teacher operation log id
+     */
+    public static String teacherLogId() {
+        return "LT" + System.currentTimeMillis();
+    }
+
+    /**
      * 管理员操作主键
      *
      * @return admin operation log id

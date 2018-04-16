@@ -13,6 +13,11 @@ public final class AuthUtils {
         throw new AssertionError();
     }
 
+
+    public static final String ROLE_USER = "[USER]";
+    public static final String ROLE_TEACHER = "[TEACHER]";
+    public static final String ROLE_ADMIN = "[ADMIN]";
+
     /**
      * 得到认证对象
      *

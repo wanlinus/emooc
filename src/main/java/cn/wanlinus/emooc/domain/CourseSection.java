@@ -1,5 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -57,5 +59,10 @@ public class CourseSection implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

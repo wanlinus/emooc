@@ -1,5 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -76,12 +78,6 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "Question{" +
-                "id='" + id + '\'' +
-                ", time=" + time +
-                ", detail='" + detail + '\'' +
-                ", user=" + user +
-                ", teacher=" + teacher +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

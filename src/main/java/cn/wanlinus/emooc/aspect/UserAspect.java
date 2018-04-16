@@ -1,10 +1,9 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.annotation.UserOperation;
-import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.domain.UserLog;
-import cn.wanlinus.emooc.persistence.UserLogRepository;
-import cn.wanlinus.emooc.persistence.UserRepository;
+import cn.wanlinus.emooc.domain.EmoocLog;
+import cn.wanlinus.emooc.enums.EmoocRole;
+import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,11 +25,9 @@ import java.util.Date;
 @Component
 public class UserAspect {
 
-    @Autowired
-    private UserLogRepository userLogRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private EmoocLogRepository logRepository;
 
     @Autowired
     private HttpServletRequest request;
@@ -42,15 +39,15 @@ public class UserAspect {
     @Transactional(rollbackFor = Exception.class)
     @Around("user() && @annotation(userOperation)")
     public Object around(ProceedingJoinPoint joinPoint, UserOperation userOperation) throws Throwable {
-        UserLog log = new UserLog();
+        EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.userLogId());
-        log.setDetail(userOperation.descript());
+        log.setWho(AuthUtils.getUsername());
+        log.setRole(EmoocRole.ROLE_USER);
+        log.setOperation(userOperation.descript());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());
-        User user = userRepository.findByUsername(AuthUtils.getAuthentication().getName());
-        log.setUser(user);
-        userLogRepository.save(log);
+        logRepository.save(log);
         return joinPoint.proceed();
 
     }

@@ -1,8 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.domain.UserLog;
-import cn.wanlinus.emooc.persistence.TeacherLogRepository;
-import cn.wanlinus.emooc.persistence.UserLogRepository;
+import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static cn.wanlinus.emooc.utils.CommonUtils.userLogId;
 
 /**
  * @author wanli
@@ -30,9 +26,7 @@ public class LoggerAspect {
     @Autowired
     private HttpServletRequest request;
     @Autowired
-    private UserLogRepository userLogRepository;
-    @Autowired
-    private TeacherLogRepository teacherLogRepository;
+    private EmoocLogRepository emoocLogRepository;
 
     /**
      * 用户注册切点
@@ -75,8 +69,6 @@ public class LoggerAspect {
     public Object userAround(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info(String.valueOf(joinPoint.getArgs()));
 
-        UserLog log = new UserLog();
-        log.setId(userLogId());
         //Todo
 
         Object obj = joinPoint.proceed();

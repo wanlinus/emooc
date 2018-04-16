@@ -2,6 +2,7 @@ package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
+import com.alibaba.fastjson.JSON;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -129,17 +130,6 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", gender=" + gender +
-                ", email='" + email + '\'' +
-                ", position='" + position + '\'' +
-                ", detail='" + detail + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", signature='" + signature + '\'' +
-                ", status=" + status +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

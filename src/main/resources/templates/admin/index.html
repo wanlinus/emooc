@@ -45,14 +45,14 @@
                             <thead>
                             <tr>
                                 <th> 教师姓名:</th>
-                                <th> 详情:</th>
+                                <th> 操作:</th>
                                 <th> 操作时间:</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="teacherLog:${teacherOperaLogs}">
-                                <td th:text="${teacherLog.teacher.username}"></td>
-                                <td th:text="${teacherLog.detail}"></td>
+                                <td th:text="${teacherLog.who}"></td>
+                                <td th:text="${teacherLog.operation}"></td>
                                 <td th:text="${#dates.format(teacherLog.time, 'yyyy-MM-dd')}"></td>
                             </tr>
                             </tbody>
@@ -79,8 +79,8 @@
                             </thead>
                             <tbody>
                             <tr th:each="userOperaLog: ${userOperaLogs}" style="white-space:nowrap">
-                                <td th:text="${userOperaLog.user.username}"></td>
-                                <td th:text="${userOperaLog.detail}"></td>
+                                <td th:text="${userOperaLog.who}"></td>
+                                <td th:text="${userOperaLog.operation}"></td>
                                 <td style="overflow:hidden;text-overflow:ellipsis;max-width: 150px"
                                     th:text="${userOperaLog.equipment}"></td>
                                 <td th:text="${userOperaLog.ip}"></td>
@@ -150,8 +150,6 @@
     }
 </script>
 <script>
-
-
     $(document).ready(function () {
         $.get({
             url: '/admin/gender-pie',

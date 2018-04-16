@@ -1,5 +1,7 @@
 package cn.wanlinus.emooc.domain;
 
+import com.alibaba.fastjson.JSON;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,9 +43,6 @@ public class CourseDirection implements Serializable {
 
     @Override
     public String toString() {
-        return "CourseDirection{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

@@ -7,20 +7,16 @@ import cn.wanlinus.emooc.utils.AuthUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.validation.Valid;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.uid;
+import static cn.wanlinus.emooc.utils.AuthUtils.*;
 
 
 /**
@@ -31,10 +27,6 @@ import static cn.wanlinus.emooc.utils.CommonUtils.uid;
 public class HomeController extends WebMvcConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-    private static final String ROLE_USER = "[USER]";
-    private static final String ROLE_TEACHER = "[TEACHER]";
-    private static final String ROLE_ADMIN = "[ADMIN]";
 
     @Autowired
     private UserService userService;
@@ -110,7 +102,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
             resultData.setCode(false);
             resultData.setMessage("数据校验错误");
         } else {
-            resultData.setCode(userService.register(dto, uid()));
+            resultData.setCode(userService.register(dto) != null);
         }
         logger.info(resultData.getCode().toString());
         return resultData;

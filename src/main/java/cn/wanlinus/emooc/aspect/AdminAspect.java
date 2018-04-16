@@ -1,12 +1,11 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.annotation.AdminOperation;
-import cn.wanlinus.emooc.domain.Admin;
-import cn.wanlinus.emooc.domain.AdminLog;
 import cn.wanlinus.emooc.domain.EmoocError;
-import cn.wanlinus.emooc.persistence.AdminLogRepository;
-import cn.wanlinus.emooc.persistence.AdminRepository;
+import cn.wanlinus.emooc.domain.EmoocLog;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocErrorRepository;
+import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -31,10 +30,7 @@ import java.util.Date;
 public class AdminAspect {
 
     @Autowired
-    private AdminLogRepository adminLogRepository;
-
-    @Autowired
-    private AdminRepository adminRepository;
+    private EmoocLogRepository emoocLogRepository;
 
     @Autowired
     private EmoocErrorRepository emoocErrorRepository;
@@ -50,42 +46,29 @@ public class AdminAspect {
     @Transactional(rollbackFor = Exception.class)
     @Around("admin() && @annotation(adminOperation)")
     public Object adminAround(ProceedingJoinPoint joinPoint, AdminOperation adminOperation) throws Throwable {
-        AdminLog log = new AdminLog();
-        Admin admin = adminRepository.findByName(AuthUtils.getAuthentication().getName());
-        log.setAdmin(admin);
-        log.setDate(new Date());
-
-        String details = Arrays.toString(joinPoint.getArgs());
-        details = details.substring(details.indexOf("username") + 10);
-        details = details.substring(0, details.indexOf(",") - 1);
-
-        log.setDetail(adminOperation.descript() + " : " + details);
-
-        log.setEquipment(CommonUtils.getEquipment(request));
+        Object obj = joinPoint.proceed();
+        EmoocLog log = new EmoocLog();
+        log.setId(CommonUtils.adminLogId());
+        log.setRole(EmoocRole.ROLE_ADMIN);
+        log.setOperation(adminOperation.descript());
+        log.setResult(null);
         log.setIp(request.getRemoteAddr());
         log.setId(CommonUtils.adminLogId());
-        Object obj = joinPoint.proceed();
-        if (obj instanceof Boolean) {
-            if ((Boolean) obj) {
-                log.setResult(true);
-            } else {
-                log.setResult(false);
-            }
-        } else {
-            log.setComment("发生未知错误");
-        }
-        adminLogRepository.save(log);
+        log.setTime(new Date());
+        log.setEquipment(CommonUtils.getEquipment(request));
+        log.setComment(Arrays.toString(joinPoint.getArgs()));
+        emoocLogRepository.save(log);
         return obj;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @AfterThrowing("admin()")
-    public void afterThrowing() {
+    @AfterThrowing("admin() && @annotation(adminOperation)")
+    public void afterThrowing(AdminOperation adminOperation) {
         EmoocError emoocError = new EmoocError();
         emoocError.setId(CommonUtils.errorId());
         emoocError.setTime(new Date());
         emoocError.setWho(AuthUtils.getAuthentication().getName());
-        emoocError.setDetails("管理员操作异常");
+        emoocError.setDetails(adminOperation.descript());
         emoocErrorRepository.save(emoocError);
     }
 

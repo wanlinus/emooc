@@ -2,6 +2,7 @@ package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
+import com.alibaba.fastjson.JSON;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -227,52 +228,7 @@ public class User implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (realname != null ? !realname.equals(user.realname) : user.realname != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (telephone != null ? !telephone.equals(user.telephone) : user.telephone != null) return false;
-        if (position != null ? !position.equals(user.position) : user.position != null) return false;
-        if (experience != null ? !experience.equals(user.experience) : user.experience != null) return false;
-        if (address != null ? !address.equals(user.address) : user.address != null) return false;
-        if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) return false;
-        if (learnTime != null ? !learnTime.equals(user.learnTime) : user.learnTime != null) return false;
-        if (integral != null ? !integral.equals(user.integral) : user.integral != null) return false;
-        if (signature != null ? !signature.equals(user.signature) : user.signature != null) return false;
-        if (avatar != null ? !avatar.equals(user.avatar) : user.avatar != null) return false;
-        if (gender != user.gender) return false;
-        if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
-        if (registerTime != null ? !registerTime.equals(user.registerTime) : user.registerTime != null) return false;
-        return userStatus == user.userStatus;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (realname != null ? realname.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (experience != null ? experience.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (learnTime != null ? learnTime.hashCode() : 0);
-        result = 31 * result + (integral != null ? integral.hashCode() : 0);
-        result = 31 * result + (signature != null ? signature.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (registerTime != null ? registerTime.hashCode() : 0);
-        result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
-        return result;
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }
