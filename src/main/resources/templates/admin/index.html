@@ -36,7 +36,7 @@
         <hr>
         <div class="layui-row layui-col-space5">
             <div class="layui-col-md6">
-                <a th:href="@{teacher-manager}">
+                <a th:href="@{tms}">
                     <h2><span style="color: red;">*</span>教师管理>> </h2>
                 </a>
                 <div class="layui-row">
@@ -50,7 +50,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="teacherLog:${teacherOperaLogs}">
+                            <tr th:each="teacherLog:${teacherLogs}">
                                 <td th:text="${teacherLog.who}"></td>
                                 <td th:text="${teacherLog.operation}"></td>
                                 <td th:text="${#dates.format(teacherLog.time, 'yyyy-MM-dd')}"></td>
@@ -62,7 +62,7 @@
 
             </div>
             <div class="layui-col-md6">
-                <a th:href="@{user-manager}" style="text-decoration: blink">
+                <a th:href="@{sms}" style="text-decoration: blink">
                     <h2><span style="color: red;">*</span>用户管理>> </h2>
                 </a>
                 <div class="layui-row">
@@ -78,13 +78,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="userOperaLog: ${userOperaLogs}" style="white-space:nowrap">
-                                <td th:text="${userOperaLog.who}"></td>
-                                <td th:text="${userOperaLog.operation}"></td>
+                            <tr th:each="userLog: ${userLogs}" style="white-space:nowrap">
+                                <td th:text="${userLog.who}"></td>
+                                <td th:text="${userLog.operation}"></td>
                                 <td style="overflow:hidden;text-overflow:ellipsis;max-width: 150px"
-                                    th:text="${userOperaLog.equipment}"></td>
-                                <td th:text="${userOperaLog.ip}"></td>
-                                <td th:text="${#dates.format(userOperaLog.time, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    th:text="${userLog.equipment}"></td>
+                                <td th:text="${userLog.ip}"></td>
+                                <td th:text="${#dates.format(userLog.time, 'yyyy-MM-dd HH:mm:ss')}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -106,7 +106,7 @@
 
 </body>
 <script th:src="@{/layui/layui.all.js}"></script>
-<!--<script src="/static/layui/layui.all.js"></script>-->
+<script src="/static/layui/layui.all.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
 <script>

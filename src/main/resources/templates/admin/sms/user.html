@@ -38,7 +38,7 @@
                     </ul>
                     <div class="layui-tab-content" style="padding: 20px 0;">
                         <div class="layui-form layui-form-pane layui-tab-item layui-show">
-                            <form method="post" action="/admin/user-manager">
+                            <form method="post" action="/admin/sms/user">
                                 <input type="text" name="id" hidden th:value="${user.id}">
                                 <div class="layui-form-item">
                                     <label for="L_username" class="layui-form-label">昵称</label>
@@ -169,7 +169,6 @@
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script th:src="@{/layui/layui.all.js}"></script>
 <script src="/static/layui/layui.all.js"></script>
 <script>

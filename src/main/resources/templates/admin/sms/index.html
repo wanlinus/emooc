@@ -8,21 +8,25 @@
     <div class="layui-body" style="padding: 15px;">
         <div class="container">
             <table class="layui-table"
-                   lay-data="{height: 'full-200', cellMinWidth: 100, url:'/admin/teacher', page:true, id:'teachers'}"
-                   lay-filter="teachers">
+                   lay-data="{height: 'full-200', cellMinWidth: 100, url:'/admin/sms/user', page:true, id:'users'}"
+                   lay-filter="users">
                 <thead>
                 <tr>
                     <th lay-data="{type:'checkbox'}">ID</th>
-                    <th lay-data="{field:'id', width: 180, sort: true}">ID</th>
-                    <th lay-data="{field:'username', width:150, event: 'teacherName',style:'cursor: pointer;text-decoration:underline;color:#009688'}">
+                    <th lay-data="{field:'id', width:150, sort: true, event: 'id', style:'cursor: pointer;text-decoration:underline;color:#009688'}">
+                        ID
+                    </th>
+                    <th lay-data="{field:'username', width:150, event: 'username',style:'cursor: pointer;text-decoration:underline;color:#009688'}">
                         用户名
                     </th>
                     <th lay-data="{field:'gender', width:100, sort: true}">性别</th>
-                    <th lay-data="{field:'email'}">邮箱</th>
-                    <th lay-data="{field:'position', width:100}">职位</th>
-                    <th lay-data="{field:'details'}">详情</th>
-                    <th lay-data="{field:'signature'}">签名</th>
-                    <th lay-data="{field:'status',width:100, templet: '#checkboxTpl', unresize: true}">状态</th>
+                    <th lay-data="{field: 'telephone', minWidth:150}">电话号码</th>
+                    <th lay-data="{field:'email', minWidth:200}">邮箱</th>
+                    <th lay-data="{field: 'experience', width: 100}">经验值</th>
+                    <th lay-data="{field: 'learnTime', width: 150}">学习时长(分钟)</th>
+                    <th lay-data="{field: 'integral', width: 100}">积分</th>
+                    <th lay-data="{field: 'balance', width: 100}">余额</th>
+                    <th lay-data="{field:'status', width: 150,templet: '#checkboxTpl', unresize: true}">状态</th>
                 </tr>
                 </thead>
             </table>
@@ -31,7 +35,6 @@
     </div>
 </div>
 </body>
-
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../layui/layui.all.js"></script>
@@ -40,13 +43,13 @@
 <script>
     layui.use('table', function () {
         let table = layui.table;
-        table.on('tool(teachers)', function (obj) {
+        table.on('tool(users)', function (obj) {
             let data = obj.data;
-            if (obj.event === 'teacherName') {
+            if (obj.event === 'username') {
                 layer.prompt({
-                    formType: 2
-                    , title: '修改 ID 为 [' + data.id + '] 的用户签名'
-                    , value: data.username
+                    formType: 2,
+                    title: '修改 ID 为 [' + data.id + '] 的用户签名',
+                    value: data.username
                 }, function (value, index) {
                     layer.close(index);
 
@@ -57,6 +60,9 @@
                         username: value
                     });
                 });
+            }
+            if (obj.event === 'id') {
+                window.location.href = "/admin/sms/user/" + data.id;
             }
         })
     })

@@ -4,8 +4,6 @@ import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,8 +23,6 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static Logger logger = LoggerFactory.getLogger(AdminController.class);
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -42,8 +38,8 @@ public class AdminController {
      */
     @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
-        model.addAttribute("userOperaLogs", logService.getTopUserLog(0, 15));
-        model.addAttribute("teacherOperaLogs", logService.getTopTeacherLog(0, 15));
+        model.addAttribute("userLogs", logService.getTopUserLog(0, 12));
+        model.addAttribute("teacherLogs", logService.getTopTeacherLog(0, 12));
         model.addAttribute("allUsers", userService.countUsers());
         model.addAttribute("allTeachers", teacherService.countTeachers());
         //这两个数据先写死
@@ -74,32 +70,22 @@ public class AdminController {
     }
 
     /**
-     * 教师管理模块
+     * 讲师管理系统
      *
      * @return
      */
-    @GetMapping("/teacher-manager")
-    public String teacherManager() {
-        return "admin/teacher-manager";
+    @GetMapping("tms")
+    public String teacherManagerSystem() {
+        return "admin/tms/index";
     }
 
-    @GetMapping("/teacher-add")
-    public String teacherAdd() {
-        return "admin/teacher-add";
-    }
-
-
-    @GetMapping("course-manager")
-    public String courseManager() {
-        return "admin/course-manager";
-    }
 
     /**
      * 教师信息
      *
      * @return 教师信息列表
      */
-    @GetMapping("teacher")
+    @GetMapping("tms/teacher")
     @ResponseBody
     public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPaginationDTO layuiPaginationDTO) {
         Page<Teacher> page = teacherService.pageTeacher(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
@@ -110,15 +96,26 @@ public class AdminController {
         return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
     }
 
-    @PostMapping("teacher")
-    public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
+    @GetMapping("tms/add")
+    public String addTeacherUI() {
+        return "admin/tms/add";
+    }
 
+    /**
+     * 添加教师
+     *
+     * @param dto                教师信息
+     * @param redirectAttributes
+     * @return
+     */
+    @PostMapping("tms/teacher")
+    public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
         if (teacherService.addTeacher(dto)) {
             redirectAttributes.addFlashAttribute("msg", "添加成功");
         } else {
             redirectAttributes.addFlashAttribute("msg", "添加失败");
         }
-        return "admin/teacher-add";
+        return "admin/tms";
     }
 
     /**
@@ -127,24 +124,25 @@ public class AdminController {
      * @param id
      * @return
      */
-    @GetMapping("teacher/{id}")
+    @GetMapping("tms/teacher/{id}")
     @ResponseBody
     public Teacher teacherDetail(@PathVariable String id) {
         return null;
     }
 
 
-    @GetMapping("teacher-info")
-    public String teacherInfo() {
-        return null;
-    }
-
     //-------------------------用户管理模块-------------------------
 
-    @GetMapping("user-manager")
-    public String userManager() {
-        return "admin/user-manager";
+    /**
+     * 用户管理系统
+     *
+     * @return
+     */
+    @GetMapping("sms")
+    public String subscriberManagementSystem() {
+        return "admin/sms/index";
     }
+
 
     /**
      * 用户分页组件
@@ -152,7 +150,7 @@ public class AdminController {
      * @param layuiPaginationDTO layui分页数据传输对象
      * @return layui分页数据传输对象
      */
-    @GetMapping("user")
+    @GetMapping("sms/user")
     @ResponseBody
     public LayuiPaginationDataDTO<UserSimpleDTO> userPage(LayuiPaginationDTO layuiPaginationDTO) {
         Page<User> page = userService.pageUser(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
@@ -163,21 +161,48 @@ public class AdminController {
         return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
     }
 
-    @GetMapping("user-manager/{id}")
-    public String eUser(@PathVariable String id, Model model) {
+    @GetMapping("sms/user/{id}")
+    public String userDetail(@PathVariable String id, Model model) {
         model.addAttribute("user", userService.userDetails(id));
-        return "admin/user-details";
+        return "admin/sms/user";
     }
 
-    @PostMapping("user-manager")
-    public String updateUser(UserUpdateDTO dto) {
-        System.err.println(dto.toString());
-        return null;
+    //-------------------------课程管理模块-------------------------
+
+    /**
+     * 课程管理系统
+     *
+     * @return
+     */
+    @GetMapping("cms")
+    public String courseManagerSystem() {
+        return "admin/cms/index";
     }
 
-    @GetMapping("user/{id}")
-    public String userDetails(@PathVariable String id, Model model) {
-        model.addAttribute("user", userService.userDetails(id));
-        return "admin/user-details";
+    //-------------------------日志管理模块-------------------------
+
+    @GetMapping("lms")
+    public String logManagerSystem() {
+        return "admin/lms/index";
+    }
+
+    @GetMapping("lms/teacher")
+    public String lmsTeacher() {
+        return "admin/lms/teacher";
+    }
+
+    @GetMapping("lms/user")
+    public String lmsUser() {
+        return "admin/lms/user";
+    }
+
+    @GetMapping("lms/admin")
+    public String lmsAdmin() {
+        return "admin/lms/admin";
+    }
+
+    @GetMapping("lms/error")
+    public String lmsError() {
+        return "admin/lms/error";
     }
 }
