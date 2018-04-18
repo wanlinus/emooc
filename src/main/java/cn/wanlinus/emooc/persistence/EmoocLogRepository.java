@@ -40,4 +40,22 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      */
     @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=2 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2;", nativeQuery = true)
     List<EmoocLog> getTopAdminLog(Integer startNum, Integer endNum);
+
+    /**
+     * 对教师记录计数
+     *
+     * @return 教师日志条数
+     */
+    @Query(value = "select count(log) from EmoocLog as log where log.role=1")
+    Long countTeacherLog();
+
+    /**
+     * 教师日志分页查询
+     *
+     * @param startIndex 开始索引
+     * @param size       条数
+     * @return 教师日志分页数据
+     */
+    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=1 LIMIT ?1 , ?2", nativeQuery = true)
+    List<EmoocLog> pageTeacherLogger(int startIndex, int size);
 }

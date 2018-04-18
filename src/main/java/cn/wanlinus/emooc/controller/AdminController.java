@@ -191,7 +191,14 @@ public class AdminController {
         return "admin/lms/teacher";
     }
 
+    @GetMapping("logger/teacher")
+    @ResponseBody
+    public LayuiPaginationDataDTO<LoggerTeacherDTO> loggerTeacher(LayuiPaginationDTO layuiPaginationDTO) {
+        return logService.pageTeacherLogger(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+    }
+
     @GetMapping("lms/user")
+
     public String lmsUser() {
         return "admin/lms/user";
     }
