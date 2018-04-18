@@ -1,7 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.annotation.LoginAnnotation;
-import cn.wanlinus.emooc.annotation.LogoutAnnotation;
 import cn.wanlinus.emooc.domain.EmoocError;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.enums.EmoocRole;
@@ -28,7 +27,7 @@ import java.util.Objects;
  */
 @Aspect
 @Component
-public class LogInOutAspect {
+public class LoginAspect {
 
     @Autowired
     private HttpServletRequest request;
@@ -42,9 +41,6 @@ public class LogInOutAspect {
     public void login() {
     }
 
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.LogoutAnnotation)")
-    public void logout() {
-    }
 
     @Transactional(rollbackFor = Exception.class)
     @Around("login() && @annotation(loginAnnotation)")
@@ -57,26 +53,6 @@ public class LogInOutAspect {
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setOperation(loginAnnotation.description());
-        log = setRole(log);
-        emoocLogRepository.save(log);
-        return object;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Around("logout() && @annotation(logoutAnnotation)")
-    public Object logoutAround(ProceedingJoinPoint joinPoint, LogoutAnnotation logoutAnnotation) throws Throwable {
-        EmoocLog log = new EmoocLog();
-        log.setWho(AuthUtils.getUsername());
-        log.setTime(new Date());
-        log.setIp(request.getRemoteAddr());
-        log.setEquipment(CommonUtils.getEquipment(request));
-        log.setOperation(logoutAnnotation.description());
-        log = setRole(log);
-        emoocLogRepository.save(log);
-        return joinPoint.proceed();
-    }
-
-    private EmoocLog setRole(EmoocLog log) {
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
         if (EmoocRole.ROLE_USER.getDesc().equals(role)) {
             log.setId(CommonUtils.userLogId());
@@ -91,11 +67,11 @@ public class LogInOutAspect {
             log.setId(CommonUtils.errorId());
             log.setRole(EmoocRole.ROLE_UNKNOWN);
         }
-        return log;
+        emoocLogRepository.save(log);
+        return object;
     }
 
-
-    @AfterThrowing("login() && logout()")
+    @AfterThrowing("login()")
     public void throwErr() {
         EmoocError emoocError = new EmoocError();
         emoocError.setId(CommonUtils.errorId());

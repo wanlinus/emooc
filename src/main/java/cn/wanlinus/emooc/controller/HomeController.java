@@ -49,7 +49,6 @@ public class HomeController extends WebMvcConfigurerAdapter {
         return "login";
     }
 
-    @LogoutAnnotation(description = "退出登录")
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         if (getAuthentication() != null) {
