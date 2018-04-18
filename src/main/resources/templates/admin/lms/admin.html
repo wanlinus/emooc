@@ -38,7 +38,25 @@
         </div>
     </div>
     <div class="layui-body" style="padding: 15px;">
-        admin
+        <div class="container">
+            <table class="layui-table"
+                   lay-data="{height: 'full-200',limit:30, cellMinWidth: 100, url:'/admin/logger/admin', page:true, id:'teacher'}"
+                   lay-filter="users">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'id', width:200, sort: true}">ID</th>
+                    <th lay-data="{field: 'who', minWidth:100}">姓名</th>
+                    <th lay-data="{field: 'operation', minWidth: 250}">操作</th>
+                    <th lay-data="{field:'time', minWidth:120}">时间</th>
+                    <th lay-data="{field: 'equipment', width: 200}">设备</th>
+                    <th lay-data="{field: 'ip', width: 150}">IP</th>
+                    <th lay-data="{field: 'result', width: 100}">结果</th>
+                    <th lay-data="{field:'comment', width: 150}">备注</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div th:replace="admin/layout::adminFooter"></div>
     </div>
 </div>
 </body>

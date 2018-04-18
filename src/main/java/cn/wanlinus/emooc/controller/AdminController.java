@@ -1,8 +1,10 @@
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.annotation.LogoutAnnotation;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.*;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -193,14 +195,19 @@ public class AdminController {
 
     @GetMapping("logger/teacher")
     @ResponseBody
-    public LayuiPaginationDataDTO<LoggerTeacherDTO> loggerTeacher(LayuiPaginationDTO layuiPaginationDTO) {
-        return logService.pageTeacherLogger(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+    public LayuiPaginationDataDTO<LoggerDTO> loggerTeacher(LayuiPaginationDTO layuiPaginationDTO) {
+        return logService.pageRoleLogger(EmoocRole.ROLE_TEACHER, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
     }
 
     @GetMapping("lms/user")
-
     public String lmsUser() {
         return "admin/lms/user";
+    }
+
+    @GetMapping("logger/user")
+    @ResponseBody
+    public LayuiPaginationDataDTO<LoggerDTO> loggerUser(LayuiPaginationDTO layuiPaginationDTO) {
+        return logService.pageRoleLogger(EmoocRole.ROLE_USER, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
     }
 
     @GetMapping("lms/admin")
@@ -208,8 +215,15 @@ public class AdminController {
         return "admin/lms/admin";
     }
 
+    @GetMapping("logger/admin")
+    @ResponseBody
+    public LayuiPaginationDataDTO<LoggerDTO> loggerAdmin(LayuiPaginationDTO layuiPaginationDTO) {
+        return logService.pageRoleLogger(EmoocRole.ROLE_ADMIN, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+    }
+
     @GetMapping("lms/error")
     public String lmsError() {
         return "admin/lms/error";
     }
+
 }

@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.annotation.UserOperation;
+import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
@@ -32,18 +32,18 @@ public class UserAspect {
     @Autowired
     private HttpServletRequest request;
 
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserOperation)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserAnnotation)")
     private void user() {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @Around("user() && @annotation(userOperation)")
-    public Object around(ProceedingJoinPoint joinPoint, UserOperation userOperation) throws Throwable {
+    @Around("user() && @annotation(userAnnotation)")
+    public Object around(ProceedingJoinPoint joinPoint, UserAnnotation userAnnotation) throws Throwable {
         EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.userLogId());
         log.setWho(AuthUtils.getUsername());
         log.setRole(EmoocRole.ROLE_USER);
-        log.setOperation(userOperation.descript());
+        log.setOperation(userAnnotation.description());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());

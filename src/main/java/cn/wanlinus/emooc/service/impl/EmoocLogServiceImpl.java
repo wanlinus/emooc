@@ -2,7 +2,8 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
-import cn.wanlinus.emooc.dto.LoggerTeacherDTO;
+import cn.wanlinus.emooc.dto.LoggerDTO;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.utils.CommonUtils;
@@ -34,16 +35,15 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public LayuiPaginationDataDTO<LoggerTeacherDTO> pageTeacherLogger(int page, Integer limit) {
-        LayuiPaginationDataDTO<LoggerTeacherDTO> dto = new LayuiPaginationDataDTO<>();
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public LayuiPaginationDataDTO<LoggerDTO> pageRoleLogger(EmoocRole role, int page, Integer limit) {
+        LayuiPaginationDataDTO<LoggerDTO> dto = new LayuiPaginationDataDTO<>();
         try {
-            dto.setCount(emoocLogRepository.countTeacherLog());
-
-            List<EmoocLog> logs = emoocLogRepository.pageTeacherLogger(limit * page, limit);
-            List<LoggerTeacherDTO> list = new ArrayList<>();
+            dto.setCount(emoocLogRepository.countLog(role));
+            List<EmoocLog> logs = emoocLogRepository.pageRoleLogger(role.ordinal(), limit * page, limit);
+            List<LoggerDTO> list = new ArrayList<>();
             for (EmoocLog log : logs) {
-                LoggerTeacherDTO d = new LoggerTeacherDTO();
+                LoggerDTO d = new LoggerDTO();
                 d.setId(log.getId());
                 d.setWho(log.getWho());
                 d.setTime(CommonUtils.dateFormatComplex(log.getTime()));

@@ -12,7 +12,7 @@
     <title sec:authorize="isAnonymous()">欢迎来到EMooc</title>
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
     <link rel="stylesheet" href="/static/css/custom-style.css">
-    <link rel="stylesheet" th:href="@{/layui/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" href="/static/layui/layui.css">
 </head>
 <body>
@@ -35,7 +35,7 @@
             </dl>
         </li>
         <li class="layui-nav-item">
-            <a href="javascript:logout()" id="logout">退出</a>
+            <a th:href="@{/logout}" id="logout">退出</a>
         </li>
     </ul>
 </div>

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface LoginOperation {
+public @interface LoginAnnotation {
     String value() default "";
 
     /**
@@ -17,5 +17,5 @@ public @interface LoginOperation {
      *
      * @return 这个有什么返回啊
      */
-    String descript();
+    String description();
 }

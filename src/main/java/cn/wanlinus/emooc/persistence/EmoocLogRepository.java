@@ -1,6 +1,7 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.EmoocLog;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -42,20 +43,23 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
     List<EmoocLog> getTopAdminLog(Integer startNum, Integer endNum);
 
     /**
-     * 对教师记录计数
+     * 根据用户身份得到日志记录总数
      *
+     * @param role 身份
      * @return 教师日志条数
      */
-    @Query(value = "select count(log) from EmoocLog as log where log.role=1")
-    Long countTeacherLog();
+    @Query(value = "select count(log) from EmoocLog as log where log.role=?1")
+    Long countLog(EmoocRole role);
+
 
     /**
-     * 教师日志分页查询
+     * 根据用户身份不同获取不同日志信息
      *
+     * @param role       身份
      * @param startIndex 开始索引
-     * @param size       条数
-     * @return 教师日志分页数据
+     * @param size       数据量
+     * @return 日志数据
      */
-    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=1 LIMIT ?1 , ?2", nativeQuery = true)
-    List<EmoocLog> pageTeacherLogger(int startIndex, int size);
+    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=?1 ORDER BY log.log_time DESC LIMIT ?2 , ?3", nativeQuery = true)
+    List<EmoocLog> pageRoleLogger(Integer role, int startIndex, Integer size);
 }

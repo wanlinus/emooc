@@ -3,21 +3,19 @@ package cn.wanlinus.emooc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 用户注册时打的注解
- *
  * @author wanli
- * @date 2018-04-01 00:54
+ * @date 2018-04-06 21:23
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface UserRegister {
+public @interface AdminAnnotation {
     String value() default "";
 
     /**
-     * 用于描述相应操作
+     * 描述管理员的行为
      *
-     * @return 操作说明
+     * @return
      */
-    String descript();
+    String description() default "";
 }

@@ -2,7 +2,8 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
-import cn.wanlinus.emooc.dto.LoggerTeacherDTO;
+import cn.wanlinus.emooc.dto.LoggerDTO;
+import cn.wanlinus.emooc.enums.EmoocRole;
 
 import java.util.List;
 
@@ -31,11 +32,13 @@ public interface EmoocLogService {
     List<EmoocLog> getTopTeacherLog(Integer startNum, Integer endNum);
 
     /**
-     * 获取分页信息
+     * 获取用户日志分页信息
      *
+     * @param role  查询身份
      * @param page  当前页
      * @param limit 每页条数
-     * @return 分页信息
+     * @return 分页数据
      */
-    LayuiPaginationDataDTO<LoggerTeacherDTO> pageTeacherLogger(int page, Integer limit);
+    LayuiPaginationDataDTO<LoggerDTO> pageRoleLogger(EmoocRole role, int page, Integer limit);
+
 }

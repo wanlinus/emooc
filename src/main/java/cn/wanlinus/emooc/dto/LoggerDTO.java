@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author wanli
  * @date 2018-04-18 22:54
  */
-public class LoggerTeacherDTO implements Serializable {
+public class LoggerDTO implements Serializable {
     private String id;
     private String who;
     private String time;
@@ -16,7 +16,7 @@ public class LoggerTeacherDTO implements Serializable {
     private String equipment;
     private String comment;
 
-    public LoggerTeacherDTO() {
+    public LoggerDTO() {
     }
 
     public String getId() {

@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.UserRegister;
+import cn.wanlinus.emooc.annotation.RegisterAnnotation;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @UserRegister(descript = "注册")
+    @RegisterAnnotation(description = "注册")
     @Transactional(rollbackFor = Exception.class)
     public User register(UserRegisterDTO dto) {
         try {

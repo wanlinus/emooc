@@ -3,15 +3,15 @@ package cn.wanlinus.emooc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 注解什么的都是浮云
+ * 用户记录用户操作的注解
  *
  * @author wanli
- * @date 2018-03-30 21:02
+ * @date 2018-03-30 20:59
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface TeacherOperation {
+public @interface UserAnnotation {
     String value() default "";
 
     /**
@@ -19,5 +19,6 @@ public @interface TeacherOperation {
      *
      * @return 操作说明
      */
-    String descript();
+    String description();
+
 }

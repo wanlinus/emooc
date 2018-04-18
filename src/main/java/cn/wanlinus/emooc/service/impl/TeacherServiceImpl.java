@@ -1,11 +1,10 @@
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.AdminOperation;
+import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
-import cn.wanlinus.emooc.exception.TeacherServiceException;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.service.TeacherService;
 import cn.wanlinus.emooc.utils.CommonUtils;
@@ -32,7 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 
     @Override
-    @AdminOperation(descript = "注册教师")
+    @AdminAnnotation(description = "注册教师")
     @Transactional(rollbackFor = Exception.class)
     public Boolean addTeacher(TeacherDetailsDTO dto) {
         Teacher teacher = new Teacher();

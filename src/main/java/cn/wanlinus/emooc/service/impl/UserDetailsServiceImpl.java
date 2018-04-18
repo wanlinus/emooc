@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.LoginOperation;
+import cn.wanlinus.emooc.annotation.LoginAnnotation;
 import cn.wanlinus.emooc.domain.Admin;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
@@ -39,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @LoginOperation(descript = "登陆")
+    @LoginAnnotation(description = "登陆")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");

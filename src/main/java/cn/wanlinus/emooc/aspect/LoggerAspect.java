@@ -31,21 +31,21 @@ public class LoggerAspect {
     /**
      * 用户注册切点
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserRegister)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.RegisterAnnotation)")
     private void userRegister() {
     }
 
     /**
      * 代表以UserOperationLogger注解了的切点
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserOperation)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserAnnotation)")
     public void user() {
     }
 
     /**
      * 这个切点肯定就是表明老师的骚操作了三
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.TeacherOperation)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.TeacherAnnotation)")
     public void teacher() {
     }
 
@@ -53,7 +53,7 @@ public class LoggerAspect {
      * 管理员的上帝视角
      * 史上最骚的操作
      */
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.AdminOperation)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.AdminAnnotation)")
     public void admin() {
     }
 

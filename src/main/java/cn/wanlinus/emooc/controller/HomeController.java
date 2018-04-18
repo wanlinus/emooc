@@ -1,5 +1,6 @@
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.annotation.LogoutAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.service.UserService;
@@ -7,6 +8,7 @@ import cn.wanlinus.emooc.utils.AuthUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.*;
@@ -24,6 +28,7 @@ import static cn.wanlinus.emooc.utils.AuthUtils.*;
  * @date 2018-02-22 10:07
  */
 @Controller
+@RequestMapping("/")
 public class HomeController extends WebMvcConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -42,6 +47,15 @@ public class HomeController extends WebMvcConfigurerAdapter {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @LogoutAnnotation(description = "退出登录")
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        if (getAuthentication() != null) {
+            new SecurityContextLogoutHandler().logout(request, response, getAuthentication());
+        }
+        return "byte";
     }
 
     @GetMapping("/dispatcher")

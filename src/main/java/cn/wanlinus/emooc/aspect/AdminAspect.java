@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.annotation.AdminOperation;
+import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.domain.EmoocError;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.enums.EmoocRole;
@@ -39,18 +39,18 @@ public class AdminAspect {
     private HttpServletRequest request;
 
 
-    @Pointcut(value = "@annotation(cn.wanlinus.emooc.annotation.AdminOperation)")
+    @Pointcut(value = "@annotation(cn.wanlinus.emooc.annotation.AdminAnnotation)")
     public void admin() {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @Around("admin() && @annotation(adminOperation)")
-    public Object adminAround(ProceedingJoinPoint joinPoint, AdminOperation adminOperation) throws Throwable {
+    @Around("admin() && @annotation(adminAnnotation)")
+    public Object adminAround(ProceedingJoinPoint joinPoint, AdminAnnotation adminAnnotation) throws Throwable {
         Object obj = joinPoint.proceed();
         EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.adminLogId());
         log.setRole(EmoocRole.ROLE_ADMIN);
-        log.setOperation(adminOperation.descript());
+        log.setOperation(adminAnnotation.description());
         log.setResult(null);
         log.setIp(request.getRemoteAddr());
         log.setId(CommonUtils.adminLogId());
@@ -62,13 +62,13 @@ public class AdminAspect {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @AfterThrowing("admin() && @annotation(adminOperation)")
-    public void afterThrowing(AdminOperation adminOperation) {
+    @AfterThrowing("admin() && @annotation(adminAnnotation)")
+    public void afterThrowing(AdminAnnotation adminAnnotation) {
         EmoocError emoocError = new EmoocError();
         emoocError.setId(CommonUtils.errorId());
         emoocError.setTime(new Date());
         emoocError.setWho(AuthUtils.getAuthentication().getName());
-        emoocError.setDetails(adminOperation.descript());
+        emoocError.setDetails(adminAnnotation.description());
         emoocErrorRepository.save(emoocError);
     }
 

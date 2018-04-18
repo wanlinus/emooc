@@ -3,19 +3,21 @@ package cn.wanlinus.emooc.annotation;
 import java.lang.annotation.*;
 
 /**
+ * 注解什么的都是浮云
+ *
  * @author wanli
- * @date 2018-04-06 21:23
+ * @date 2018-03-30 21:02
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface AdminOperation {
+public @interface TeacherAnnotation {
     String value() default "";
 
     /**
-     * 描述管理员的行为
+     * 用于描述相应操作
      *
-     * @return
+     * @return 操作说明
      */
-    String descript() default "";
+    String description();
 }

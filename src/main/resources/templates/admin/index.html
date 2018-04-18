@@ -158,15 +158,6 @@
                 myChart.setOption(option);
             }
         });
-
-        $("#logout").on('click', function () {
-            $.post({
-                url: '/logout',
-                success: function () {
-                    window.location.href = ("/login");
-                }
-            })
-        });
     });
 </script>
 </html>

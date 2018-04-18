@@ -1,6 +1,6 @@
 package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.annotation.UserRegister;
+import cn.wanlinus.emooc.annotation.RegisterAnnotation;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
@@ -38,12 +38,12 @@ public class RegisterAspect {
     private EmoocErrorRepository errorRepository;
 
 
-    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.UserRegister)")
+    @Pointcut("@annotation(cn.wanlinus.emooc.annotation.RegisterAnnotation)")
     public void register() {
     }
 
-    @Around("register() && @annotation(userRegister)")
-    public Object registerAround(ProceedingJoinPoint joinPoint, UserRegister userRegister) throws Throwable {
+    @Around("register() && @annotation(registerAnnotation)")
+    public Object registerAround(ProceedingJoinPoint joinPoint, RegisterAnnotation registerAnnotation) throws Throwable {
         Object object = joinPoint.proceed();
         EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.userLogId());
@@ -51,7 +51,7 @@ public class RegisterAspect {
         log.setTime(new Date());
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
-        log.setOperation(userRegister.descript());
+        log.setOperation(registerAnnotation.description());
         if (object instanceof User) {
             log.setWho(((User) object).getUsername());
             log.setResult(true);
