@@ -132,12 +132,12 @@ public class AdminController {
      */
     @PostMapping("tms/teacher")
     public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {
-        if (teacherService.addTeacher(dto)) {
+        if (teacherService.addTeacher(dto) != null) {
             redirectAttributes.addFlashAttribute("msg", "添加成功");
         } else {
             redirectAttributes.addFlashAttribute("msg", "添加失败");
         }
-        return "admin/tms";
+        return "redirect:add";
     }
 
     /**

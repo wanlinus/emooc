@@ -27,6 +27,7 @@ import cn.wanlinus.emooc.persistence.EmoocErrorRepository;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -37,8 +38,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Date;
+
+import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
 
 /**
  * @author wanli
@@ -68,14 +70,15 @@ public class AdminAspect {
         Object obj = joinPoint.proceed();
         EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.adminLogId());
+        log.setWho(getUsername());
         log.setRole(EmoocRole.ROLE_ADMIN);
         log.setOperation(adminAnnotation.description());
-        log.setResult(null);
+        log.setResult(true);
         log.setIp(request.getRemoteAddr());
         log.setId(CommonUtils.adminLogId());
         log.setTime(new Date());
         log.setEquipment(CommonUtils.getEquipment(request));
-        log.setComment(Arrays.toString(joinPoint.getArgs()));
+        log.setComment(JSON.toJSONString(obj));
         emoocLogRepository.save(log);
         return obj;
     }

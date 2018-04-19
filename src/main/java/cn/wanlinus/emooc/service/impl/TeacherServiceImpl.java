@@ -52,7 +52,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @AdminAnnotation(description = "注册教师")
     @Transactional(rollbackFor = Exception.class)
-    public Boolean addTeacher(TeacherDetailsDTO dto) {
+    public Teacher addTeacher(TeacherDetailsDTO dto) {
         Teacher teacher = new Teacher();
         teacher.setUsername(dto.getUsername());
         teacher.setEmail(dto.getEmail());
@@ -64,7 +64,7 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setDetail("");
         teacher.setPosition("讲师");
         teacher.setSignature("这位老师很懒,暂时没有签名");
-        return teacherRepository.save(teacher) != null;
+        return teacherRepository.save(teacher);
     }
 
     @Override

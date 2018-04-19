@@ -41,9 +41,9 @@ public interface TeacherService {
      * 添加教师
      *
      * @param dto 教师数据传输对象
-     * @return
+     * @return 返回注册的老师
      */
-    Boolean addTeacher(TeacherDetailsDTO dto);
+    Teacher addTeacher(TeacherDetailsDTO dto);
 
     /**
      * 对所有教师计数

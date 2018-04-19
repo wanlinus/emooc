@@ -86,6 +86,11 @@ public class LoginAspect {
             log.setId(CommonUtils.errorId());
             log.setRole(EmoocRole.ROLE_UNKNOWN);
         }
+        if (object != null) {
+            log.setResult(true);
+        } else {
+            log.setResult(false);
+        }
         emoocLogRepository.save(log);
         return object;
     }
