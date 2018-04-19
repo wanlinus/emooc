@@ -60,11 +60,9 @@ public class HomeController extends WebMvcConfigurerAdapter {
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/try").setViewName("try");
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/alogin").setViewName("admin-login");
+        registry.addViewController("/tlogin").setViewName("teacher-login");
     }
 
     @GetMapping("/logout")
@@ -72,7 +70,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         if (getAuthentication() != null) {
             new SecurityContextLogoutHandler().logout(request, response, getAuthentication());
         }
-        return "byte";
+        return "index";
     }
 
     @GetMapping("/dispatcher")

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2018 - wanli <wanlinus@qq.com>
+  ~
+  ~ This file is part of emooc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<form name='f' th:action='@{login}' method='POST'>
+    <div>
+        <label for="username">用户名: </label>
+        <input type='text' autofocus name='username' id="username" value=''/>
+    </div>
+    <div>
+        <label for="password">密码: </label>
+        <input type='password' id="password" name='password'/>
+    </div>
+    <div>
+        <label for="role">Role: </label>
+        <input type="text" hidden name="role" id="role" value="TEACHER">
+    </div>
+    <input name="submit" type="submit" value="登陆"/>
+    <input type="reset" th:value="重置">
+</form>
+
+</body>
+</html>
