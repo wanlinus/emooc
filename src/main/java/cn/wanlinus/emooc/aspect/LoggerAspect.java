@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018. - wanli <wanlinus@qq.com>
+ * Copyright (C) 2018 - wanli <wanlinus@qq.com>
  *
  * This file is part of emooc
  *

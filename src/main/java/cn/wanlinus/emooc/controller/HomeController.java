@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018. - wanli <wanlinus@qq.com>
+ * Copyright (C) 2018 - wanli <wanlinus@qq.com>
  *
  * This file is part of emooc
  *
@@ -19,7 +19,6 @@
 
 package cn.wanlinus.emooc.controller;
 
-import cn.wanlinus.emooc.annotation.LogoutAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.service.UserService;
