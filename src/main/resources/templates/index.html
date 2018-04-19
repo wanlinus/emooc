@@ -7,7 +7,9 @@
 <div th:include="layout::navFragment">
 </div>
 这是index界面
-点击<a href="/login">登陆</a>
+点击<a th:href="@{/login}">用户</a>
+<a th:href="@{/alogin}">admin</a>
+<a th:href="@{/tlogin}">teacher</a>
 <div sec:authorize='hasAuthority("ADMIN")'>
     <p th:text="admin">Admin</p>
     asdasdasd

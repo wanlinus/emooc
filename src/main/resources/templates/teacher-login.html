@@ -24,7 +24,7 @@
     <title>Title</title>
 </head>
 <body>
-<form name='f' th:action='@{login}' method='POST'>
+<form name='f' th:action='@{/login}' method='POST'>
     <div>
         <label for="username">用户名: </label>
         <input type='text' autofocus name='username' id="username" value=''/>
@@ -33,10 +33,7 @@
         <label for="password">密码: </label>
         <input type='password' id="password" name='password'/>
     </div>
-    <div>
-        <label for="role">Role: </label>
         <input type="text" hidden name="role" id="role" value="TEACHER">
-    </div>
     <input name="submit" type="submit" value="登陆"/>
     <input type="reset" th:value="重置">
 </form>
