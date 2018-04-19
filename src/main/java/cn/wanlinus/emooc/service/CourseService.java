@@ -17,35 +17,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.controller;
+package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.service.CourseService;
-import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 /**
+ * 课程服务接口
+ *
  * @author wanli
- * @date 2018-02-25 16:26
+ * @date 2018-04-19 23:57
  */
-@Controller
-@RequestMapping("/course")
-public class CourseController {
-
-    @Autowired
-    private CourseService courseService;
-
-    @GetMapping(value = "")
-    public String index(Model model) {
-        List<CourseDirection> list = courseService.getAllCourseDirection();
-        model.addAttribute("direction", JSON.toJSONString(list));
-        return "course/index";
-    }
-
+public interface CourseService {
+    /**
+     * 获取所有的课程方向
+     *
+     * @return 课程方向列表
+     */
+    List<CourseDirection> getAllCourseDirection();
 }

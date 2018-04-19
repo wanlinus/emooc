@@ -21,18 +21,19 @@ package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
+ * 课程大方向
+ *
  * @author wanli
  * @date 2018-04-15 02:43
  */
 @Entity
-@Table(name = "tb_course_direction")
+@Table(name = "tb_course_direction", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "direction_id")})
 public class CourseDirection implements Serializable {
     @Id
     @Column(name = "direction_id")
@@ -40,6 +41,10 @@ public class CourseDirection implements Serializable {
 
     @Column(name = "direction_name")
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "classification_id", referencedColumnName = "direction_id")
+    private List<CourseClassification> classifications;
 
     public CourseDirection() {
     }
@@ -58,6 +63,14 @@ public class CourseDirection implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<CourseClassification> getClassifications() {
+        return classifications;
+    }
+
+    public void setClassifications(List<CourseClassification> classifications) {
+        this.classifications = classifications;
     }
 
     @Override

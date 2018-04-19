@@ -47,13 +47,14 @@ import static cn.wanlinus.emooc.utils.CommonUtils.uid;
  * @date 2018-03-06 16:25
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<GenderPieDTO> genderPie() {
         Map<String, Integer> mm = userRepository.genderPie();
         List<GenderPieDTO> pies = new ArrayList<>();
@@ -64,12 +65,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Boolean checkName(String username) {
         return userRepository.findByUsername(username) != null;
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Boolean checkEmail(String email) {
         return userRepository.findByEmail(email) != null;
     }
@@ -91,22 +94,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Page<User> pageUser(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public UserDetailsDTO userDetails(String id) {
         User user = userRepository.findOne(id);
         return user != null ? new UserDetailsDTO(user) : new UserDetailsDTO();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long countUsers() {
         return userRepository.count();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public User getUser(String username) {
         return userRepository.findByUsername(username);
     }
