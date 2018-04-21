@@ -26,9 +26,12 @@ package cn.wanlinus.emooc.enums;
  * @date 2018-02-22 10:42
  */
 public enum Gender {
+    /**
+     * 用户性别
+     */
     MALE("男"),
     FEMALE("女"),
-    UNDEFINE("未知");
+    UNDEFINED("未知");
     private String name;
 
     Gender(String name) {

@@ -26,6 +26,7 @@ import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -95,4 +96,12 @@ public interface UserService {
      * @return 存在返回用户对象 不存在返回null
      */
     User getUser(String username);
+
+    /**
+     * 计算今日用户访问量
+     *
+     * @param day 日期
+     * @return 访问量
+     */
+    Long countUsersLogin(Date day);
 }

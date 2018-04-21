@@ -24,6 +24,8 @@ import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
+
 /**
  * @author wanli
  * @date 2018-03-07 10:00
@@ -51,4 +53,12 @@ public interface TeacherService {
      * @return 教师总人数
      */
     Long countTeachers();
+
+    /**
+     * 计算指定天数教师登陆数
+     *
+     * @param date 指定天数
+     * @return 登陆量
+     */
+    Long countTeachersLogin(Date date);
 }

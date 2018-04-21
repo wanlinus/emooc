@@ -70,7 +70,7 @@ public class RegisterAspect {
         log.setTime(new Date());
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
-        log.setOperation(registerAnnotation.description());
+        log.setType(registerAnnotation.type());
         if (object instanceof User) {
             log.setWho(((User) object).getUsername());
             log.setResult(true);

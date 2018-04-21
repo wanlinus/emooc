@@ -72,7 +72,7 @@ public class AdminAspect {
         log.setId(CommonUtils.adminLogId());
         log.setWho(getUsername());
         log.setRole(EmoocRole.ROLE_ADMIN);
-        log.setOperation(adminAnnotation.description());
+        log.setType(adminAnnotation.type());
         log.setResult(true);
         log.setIp(request.getRemoteAddr());
         log.setId(CommonUtils.adminLogId());
@@ -90,7 +90,7 @@ public class AdminAspect {
         emoocError.setId(CommonUtils.errorId());
         emoocError.setTime(new Date());
         emoocError.setWho(AuthUtils.getAuthentication().getName());
-        emoocError.setDetails(adminAnnotation.description());
+        emoocError.setDetails(adminAnnotation.type().getDescription());
         emoocErrorRepository.save(emoocError);
     }
 

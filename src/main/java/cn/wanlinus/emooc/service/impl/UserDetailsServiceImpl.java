@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.annotation.LoginAnnotation;
 import cn.wanlinus.emooc.domain.Admin;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
+import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.AdminRepository;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
@@ -58,7 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    @LoginAnnotation(description = "登陆")
+    @LoginAnnotation(type = EmoocLogType.LOGIN)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");

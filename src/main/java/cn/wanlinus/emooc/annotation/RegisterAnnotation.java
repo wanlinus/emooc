@@ -19,6 +19,8 @@
 
 package cn.wanlinus.emooc.annotation;
 
+import cn.wanlinus.emooc.enums.EmoocLogType;
+
 import java.lang.annotation.*;
 
 /**
@@ -34,9 +36,9 @@ public @interface RegisterAnnotation {
     String value() default "";
 
     /**
-     * 用于描述相应操作
+     * 用于描述相应操作类型
      *
      * @return 操作说明
      */
-    String description();
+    EmoocLogType type();
 }

@@ -24,6 +24,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -160,6 +161,34 @@ public final class CommonUtils {
      */
     public static String dateFormatComplex(Date date) {
         return dateFormatCustom(date, "yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 获取今日零点时间 如:现在是2018-4-21 12:51:32 转化后2018-4-21 00:00:00
+     *
+     * @param date 传入日期
+     * @return 当天第一秒钟
+     */
+    public static Date startDate(final Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        Date tmp = null;
+        try {
+            tmp = sdf.parse(sdf.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return tmp;
+    }
+
+    /**
+     * 返回传入日期当天最后一秒
+     *
+     * @param date 传入日期
+     * @return 当天最后一秒
+     */
+    public static Date endDate(final Date date) {
+        Date tmp = startDate(date);
+        return new Date(tmp.getTime() + 24 * 60 * 60 * 1000 - 1000);
     }
 
 

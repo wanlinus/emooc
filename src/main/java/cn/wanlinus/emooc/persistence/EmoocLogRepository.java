@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,4 +82,16 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      */
     @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=?1 ORDER BY log.log_time DESC LIMIT ?2 , ?3", nativeQuery = true)
     List<EmoocLog> pageRoleLogger(Integer role, int startIndex, Integer size);
+
+
+    /**
+     * 查询某一时间段不同身份登陆量
+     *
+     * @param role      身份
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return 登陆量
+     */
+    @Query(value = "SELECT count(log) FROM EmoocLog log WHERE log.role=?1 AND log.time BETWEEN ?2 AND ?3")
+    Long countRoleLogin(EmoocRole role, Date startTime, Date endTime);
 }

@@ -66,7 +66,7 @@ public class EmoocLogServiceImpl implements EmoocLogService {
                 d.setId(log.getId());
                 d.setWho(log.getWho());
                 d.setTime(CommonUtils.dateFormatComplex(log.getTime()));
-                d.setOperation(log.getOperation());
+                d.setOperation(log.getType().getDescription());
                 d.setResult(log.getResult());
                 d.setIp(log.getIp());
                 d.setEquipment(log.getEquipment());

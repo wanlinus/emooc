@@ -24,8 +24,11 @@ package cn.wanlinus.emooc.enums;
  * @date 2018-03-07 09:52
  */
 public enum TeacherStatus {
+    /**
+     * 教师状态
+     */
     A("启用"),
-    B("应用");
+    B("禁用");
     private String name;
 
     TeacherStatus(String name) {

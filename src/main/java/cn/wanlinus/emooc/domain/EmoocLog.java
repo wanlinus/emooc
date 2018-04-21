@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.domain;
 
+import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import com.alibaba.fastjson.JSON;
 
@@ -51,8 +52,8 @@ public class EmoocLog implements Serializable {
     @Column(name = "log_time")
     private Date time;
 
-    @Column(name = "log_operation")
-    private String operation;
+    @Column(name = "log_type")
+    private EmoocLogType type;
 
     @Column(name = "log_result")
     private Boolean result;
@@ -101,12 +102,12 @@ public class EmoocLog implements Serializable {
         this.time = time;
     }
 
-    public String getOperation() {
-        return operation;
+    public EmoocLogType getType() {
+        return type;
     }
 
-    public void setOperation(String operation) {
-        this.operation = operation;
+    public void setType(EmoocLogType type) {
+        this.type = type;
     }
 
     public Boolean getResult() {

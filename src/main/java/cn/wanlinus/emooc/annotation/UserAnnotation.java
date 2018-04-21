@@ -19,6 +19,8 @@
 
 package cn.wanlinus.emooc.annotation;
 
+import cn.wanlinus.emooc.enums.EmoocLogType;
+
 import java.lang.annotation.*;
 
 /**
@@ -38,6 +40,6 @@ public @interface UserAnnotation {
      *
      * @return 操作说明
      */
-    String description();
+    EmoocLogType type();
 
 }

@@ -71,7 +71,7 @@ public class LoginAspect {
         log.setTime(new Date());
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
-        log.setOperation(loginAnnotation.description());
+        log.setType(loginAnnotation.type());
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
         if (EmoocRole.ROLE_USER.getDesc().equals(role)) {
             log.setId(CommonUtils.userLogId());

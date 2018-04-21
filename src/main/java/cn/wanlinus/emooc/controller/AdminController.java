@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,7 +64,9 @@ public class AdminController {
         model.addAttribute("userLogs", logService.getTopUserLog(0, 12));
         model.addAttribute("teacherLogs", logService.getTopTeacherLog(0, 12));
         model.addAttribute("allUsers", userService.countUsers());
+        model.addAttribute("usersLogin", userService.countUsersLogin(new Date()));
         model.addAttribute("allTeachers", teacherService.countTeachers());
+        model.addAttribute("teachersLogin", teacherService.countTeachersLogin(new Date()));
         //这两个数据先写死
         model.addAttribute("allCourses", 1000);
         model.addAttribute("toDayLogin", 1000);

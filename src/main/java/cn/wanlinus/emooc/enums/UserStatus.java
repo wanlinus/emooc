@@ -26,6 +26,9 @@ package cn.wanlinus.emooc.enums;
  * @date 2018-02-22 10:48
  */
 public enum UserStatus {
+    /**
+     * 用户状态
+     */
     INACTIVE("用户未激活"),
     ACTIVATED("已激活"),
     DELETED("用户已删除"),

@@ -24,8 +24,11 @@ import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
+import cn.wanlinus.emooc.enums.EmoocLogType;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
+import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.md5Encrypt;
-import static cn.wanlinus.emooc.utils.CommonUtils.uid;
+import static cn.wanlinus.emooc.utils.CommonUtils.*;
 
 /**
  * @author wanli
@@ -51,6 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmoocLogRepository logRepository;
 
 
     @Override
@@ -78,14 +83,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @RegisterAnnotation(description = "注册")
+    @RegisterAnnotation(type = EmoocLogType.USER_REGISTER)
     @Transactional(rollbackFor = Exception.class)
     public User register(UserRegisterDTO dto) {
         try {
             User user = new User(uid(), dto.getUsername(), md5Encrypt(dto.getPassword()), dto.getEmail());
             user.setUserStatus(UserStatus.INACTIVE);
             user.setRegisterTime(new Date());
-            user.setGender(Gender.UNDEFINE);
+            user.setGender(Gender.UNDEFINED);
             return userRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,5 +121,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public User getUser(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Long countUsersLogin(Date date) {
+        return logRepository.countRoleLogin(EmoocRole.ROLE_USER, startDate(date), endDate(date));
     }
 }

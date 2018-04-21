@@ -62,7 +62,7 @@ public class UserAspect {
         log.setId(CommonUtils.userLogId());
         log.setWho(AuthUtils.getUsername());
         log.setRole(EmoocRole.ROLE_USER);
-        log.setOperation(userAnnotation.description());
+        log.setType(userAnnotation.type());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());

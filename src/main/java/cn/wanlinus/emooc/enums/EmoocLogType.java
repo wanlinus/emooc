@@ -17,30 +17,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence;
-
-import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.persistence.custom.UserCustomPersistence;
-import org.springframework.data.jpa.repository.Query;
+package cn.wanlinus.emooc.enums;
 
 /**
  * @author wanli
- * @date 2018-02-22 11:17
+ * @date 2018-04-21 13:41
  */
-public interface UserRepository extends BaseRepository<User, String>, UserCustomPersistence {
+public enum EmoocLogType {
     /**
-     * 通过用户名查找用户
-     *
-     * @param username 用户名
-     * @return 返回查找到的用户
+     * 描述
      */
-    User findByUsername(String username);
+    LOGIN("登陆"),
+    USER_REGISTER("用户注册"),
+    TEACHER_REGISTER("教师注册"),
+    UNKNOWN("未知");
 
-    /**
-     * 通过邮箱查找用户
-     *
-     * @param email 需要查找的邮箱
-     * @return 返回查找到的用户
-     */
-    User findByEmail(String email);
+
+    private String description;
+
+    EmoocLogType(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

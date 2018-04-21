@@ -52,7 +52,7 @@
                             <tbody>
                             <tr th:each="teacherLog:${teacherLogs}">
                                 <td th:text="${teacherLog.who}"></td>
-                                <td th:text="${teacherLog.operation}"></td>
+                                <td th:text="${teacherLog.type.description}"></td>
                                 <td th:text="${#dates.format(teacherLog.time, 'yyyy-MM-dd')}"></td>
                             </tr>
                             </tbody>
@@ -80,7 +80,7 @@
                             <tbody>
                             <tr th:each="userLog: ${userLogs}" style="white-space:nowrap">
                                 <td th:text="${userLog.who}"></td>
-                                <td th:text="${userLog.operation}"></td>
+                                <td th:text="${userLog.type.description}"></td>
                                 <td style="overflow:hidden;text-overflow:ellipsis;max-width: 150px"
                                     th:text="${userLog.equipment}"></td>
                                 <td th:text="${userLog.ip}"></td>

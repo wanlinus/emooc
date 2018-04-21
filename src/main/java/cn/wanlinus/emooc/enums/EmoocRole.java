@@ -24,6 +24,9 @@ package cn.wanlinus.emooc.enums;
  * @date 2018-04-16 16:54
  */
 public enum EmoocRole {
+    /**
+     * 用户权限配置
+     */
     ROLE_USER("USER", "普通用户"),
     ROLE_TEACHER("TEACHER", "讲师"),
     ROLE_ADMIN("ADMIN", "管理员"),
