@@ -63,13 +63,15 @@ public class AdminController {
     public String home(Model model) {
         model.addAttribute("userLogs", logService.getTopUserLog(0, 12));
         model.addAttribute("teacherLogs", logService.getTopTeacherLog(0, 12));
-        model.addAttribute("allUsers", userService.countUsers());
-        model.addAttribute("usersLogin", userService.countUsersLogin(new Date()));
+        model.addAttribute("userNum", userService.countUsers());
+        model.addAttribute("userRegister", userService.countUserRegister(new Date()));
+        model.addAttribute("userLogin", userService.countUserLogin(new Date()));
+
         model.addAttribute("allTeachers", teacherService.countTeachers());
         model.addAttribute("teachersLogin", teacherService.countTeachersLogin(new Date()));
         //这两个数据先写死
         model.addAttribute("allCourses", 1000);
-        model.addAttribute("toDayLogin", 1000);
+        model.addAttribute("addCourses", 50);
         return "admin/index";
     }
 
@@ -112,13 +114,8 @@ public class AdminController {
      */
     @GetMapping("tms/teacher")
     @ResponseBody
-    public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPaginationDTO layuiPaginationDTO) {
-        Page<Teacher> page = teacherService.pageTeacher(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
-        List<TeacherDetailsDTO> list = new ArrayList<>();
-        for (Teacher t : page.getContent()) {
-            list.add(new TeacherDetailsDTO(t));
-        }
-        return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
+    public LayuiPaginationDataDTO<TeacherDetailsDTO> teacherPage(LayuiPaginationDTO dto) {
+        return teacherService.pageTeacher(dto);
     }
 
     @GetMapping("tms/add")
@@ -178,7 +175,8 @@ public class AdminController {
     @GetMapping("sms/user")
     @ResponseBody
     public LayuiPaginationDataDTO<UserSimpleDTO> userPage(LayuiPaginationDTO layuiPaginationDTO) {
-        Page<User> page = userService.pageUser(new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit()));
+        Page<User> page = userService.pageUser(new PageRequest(layuiPaginationDTO.getPage() - 1,
+                layuiPaginationDTO.getLimit()));
         List<UserSimpleDTO> list = new ArrayList<>();
         for (User u : page.getContent()) {
             list.add(new UserSimpleDTO(u));
@@ -219,7 +217,8 @@ public class AdminController {
     @GetMapping("logger/teacher")
     @ResponseBody
     public LayuiPaginationDataDTO<LoggerDTO> loggerTeacher(LayuiPaginationDTO layuiPaginationDTO) {
-        return logService.pageRoleLogger(EmoocRole.ROLE_TEACHER, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+        return logService.pageRoleLogger(EmoocRole.ROLE_TEACHER, layuiPaginationDTO.getPage() - 1,
+                layuiPaginationDTO.getLimit());
     }
 
     @GetMapping("lms/user")
@@ -230,7 +229,8 @@ public class AdminController {
     @GetMapping("logger/user")
     @ResponseBody
     public LayuiPaginationDataDTO<LoggerDTO> loggerUser(LayuiPaginationDTO layuiPaginationDTO) {
-        return logService.pageRoleLogger(EmoocRole.ROLE_USER, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+        return logService.pageRoleLogger(EmoocRole.ROLE_USER, layuiPaginationDTO.getPage() - 1,
+                layuiPaginationDTO.getLimit());
     }
 
     @GetMapping("lms/admin")
@@ -241,7 +241,8 @@ public class AdminController {
     @GetMapping("logger/admin")
     @ResponseBody
     public LayuiPaginationDataDTO<LoggerDTO> loggerAdmin(LayuiPaginationDTO layuiPaginationDTO) {
-        return logService.pageRoleLogger(EmoocRole.ROLE_ADMIN, layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+        return logService.pageRoleLogger(EmoocRole.ROLE_ADMIN, layuiPaginationDTO.getPage() - 1,
+                layuiPaginationDTO.getLimit());
     }
 
     @GetMapping("lms/error")

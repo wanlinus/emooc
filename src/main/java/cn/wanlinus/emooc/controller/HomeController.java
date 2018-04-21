@@ -63,6 +63,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/alogin").setViewName("admin-login");
         registry.addViewController("/tlogin").setViewName("teacher-login");
+        super.addViewControllers(registry);
     }
 
     @GetMapping("/logout")

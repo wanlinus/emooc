@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author wanli
@@ -32,16 +34,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("teacher")
-public class TeacherController {
+public class TeacherController extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        super.addViewControllers(registry);
+    }
 
     @GetMapping(value = {"", "/", "index"})
     public String index() {
         return "teacher/index";
-    }
-
-    @GetMapping(value = "add-course")
-    public String addCourseUI() {
-        return "teacher/add-course";
     }
 
     @PostMapping(value = "add-course")

@@ -103,5 +103,13 @@ public interface UserService {
      * @param day 日期
      * @return 访问量
      */
-    Long countUsersLogin(Date day);
+    Long countUserLogin(Date day);
+
+    /**
+     * 计算今日用户注册量
+     *
+     * @param date 日期
+     * @return 注册量
+     */
+    Long countUserRegister(Date date);
 }

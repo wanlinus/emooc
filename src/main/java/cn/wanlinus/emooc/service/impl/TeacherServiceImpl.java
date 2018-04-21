@@ -21,6 +21,8 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
+import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
@@ -30,14 +32,16 @@ import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.service.TeacherService;
 import cn.wanlinus.emooc.utils.CommonUtils;
-import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.endDate;
 import static cn.wanlinus.emooc.utils.CommonUtils.startDate;
@@ -56,8 +60,14 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
-    public Page<Teacher> pageTeacher(Pageable pageable) {
-        return teacherRepository.findAll(pageable);
+    public LayuiPaginationDataDTO<TeacherDetailsDTO> pageTeacher(LayuiPaginationDTO layuiPaginationDTO) {
+        Pageable pageable = new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
+        Page<Teacher> page = teacherRepository.findAll(pageable);
+        List<TeacherDetailsDTO> list = new ArrayList<>();
+        for (Teacher t : page.getContent()) {
+            list.add(new TeacherDetailsDTO(t));
+        }
+        return new LayuiPaginationDataDTO<>(0, "", page.getTotalElements(), list);
     }
 
 
@@ -86,6 +96,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Long countTeachersLogin(Date date) {
-        return logRepository.countRoleLogin(EmoocRole.ROLE_TEACHER, startDate(date), endDate(date));
+        return logRepository.countRoleType(EmoocRole.ROLE_TEACHER, EmoocLogType.LOGIN, startDate(date), endDate(date));
     }
 }

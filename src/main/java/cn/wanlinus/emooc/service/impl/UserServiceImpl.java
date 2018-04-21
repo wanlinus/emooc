@@ -124,7 +124,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long countUsersLogin(Date date) {
-        return logRepository.countRoleLogin(EmoocRole.ROLE_USER, startDate(date), endDate(date));
+    public Long countUserLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_USER, EmoocLogType.LOGIN, startDate(date), endDate(date));
     }
+
+
+    @Override
+    public Long countUserRegister(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_USER, EmoocLogType.USER_REGISTER, startDate(date), endDate(date));
+    }
+
 }

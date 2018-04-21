@@ -19,9 +19,17 @@
 
 package cn.wanlinus.emooc.service;
 
+import java.util.Map;
+
 /**
  * @author wanli
  * @date 2018-04-16 19:43
  */
 public interface AdminService {
+    /**
+     * 管理页面主页数据
+     *
+     * @return 数据映射
+     */
+    Map<String, Object> indexData();
 }

@@ -3,16 +3,43 @@
     border: 1px solid red;
 }
 
+.emooc-logo {
+    color: #009688;
+    display: block;
+    font-size: 16px;
+    font-stretch: normal;
+    font-weight: 400;
+    height: 60px;
+    line-height: 60px;
+    position: absolute;
+    text-align: center;
+    width: 200px;
+}
+
+.admin-num-container {
+    height: 150px;
+    background-color: #f2f2f2;
+    position: relative;
+    margin: 5px;
+    padding: 10px 5px 5px 10px !important;
+    border-radius: 5px;
+}
+
 .admin-num {
     font-size: 70px;
-    height: 140px;
-    width: 200px;
-    line-height: 140px;
+    line-height: 110px;
     text-align: center;
     color: #adbe69;
-    position: relative;
+
     left: 20px;
-    background-color: #f2f2f2;
+}
+
+.emooc-container {
+    position: relative;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    width: 90%;
 }
 
 .avatar-add {
