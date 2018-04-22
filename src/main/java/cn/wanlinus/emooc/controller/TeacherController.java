@@ -20,10 +20,16 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.service.CourseClassificationService;
+import cn.wanlinus.emooc.service.CourseDirectionService;
+import cn.wanlinus.emooc.service.CourseTypeService;
 import cn.wanlinus.emooc.service.TeacherService;
+import cn.wanlinus.emooc.service.impl.CourseDirectionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,22 +50,33 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private CourseDirectionService directionService;
+
+    @Autowired
+    private CourseClassificationService classificationService;
+
+    @Autowired
+    private CourseTypeService typeService;
 
     @GetMapping(value = {"", "/", "index"})
     public String index() {
         return "teacher/index";
     }
 
-    @GetMapping("course/add")
-    public String add() {
+    @GetMapping(value = "course/add")
+    public String add(Model model) {
+        model.addAttribute("directions", directionService.getDirections());
+        model.addAttribute("classifications", classificationService.getClassifications(String.valueOf(1)));
+        model.addAttribute("types", typeService.getTypes());
         return "teacher/course/add";
     }
 
-    @PostMapping(value = "add-course")
+    @PostMapping(value = "course/add")
     @ResponseBody
-    public ResultData<String> addCourse(ThAddCourseDTO dto, @RequestParam("pic") MultipartFile multipartFile) throws IOException {
-        FileOutputStream fos = new FileOutputStream(new File(path + multipartFile.getOriginalFilename()));
-        FileInputStream fs = (FileInputStream) multipartFile.getInputStream();
+    public ResultData<String> addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic) throws IOException {
+        FileOutputStream fos = new FileOutputStream(new File(path + pic.getOriginalFilename()));
+        FileInputStream fs = (FileInputStream) pic.getInputStream();
         byte[] buffer = new byte[1024];
         int len = 0;
         while ((len = fs.read(buffer)) != -1) {
@@ -67,9 +84,9 @@ public class TeacherController {
         }
         fos.close();
         fs.close();
-        teacherService.addCourse(dto, multipartFile.getOriginalFilename());
-
+        Course course = teacherService.addCourse(dto, pic.getOriginalFilename());
         ResultData<String> resultData = new ResultData<>();
+        resultData.setCode(course == null);
         return resultData;
     }
 }

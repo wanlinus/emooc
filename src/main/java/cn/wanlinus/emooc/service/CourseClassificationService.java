@@ -34,4 +34,12 @@ public interface CourseClassificationService {
      * @return 课程分类
      */
     List<CourseClassification> getClassifications();
+
+    /**
+     * 更具课程方向返回课程分类
+     *
+     * @param direction 课程方向
+     * @return 课程分类
+     */
+    List<CourseClassification> getClassifications(String direction);
 }

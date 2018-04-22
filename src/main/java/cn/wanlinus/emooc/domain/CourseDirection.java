@@ -20,6 +20,8 @@
 package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
+import groovy.lang.Lazy;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -42,10 +44,6 @@ public class CourseDirection implements Serializable {
     @Column(name = "direction_name")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "classification_id", referencedColumnName = "direction_id")
-    private List<CourseClassification> classifications;
-
     public CourseDirection() {
     }
 
@@ -65,13 +63,6 @@ public class CourseDirection implements Serializable {
         this.name = name;
     }
 
-    public List<CourseClassification> getClassifications() {
-        return classifications;
-    }
-
-    public void setClassifications(List<CourseClassification> classifications) {
-        this.classifications = classifications;
-    }
 
     @Override
     public String toString() {

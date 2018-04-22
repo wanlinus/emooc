@@ -40,4 +40,10 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
     public List<CourseClassification> getClassifications() {
         return classificationRepository.findAll();
     }
+
+    @Override
+    public List<CourseClassification> getClassifications(String directionId) {
+        return classificationRepository.findByDirectionId(directionId);
+
+    }
 }

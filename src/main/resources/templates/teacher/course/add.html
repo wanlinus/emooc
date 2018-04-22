@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <title>EMooc讲师管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <mate name="_csrf" th:content="${_csrf.token}"></mate>
+    <mate name="_csrf_header" th:content="${_csrf.headerName}"></mate>
     <link rel="stylesheet" href="/static/layui/css/layui.css">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
     <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <link rel="stylesheet" href="/static/css/custom-style.css">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
-    <link rel="stylesheet" href="../../../static/steps/style.css">
+    <link rel="stylesheet" href="/static/steps/style.css">
 </head>
 <body>
 <div th:replace="teacher/layout::nav"></div>
@@ -23,7 +25,6 @@
                 <ul>
                     <li><span class="step-name">课程名称</span></li>
                     <li><span class="step-name">课程方向</span></li>
-                    <li><span class="step-name">课程分类</span></li>
                     <li><span class="step-name">课程类型</span></li>
                     <li><span class="step-name">资费</span></li>
                     <li><span class="step-name">难度等级</span></li>
@@ -32,25 +33,32 @@
                     <li><span class="step-name">封面</span></li>
                 </ul>
             </div>
-            <form method="post" enctype="multipart/form-data">
-                <div class="step-content">
+            <div class="step-content">
+                <form th:action="@{/teacher/course/add}" method="post" enctype="multipart/form-data">
                     <div class="step-list emooc-teacher-div">
                         <label for="name">课程名称</label>
                         <input type="text" name="name" id="name" class="emooc-teacher-input">
                     </div>
                     <div class="step-list emooc-teacher-div">
-                        <label for="direction">方向</label>
-                        <select name="direction" id="direction" class="emooc-teacher-input">
-                        </select>
-                    </div>
-                    <div class="step-list emooc-teacher-div">
-                        <label for="classification">分类</label>
-                        <select name="classification" id="classification" class="emooc-teacher-input">
-                        </select>
+                        <div style="margin-bottom: 10px">
+                            <label for="direction">方向</label>
+                            <select name="direction" id="direction" class="emooc-teacher-input">
+                                <option th:each="direction:${directions}" th:value="${direction.id}"
+                                        th:text="${direction.name}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="classification">分类</label>
+                            <select name="classification" id="classification" class="emooc-teacher-input">
+                                <option th:each="classification:${classifications}"
+                                        th:value="${classification.id}" th:text="${classification.name}"></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="step-list emooc-teacher-div">
                         <label for="type">类型</label>
                         <select name="type" id="type" class="emooc-teacher-input">
+                            <option th:each="type:${types}" th:value="${type.id}" th:text="${type.name}"></option>
                         </select>
                     </div>
                     <div class="step-list emooc-teacher-div">
@@ -74,20 +82,16 @@
                         <textarea name="wtcanlearn" class="emooc-teacher-input" id="wtcanlearn"></textarea>
                     </div>
                     <div class="step-list emooc-teacher-div">
-                        <input type="file" name="pic" class="emooc-teacher-input" id="pic" accept="image/*">
-                        <input type="submit" value="提交">
+                        <input type="file" name="pic" class="emooc-teacher-input" id="pic1" accept="image/*">
                     </div>
-                </div>
-                <div>
-
-                </div>
-            </form>
+                    <input type="submit" value="提交">
+                </form>
+            </div>
         </div>
         <button id="preBtn">上一步</button>
         <button id="nextBtn">下一步</button>
     </div>
-    <div>
-    </div>
+
 </div>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
@@ -113,13 +117,17 @@
 <script>
     $("#direction").change(function () {
         $.ajax({
-            url: "course/list-classification?id=" + $("#direction")[0].value,
-            success: function (resposnedata) {
-                var b = eval(resposnedata);
+            url: "/course/classifications/" + $("#direction")[0].value,
+            success: function (responseData) {
+                console.log(responseData);
+                const b = eval(responseData);
                 $("#classification option").remove();
-                for (var i = 0; i < b.length; i++) {
+                for (let i = 0; i < b.length; i++) {
                     $("#classification").append("<option value='" + b[i].id + "'>" + b[i].name + "</option>")
                 }
+            },
+            error: function (response) {
+                console.log(response);
             }
         })
     })

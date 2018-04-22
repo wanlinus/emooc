@@ -30,9 +30,7 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -63,19 +61,25 @@ public class CourseController {
         return "course/index";
     }
 
-    @GetMapping("type")
+    @GetMapping("types")
     @ResponseBody
     public List<CourseType> types() {
         return typeService.getTypes();
     }
 
-    @GetMapping("direction")
+    @GetMapping("directions")
     @ResponseBody
     public List<CourseDirection> directions() {
         return directionService.getDirections();
     }
 
-    @GetMapping("classification")
+    @GetMapping("classifications/{directionId}")
+    @ResponseBody
+    public List<CourseClassification> classifications(@PathVariable String directionId) {
+        return classificationService.getClassifications(directionId);
+    }
+
+    @GetMapping("classifications")
     @ResponseBody
     public List<CourseClassification> classifications() {
         return classificationService.getClassifications();
