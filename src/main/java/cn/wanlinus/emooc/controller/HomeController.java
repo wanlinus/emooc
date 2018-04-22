@@ -121,7 +121,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping("register")
     @ResponseBody
     public ResultData<Boolean> register(@RequestBody @Valid UserRegisterDTO dto, Errors errors) {
         ResultData<Boolean> resultData = new ResultData<>();

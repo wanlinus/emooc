@@ -19,14 +19,22 @@
 
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
+import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.persistence.CourseClassificationRepository;
 import cn.wanlinus.emooc.persistence.CourseDirectionRepository;
 import cn.wanlinus.emooc.persistence.CourseRepository;
+import cn.wanlinus.emooc.persistence.CourseTypeRepository;
 import cn.wanlinus.emooc.service.CourseService;
+import cn.wanlinus.emooc.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static cn.wanlinus.emooc.utils.CommonUtils.cid;
 
 /**
  * @author wanli
@@ -40,8 +48,31 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseDirectionRepository courseDirectionRepository;
 
+    @Autowired
+    private CourseClassificationRepository classificationRepository;
+
+    @Autowired
+    private CourseTypeRepository courseTypeRepository;
+
     @Override
     public List<CourseDirection> getAllCourseDirection() {
         return courseDirectionRepository.findAll();
+    }
+
+    @Override
+    public Course saveCourse(Teacher teacher, ThAddCourseDTO dto) {
+        Course course = new Course();
+        course.setId(cid());
+        course.setName(dto.getName());
+        course.setTariff(dto.getTariff());
+        course.setDuration(0);
+        course.setScore(0.0);
+        course.setNotice(dto.getNotice());
+        course.setWtcanlearn(dto.getWtcanlearn());
+        course.setImagePath(dto.getPath());
+        course.setTeacher(teacher);
+        course.setClassification(classificationRepository.findOne(String.valueOf(dto.getClassification())));
+        course.setType(courseTypeRepository.findOne(String.valueOf(dto.getType())));
+        return courseRepository.save(course);
     }
 }

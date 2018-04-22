@@ -18,111 +18,75 @@
 
 <div class="layui-container">
     <div>
-        <div id="step" class="step-body" style="background-color: #ffffff; height: 500px">
+        <div id="step" class="step-body" style="background-color: #ffffff; height: 300px">
             <div class="step-header" style="width:80%;overflow: hidden; padding:25px">
                 <ul>
-                    <li>
-                        <span class="step-name">课程名称</span>
-                    </li>
-                    <li>
-                        <span class="step-name">课程方向</span>
-                    </li>
-                    <li>
-                        <span class="step-name">课程分类</span>
-                    </li>
-                    <li>
-                        <span class="step-name">资费</span>
-                    </li>
-                    <li>
-                        <span class="step-name">难度等级</span>
-                    </li>
-                    <li>
-                        <span class="step-name">课程须知</span>
-                    </li>
-                    <li>
-                        <span class="step-name">学生能学到什么</span>
-                    </li>
-                    <li>
-                        <span class="step-name">提交</span>
-                    </li>
+                    <li><span class="step-name">课程名称</span></li>
+                    <li><span class="step-name">课程方向</span></li>
+                    <li><span class="step-name">课程分类</span></li>
+                    <li><span class="step-name">课程类型</span></li>
+                    <li><span class="step-name">资费</span></li>
+                    <li><span class="step-name">难度等级</span></li>
+                    <li><span class="step-name">课程须知</span></li>
+                    <li><span class="step-name">学生能学到什么</span></li>
+                    <li><span class="step-name">封面</span></li>
                 </ul>
             </div>
             <form method="post" enctype="multipart/form-data">
                 <div class="step-content">
-                    <div class="step-list">
-                        <div>
-                            <label for="name">课程名称</label>
-                            <input type="text" name="name" id="name">
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="name">课程名称</label>
+                        <input type="text" name="name" id="name" class="emooc-teacher-input">
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="direction">方向</label>
-                            <select name="direction" id="direction">
-
-                            </select>
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="direction">方向</label>
+                        <select name="direction" id="direction" class="emooc-teacher-input">
+                        </select>
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="classification">分类</label>
-                            <select name="classification" id="classification">
-                            </select>
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="classification">分类</label>
+                        <select name="classification" id="classification" class="emooc-teacher-input">
+                        </select>
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="tariff">资费</label>
-                            <input type="number" name="tariff" id="tariff">
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="type">类型</label>
+                        <select name="type" id="type" class="emooc-teacher-input">
+                        </select>
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="grade">难度等级</label>
-                            <select name="grade" id="grade">
-                                <option value="a">初级</option>
-                                <option value="b">中级</option>
-                                <option value="c">高级</option>
-                            </select>
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="tariff">资费</label>
+                        <input type="number" name="tariff" id="tariff" class="emooc-teacher-input">
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="notice">课程须知</label>
-                            <input type="text" id="notice" name="notice">
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="grade">难度等级</label>
+                        <select name="grade" id="grade" class="emooc-teacher-input">
+                            <option value="a">初级</option>
+                            <option value="b">中级</option>
+                            <option value="c">高级</option>
+                        </select>
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="wtcanlearn">能学到什么</label>
-                            <textarea name="wtcanlearn" id="wtcanlearn" cols="30" rows="10">
-
-            </textarea>
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="notice">课程须知</label>
+                        <input type="text" id="notice" name="notice" class="emooc-teacher-input">
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <label for="pic">封面</label>
-                            <input type="file" name="pic" id="pic" accept="image/*">
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <label for="wtcanlearn">能学到什么</label>
+                        <textarea name="wtcanlearn" class="emooc-teacher-input" id="wtcanlearn"></textarea>
                     </div>
-                    <div class="step-list">
-                        <div>
-                            <input type="submit" value="提交">
-                        </div>
+                    <div class="step-list emooc-teacher-div">
+                        <input type="file" name="pic" class="emooc-teacher-input" id="pic" accept="image/*">
+                        <input type="submit" value="提交">
                     </div>
                 </div>
-            </form>
+                <div>
 
+                </div>
+            </form>
         </div>
         <button id="preBtn">上一步</button>
         <button id="nextBtn">下一步</button>
     </div>
     <div>
-
-        <input type="hidden" name="teacherId">
-
-
     </div>
 </div>
 

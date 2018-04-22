@@ -19,10 +19,12 @@
 
 package cn.wanlinus.emooc.service;
 
+import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
+import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -63,4 +65,13 @@ public interface TeacherService {
      * @return 登陆量
      */
     Long countTeachersLogin(Date date);
+
+    /**
+     * 添加课程
+     *
+     * @param dto      添加课程数据传输对象
+     * @param filename 课程封面
+     * @return 添加的课程
+     */
+    Course addCourse(ThAddCourseDTO dto, String filename);
 }

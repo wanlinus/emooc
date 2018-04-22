@@ -74,6 +74,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 生成课程ID
+     *
+     * @return cid
+     */
+    public static String cid() {
+        return "C" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id
@@ -99,6 +108,7 @@ public final class CommonUtils {
     public static String adminLogId() {
         return "LA" + System.currentTimeMillis();
     }
+
 
     /**
      * 系统错误主键

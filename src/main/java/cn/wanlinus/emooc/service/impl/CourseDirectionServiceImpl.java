@@ -17,38 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
+package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.domain.CourseType;
-import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.persistence.CourseDirectionRepository;
+import cn.wanlinus.emooc.service.CourseDirectionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * 课程服务接口
- *
  * @author wanli
- * @date 2018-04-19 23:57
+ * @date 2018-04-22 21:07
  */
-public interface CourseService {
-    /**
-     * 获取所有的课程方向
-     *
-     * @return 课程方向列表
-     */
-    List<CourseDirection> getAllCourseDirection();
+@Service
+public class CourseDirectionServiceImpl implements CourseDirectionService {
+    @Autowired
+    private CourseDirectionRepository directionRepository;
 
-    /**
-     * 保存课程
-     *
-     * @param teacher 保存课程的教师
-     * @param dto     保存课程的数据传输对象
-     * @return 保存完成的课程对象
-     */
-    Course saveCourse(Teacher teacher, ThAddCourseDTO dto);
-
-
+    @Override
+    public List<CourseDirection> getDirections() {
+        return directionRepository.findAll();
+    }
 }

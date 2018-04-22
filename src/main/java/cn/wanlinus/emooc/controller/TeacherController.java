@@ -20,11 +20,15 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.service.TeacherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.*;
 
 /**
  * @author wanli
@@ -33,6 +37,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("teacher")
 public class TeacherController {
+
+    @Resource(name = "path")
+    private String path;
+
+    @Autowired
+    private TeacherService teacherService;
 
 
     @GetMapping(value = {"", "/", "index"})
@@ -47,7 +57,18 @@ public class TeacherController {
 
     @PostMapping(value = "add-course")
     @ResponseBody
-    public ResultData<String> addCourse() {
+    public ResultData<String> addCourse(ThAddCourseDTO dto, @RequestParam("pic") MultipartFile multipartFile) throws IOException {
+        FileOutputStream fos = new FileOutputStream(new File(path + multipartFile.getOriginalFilename()));
+        FileInputStream fs = (FileInputStream) multipartFile.getInputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        while ((len = fs.read(buffer)) != -1) {
+            fos.write(buffer, 0, len);
+        }
+        fos.close();
+        fs.close();
+        teacherService.addCourse(dto, multipartFile.getOriginalFilename());
+
         ResultData<String> resultData = new ResultData<>();
         return resultData;
     }

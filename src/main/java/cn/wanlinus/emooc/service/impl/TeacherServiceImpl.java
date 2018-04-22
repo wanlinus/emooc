@@ -20,17 +20,20 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.AdminAnnotation;
+import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
+import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
-import cn.wanlinus.emooc.persistence.EmoocLogRepository;
-import cn.wanlinus.emooc.persistence.TeacherRepository;
+import cn.wanlinus.emooc.persistence.*;
+import cn.wanlinus.emooc.service.CourseService;
 import cn.wanlinus.emooc.service.TeacherService;
+import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,8 +46,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.endDate;
-import static cn.wanlinus.emooc.utils.CommonUtils.startDate;
+import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
+import static cn.wanlinus.emooc.utils.CommonUtils.*;
 
 /**
  * @author wanli
@@ -54,6 +57,9 @@ import static cn.wanlinus.emooc.utils.CommonUtils.startDate;
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private CourseService courseService;
 
     @Autowired
     private EmoocLogRepository logRepository;
@@ -97,5 +103,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Long countTeachersLogin(Date date) {
         return logRepository.countRoleType(EmoocRole.ROLE_TEACHER, EmoocLogType.LOGIN, startDate(date), endDate(date));
+    }
+
+    @Override
+    public Course addCourse(ThAddCourseDTO dto, String filename) {
+        dto.setPath(filename);
+        return courseService.saveCourse(teacherRepository.findByUsername(getUsername()), dto);
     }
 }

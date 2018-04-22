@@ -28,5 +28,100 @@ import java.io.Serializable;
  * @date 2018-04-15 12:13
  */
 public class ThAddCourseDTO implements Serializable {
+    private String name;
+    private Integer direction;
+    private Integer classification;
+    private Integer type;
+    private Double tariff;
+    private Integer grade;
+    private String notice;
+    private String path;
+    private String wtcanlearn;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Integer direction) {
+        this.direction = direction;
+    }
+
+    public Integer getClassification() {
+        return classification;
+    }
+
+    public void setClassification(Integer classification) {
+        this.classification = classification;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Double getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Double tariff) {
+        this.tariff = tariff;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getWtcanlearn() {
+        return wtcanlearn;
+    }
+
+    public void setWtcanlearn(String wtcanlearn) {
+        this.wtcanlearn = wtcanlearn;
+    }
+
+    @Override
+    public String toString() {
+        return "ThAddCourseDTO{" +
+                "name='" + name + '\'' +
+                ", direction=" + direction +
+                ", classification=" + classification +
+                ", type=" + type +
+                ", tariff=" + tariff +
+                ", grade=" + grade +
+                ", notice='" + notice + '\'' +
+                ", path='" + path + '\'' +
+                ", wtcanlearn='" + wtcanlearn + '\'' +
+                '}';
+    }
 }

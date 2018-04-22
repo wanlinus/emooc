@@ -19,14 +19,20 @@
 
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.domain.CourseClassification;
 import cn.wanlinus.emooc.domain.CourseDirection;
+import cn.wanlinus.emooc.domain.CourseType;
+import cn.wanlinus.emooc.service.CourseClassificationService;
+import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseService;
+import cn.wanlinus.emooc.service.CourseTypeService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -41,6 +47,15 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private CourseTypeService typeService;
+
+    @Autowired
+    private CourseDirectionService directionService;
+
+    @Autowired
+    private CourseClassificationService classificationService;
+
     @GetMapping(value = "")
     public String index(Model model) {
         List<CourseDirection> list = courseService.getAllCourseDirection();
@@ -48,4 +63,21 @@ public class CourseController {
         return "course/index";
     }
 
+    @GetMapping("type")
+    @ResponseBody
+    public List<CourseType> types() {
+        return typeService.getTypes();
+    }
+
+    @GetMapping("direction")
+    @ResponseBody
+    public List<CourseDirection> directions() {
+        return directionService.getDirections();
+    }
+
+    @GetMapping("classification")
+    @ResponseBody
+    public List<CourseClassification> classifications() {
+        return classificationService.getClassifications();
+    }
 }

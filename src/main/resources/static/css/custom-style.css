@@ -16,6 +16,18 @@
     width: 200px;
 }
 
+.emooc-teacher-div {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+.emooc-teacher-input {
+    width: 50%;
+    height: 34px;
+    border: 1px solid #999999;
+}
+
 .admin-num-container {
     height: 150px;
     background-color: #f2f2f2;

@@ -19,36 +19,19 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.domain.CourseType;
-import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.domain.CourseClassification;
 
 import java.util.List;
 
 /**
- * 课程服务接口
- *
  * @author wanli
- * @date 2018-04-19 23:57
+ * @date 2018-04-22 21:12
  */
-public interface CourseService {
+public interface CourseClassificationService {
     /**
-     * 获取所有的课程方向
+     * 获取所有的课程分类
      *
-     * @return 课程方向列表
+     * @return 课程分类
      */
-    List<CourseDirection> getAllCourseDirection();
-
-    /**
-     * 保存课程
-     *
-     * @param teacher 保存课程的教师
-     * @param dto     保存课程的数据传输对象
-     * @return 保存完成的课程对象
-     */
-    Course saveCourse(Teacher teacher, ThAddCourseDTO dto);
-
-
+    List<CourseClassification> getClassifications();
 }

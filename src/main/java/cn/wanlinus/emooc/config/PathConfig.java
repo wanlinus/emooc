@@ -17,38 +17,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
+package cn.wanlinus.emooc.config;
 
-import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.domain.CourseType;
-import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-
-import java.util.List;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
- * 课程服务接口
- *
  * @author wanli
- * @date 2018-04-19 23:57
+ * @date 2018-04-22 20:31
  */
-public interface CourseService {
-    /**
-     * 获取所有的课程方向
-     *
-     * @return 课程方向列表
-     */
-    List<CourseDirection> getAllCourseDirection();
-
-    /**
-     * 保存课程
-     *
-     * @param teacher 保存课程的教师
-     * @param dto     保存课程的数据传输对象
-     * @return 保存完成的课程对象
-     */
-    Course saveCourse(Teacher teacher, ThAddCourseDTO dto);
+@Configuration
+public class PathConfig {
+    @Bean(name = "path")
+    @Profile(value = "dev")
+    public String path() {
+        return "D:/upload/";
+    }
 
 
+    @Bean(name = "path")
+    @Profile(value = "prod")
+    public String prodPath() {
+        return "/root/emooc/pic/";
+    }
 }
