@@ -78,7 +78,7 @@ public class TeacherController {
 
     @PostMapping(value = "course/add")
     public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic, RedirectAttributes redirectAttributes) throws IOException {
-        String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf(".") + 1);
+        String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
         FileOutputStream fos = new FileOutputStream(new File(path + filename));
         FileInputStream fs = (FileInputStream) pic.getInputStream();
         byte[] buffer = new byte[1024];

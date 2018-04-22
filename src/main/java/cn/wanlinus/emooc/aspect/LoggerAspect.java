@@ -83,26 +83,26 @@ public class LoggerAspect {
      * @param joinPoint 连接点
      * @return 被注解方法的返回值
      * @throws Throwable 抛出的异常啊,,,为什么这个东西还要让注释
-     */
-    @Around("user()")
-    public Object userAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        logger.info(String.valueOf(joinPoint.getArgs()));
-
-        //Todo
-
-        Object obj = joinPoint.proceed();
-        return obj;
-    }
-
-    @Around("teacher()")
-    public Object teacherAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        logger.info(String.valueOf(joinPoint.getArgs()));
-        for (Object o : joinPoint.getArgs()) {
-            logger.info(o.toString());
-        }
-
-        Object obj = joinPoint.proceed();
-        return obj;
-    }
+//     */
+//    @Around("user()")
+//    public Object userAround(ProceedingJoinPoint joinPoint) throws Throwable {
+//        logger.info(String.valueOf(joinPoint.getArgs()));
+//
+//        //Todo
+//
+//        Object obj = joinPoint.proceed();
+//        return obj;
+//    }
+//
+//    @Around("teacher()")
+//    public Object teacherAround(ProceedingJoinPoint joinPoint) throws Throwable {
+//        logger.info(String.valueOf(joinPoint.getArgs()));
+//        for (Object o : joinPoint.getArgs()) {
+//            logger.info(o.toString());
+//        }
+//
+//        Object obj = joinPoint.proceed();
+//        return obj;
+//    }
 
 }

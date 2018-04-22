@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.AdminAnnotation;
+import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
@@ -106,6 +107,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
     public Course addCourse(ThAddCourseDTO dto, String filename) {
         dto.setPath(filename);
         return courseService.saveCourse(teacherRepository.findByUsername(getUsername()), dto);

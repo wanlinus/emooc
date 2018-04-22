@@ -30,6 +30,8 @@ public enum EmoocLogType {
     LOGIN("登陆"),
     USER_REGISTER("用户注册"),
     TEACHER_REGISTER("教师注册"),
+    TEACHER_ADD_COURSE("教师添加课程"),
+    TEACHER_ADD_VIDEO("教师添加视频"),
     UNKNOWN("未知");
 
 
