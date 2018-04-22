@@ -66,8 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("admin").password("123456").roles("ADMIN");
         //使用UserDetails实现用户认证
         auth.userDetailsService(detailsService()).passwordEncoder(passwordEncoder());
-
-
     }
 
     @Override

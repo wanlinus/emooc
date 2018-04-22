@@ -65,6 +65,7 @@ public class CourseServiceImpl implements CourseService {
         course.setId(cid());
         course.setName(dto.getName());
         course.setTariff(dto.getTariff());
+        course.setGrade(dto.getGrade());
         course.setDuration(0);
         course.setScore(0.0);
         course.setNotice(dto.getNotice());

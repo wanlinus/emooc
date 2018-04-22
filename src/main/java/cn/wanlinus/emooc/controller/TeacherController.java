@@ -19,22 +19,26 @@
 
 package cn.wanlinus.emooc.controller;
 
-import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseTypeService;
 import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.service.impl.CourseDirectionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static cn.wanlinus.emooc.utils.CommonUtils.filename;
 
 /**
  * @author wanli
@@ -73,9 +77,9 @@ public class TeacherController {
     }
 
     @PostMapping(value = "course/add")
-    @ResponseBody
-    public ResultData<String> addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic) throws IOException {
-        FileOutputStream fos = new FileOutputStream(new File(path + pic.getOriginalFilename()));
+    public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic, RedirectAttributes redirectAttributes) throws IOException {
+        String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf(".") + 1);
+        FileOutputStream fos = new FileOutputStream(new File(path + filename));
         FileInputStream fs = (FileInputStream) pic.getInputStream();
         byte[] buffer = new byte[1024];
         int len = 0;
@@ -84,9 +88,12 @@ public class TeacherController {
         }
         fos.close();
         fs.close();
-        Course course = teacherService.addCourse(dto, pic.getOriginalFilename());
-        ResultData<String> resultData = new ResultData<>();
-        resultData.setCode(course == null);
-        return resultData;
+        Course course = teacherService.addCourse(dto, filename);
+        if (course != null) {
+            redirectAttributes.addFlashAttribute("msg", "添加成功");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "添加失败");
+        }
+        return "redirect:/teacher/course/add";
     }
 }

@@ -17,8 +17,10 @@
 <body>
 <div th:replace="teacher/layout::nav"></div>
 <div th:replace="teacher/layout::top"></div>
-
 <div class="layui-container">
+    <div>
+        <h3 th:text="${msg}"></h3>
+    </div>
     <div>
         <div id="step" class="step-body" style="background-color: #ffffff; height: 300px">
             <div class="step-header" style="width:80%;overflow: hidden; padding:25px">
@@ -83,8 +85,9 @@
                     </div>
                     <div class="step-list emooc-teacher-div">
                         <input type="file" name="pic" class="emooc-teacher-input" id="pic1" accept="image/*">
+                        <input th:type="submit" value="提交">
                     </div>
-                    <input type="submit" value="提交">
+
                 </form>
             </div>
         </div>

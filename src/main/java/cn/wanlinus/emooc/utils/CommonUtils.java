@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 公共基础工具
@@ -117,6 +118,16 @@ public final class CommonUtils {
      */
     public static String errorId() {
         return "Err" + System.currentTimeMillis();
+    }
+
+
+    /**
+     * 获取文件名
+     *
+     * @return 文件名
+     */
+    public static String filename() {
+        return "emooc" + UUID.randomUUID();
     }
 
 

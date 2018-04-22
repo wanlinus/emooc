@@ -41,6 +41,9 @@ public class Course implements Serializable {
     @Column(name = "course_tariff")
     private Double tariff;
 
+    @Column(name = "course_grade")
+    private Character grade;
+
     @Column(name = "course_duration")
     private Integer duration;
 
@@ -93,6 +96,14 @@ public class Course implements Serializable {
 
     public void setTariff(Double tariff) {
         this.tariff = tariff;
+    }
+
+    public Character getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Character grade) {
+        this.grade = grade;
     }
 
     public Integer getDuration() {

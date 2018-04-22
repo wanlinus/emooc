@@ -33,10 +33,13 @@ public class ThAddCourseDTO implements Serializable {
     private Integer classification;
     private Integer type;
     private Double tariff;
-    private Integer grade;
+    private Character grade;
     private String notice;
     private String path;
     private String wtcanlearn;
+
+    public ThAddCourseDTO() {
+    }
 
     public String getName() {
         return name;
@@ -78,11 +81,11 @@ public class ThAddCourseDTO implements Serializable {
         this.tariff = tariff;
     }
 
-    public Integer getGrade() {
+    public Character getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(Character grade) {
         this.grade = grade;
     }
 
