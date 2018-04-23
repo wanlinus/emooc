@@ -50,5 +50,11 @@ public interface CourseService {
      */
     Course saveCourse(Teacher teacher, ThAddCourseDTO dto);
 
-
+    /**
+     * 查找指定讲师的顶置课程
+     *
+     * @param teacher 指定讲师
+     * @return 课程列表
+     */
+    List<Course> topCourse(Teacher teacher);
 }

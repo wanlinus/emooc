@@ -21,14 +21,12 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
-import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
-import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -74,4 +72,11 @@ public interface TeacherService {
      * @return 添加的课程
      */
     Course addCourse(ThAddCourseDTO dto, String filename);
+
+    /**
+     * 获取教师顶置课程
+     *
+     * @return 顶置课程列表
+     */
+    List<ThTopCoursesDTO> topCourses();
 }

@@ -20,10 +20,21 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.Course;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  * @author wanli
  * @date 2018-04-15 13:54
  */
 public interface CourseRepository extends BaseRepository<Course, String> {
+    /**
+     * 通过教师Id查找该教师顶置课程
+     *
+     * @param teacherId 教师ID
+     * @return 课程列表
+     */
+    @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_SCORE DESC LIMIT 0,5", nativeQuery = true)
+    List<Course> findTopByTeacherId(String teacherId);
 }

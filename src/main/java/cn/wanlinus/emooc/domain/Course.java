@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author wanli
@@ -58,6 +59,9 @@ public class Course implements Serializable {
 
     @Column(name = "course_image")
     private String imagePath;
+
+    @Column(name = "course_create_time")
+    private Date createTime;
 
     @ManyToOne
     @JoinColumn(name = "course_teach_id", referencedColumnName = "teacher_id")
@@ -144,6 +148,14 @@ public class Course implements Serializable {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Teacher getTeacher() {

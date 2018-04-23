@@ -28,7 +28,6 @@ import cn.wanlinus.emooc.persistence.CourseDirectionRepository;
 import cn.wanlinus.emooc.persistence.CourseRepository;
 import cn.wanlinus.emooc.persistence.CourseTypeRepository;
 import cn.wanlinus.emooc.service.CourseService;
-import cn.wanlinus.emooc.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +74,11 @@ public class CourseServiceImpl implements CourseService {
         course.setClassification(classificationRepository.findOne(String.valueOf(dto.getClassification())));
         course.setType(courseTypeRepository.findOne(String.valueOf(dto.getType())));
         return courseRepository.save(course);
+    }
+
+    @Override
+    public List<Course> topCourse(Teacher teacher) {
+        return courseRepository.findTopByTeacherId(teacher.getId());
+
     }
 }

@@ -20,10 +20,19 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.CourseComment;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author wanli
  * @date 2018-04-15 13:56
  */
 public interface CourseCommentRepository extends BaseRepository<CourseComment, String> {
+    /**
+     * 根据课程ID查询评论数
+     *
+     * @param courseId 课程ID
+     * @return 评论数
+     */
+    @Query(value = "SELECT count(*) FROM TB_COURSE_COMMENT comment WHERE comment.COMMENT_COURSE_ID = ?1", nativeQuery = true)
+    Integer commentsNum(String courseId);
 }

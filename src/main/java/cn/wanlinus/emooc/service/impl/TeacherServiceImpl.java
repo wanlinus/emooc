@@ -23,10 +23,7 @@ import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
-import cn.wanlinus.emooc.dto.LayuiPaginationDTO;
-import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
-import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
@@ -34,7 +31,6 @@ import cn.wanlinus.emooc.enums.TeacherStatus;
 import cn.wanlinus.emooc.persistence.*;
 import cn.wanlinus.emooc.service.CourseService;
 import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,10 +53,16 @@ import static cn.wanlinus.emooc.utils.CommonUtils.*;
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
     private CourseService courseService;
+    @Autowired
+    private TeacherRepository teacherRepository;
+    @Autowired
+    private CourseRepository courseRepository;
+    @Autowired
+    private CourseCommentRepository commentRepository;
+    @Autowired
+    private UserStudyRepository userStudyRepository;
+
 
     @Autowired
     private EmoocLogRepository logRepository;
@@ -111,5 +113,24 @@ public class TeacherServiceImpl implements TeacherService {
     public Course addCourse(ThAddCourseDTO dto, String filename) {
         dto.setPath(filename);
         return courseService.saveCourse(teacherRepository.findByUsername(getUsername()), dto);
+    }
+
+    @Override
+    public List<ThTopCoursesDTO> topCourses() {
+        List<ThTopCoursesDTO> list = new ArrayList<>();
+        List<Course> courses = courseRepository.findTopByTeacherId(teacherRepository.findByUsername(getUsername()).getId());
+        for (Course c : courses) {
+            ThTopCoursesDTO dto = new ThTopCoursesDTO();
+            dto.setId(c.getId());
+            dto.setName(c.getName());
+            dto.setClassification(c.getClassification().getName());
+            dto.setComments(commentRepository.commentsNum(c.getId()));
+            dto.setDate(CommonUtils.dateFormatSimple(c.getCreateTime()));
+            dto.setPicPath(c.getImagePath());
+            dto.setWatch(userStudyRepository.studyNum(c.getId()));
+            dto.setScore(c.getScore());
+            list.add(dto);
+        }
+        return list;
     }
 }

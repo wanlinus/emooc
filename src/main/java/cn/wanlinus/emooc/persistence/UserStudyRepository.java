@@ -20,10 +20,19 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.UserStudy;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author wanli
  * @date 2018-04-15 14:05
  */
 public interface UserStudyRepository extends BaseRepository<UserStudy, String> {
+    /**
+     * 用户学习计数
+     *
+     * @param courseId 课程ID
+     * @return 观看相关课程的用户数
+     */
+    @Query(value = "SELECT count(*) FROM TB_USER_STUDY s WHERE s.STUDY_COURSE_ID=?1", nativeQuery = true)
+    Integer studyNum(String courseId);
 }

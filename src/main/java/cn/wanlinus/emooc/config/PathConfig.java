@@ -21,6 +21,7 @@ package cn.wanlinus.emooc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 /**
@@ -29,16 +30,17 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 public class PathConfig {
+    @Primary
     @Bean(name = "path")
     @Profile(value = "dev")
     public String path() {
-        return "D:/upload/";
+        return "D:/upload/teacher/";
     }
 
 
     @Bean(name = "path")
     @Profile(value = "prod")
     public String prodPath() {
-        return "/root/emooc/pic/";
+        return "/root/emooc/pic/teacher/";
     }
 }

@@ -64,7 +64,8 @@ public class TeacherController {
     private CourseTypeService typeService;
 
     @GetMapping(value = {"", "/", "index"})
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("tops", teacherService.topCourses());
         return "teacher/index";
     }
 
