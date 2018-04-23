@@ -31,6 +31,7 @@ import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.cid;
@@ -71,6 +72,7 @@ public class CourseServiceImpl implements CourseService {
         course.setWtcanlearn(dto.getWtcanlearn());
         course.setImagePath(dto.getPath());
         course.setTeacher(teacher);
+        course.setCreateTime(new Date());
         course.setClassification(classificationRepository.findOne(String.valueOf(dto.getClassification())));
         course.setType(courseTypeRepository.findOne(String.valueOf(dto.getType())));
         return courseRepository.save(course);
