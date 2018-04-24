@@ -39,7 +39,7 @@
                         </div>
                         <div class="fly-list-badge">
                             <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
+                            <span class="layui-badge layui-bg-red">精品</span>
                         </div>
                     </li>
                 </ul>
@@ -60,7 +60,7 @@
             <a href="">按热议</a>
           </span>
                 </div>
-                <ul class="fly-list">
+                <ul class="fly-list" id="flowul">
                     <li>
                         <a href="user/home.html" class="fly-avatar">
                             <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
@@ -71,13 +71,7 @@
                             <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
                         </h2>
                         <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>贤心</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
+                            <a href="user/home.html" link><cite>贤心</cite></a>
                             <span>刚刚</span>
 
                             <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
@@ -120,7 +114,6 @@
                 </ul>
                 <div style="text-align: center">
                     <div class="laypage-main">
-                        <a href="jie/index.html" class="laypage-next">更多求解</a>
                     </div>
                 </div>
 
@@ -234,35 +227,42 @@
     </div>
 </div>
 
-<div class="fly-footer">
-    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
-                                                                                target="_blank">layui.com 出品</a></p>
-    <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-    </p>
-</div>
-
-<script src="../res/layui/layui.js"></script>
-<script>
-    layui.cache.page = '';
-    layui.cache.user = {
-        username: '游客'
-        , uid: -1
-        , avatar: '../res/images/avatar/00.jpg'
-        , experience: 83
-        , sex: '男'
-    };
-    layui.config({
-        version: "3.0.0"
-        , base: '../res/mods/' //这里实际使用时，建议改成绝对路径
-    }).extend({
-        fly: 'index'
-    }).use('fly');
-</script>
-
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
+<div th:replace="teacher/layout::footer"></div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    layui.use('flow', function () {
+        let flow = layui.flow;
+        let num = 0;
+        let list = [];
+        flow.load({
+            elem: '#flowul' //流加载容器
+            , scrollElem: '#flowul' //滚动条所在元素，一般不用填，此处只是演示需要。
+            , isAuto: false
+            , isLazyimg: true
+            , done: function (page, next) { //加载下一页
+                $.get({
+                    url: '/teacher/course/page?size=6&page=' + num,
+                    success: function (response) {
+                        console.log(response);
+                        list = response;
+                        console.log(list[0].name);
+                        setTimeout(function () {
+                            var lis = [];
+                            for (var i = 0; i < list.length; i++) {
+                                lis.push('<li>' + list[i].name + '</li>');
+                            }
+                            next(lis.join(''), page < 6); //假设总页数为 6
+                        }, 500);
+                        num++;
+                    }
+                });
+
+
+            }
+        });
+    });
+</script>
 </html>
