@@ -23,7 +23,7 @@
                 </div>
                 <ul class="fly-list" th:each="top:${tops}">
                     <li>
-                        <a href="user/home.html" class="fly-avatar"> <img th:src="${top.picPath}" alt=""></a>
+                        <a th:href="${top.picPath}" class="fly-avatar"><img th:src="${top.picPath}" alt=""/></a>
                         <h2>
                             <a class="layui-badge" th:text="${top.classification}"></a>
                             <a href="jie/detail.html" th:text="${top.name}"></a>

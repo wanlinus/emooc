@@ -34,13 +34,7 @@ public class PathConfig {
     @Bean(name = "path")
     @Profile(value = "dev")
     public String path() {
-        return "D:/upload/teacher/";
+        return "/upload/teacher/";
     }
 
-
-    @Bean(name = "path")
-    @Profile(value = "prod")
-    public String prodPath() {
-        return "/root/emooc/pic/teacher/";
-    }
 }

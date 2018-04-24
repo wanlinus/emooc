@@ -127,7 +127,7 @@ public final class CommonUtils {
      * @return 文件名
      */
     public static String filename() {
-        return "emooc" + UUID.randomUUID();
+        return "emooc-" + UUID.randomUUID();
     }
 
 

@@ -26,13 +26,13 @@ import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseTypeService;
 import cn.wanlinus.emooc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,8 +48,11 @@ import static cn.wanlinus.emooc.utils.CommonUtils.filename;
 @RequestMapping("teacher")
 public class TeacherController {
 
-    @Resource(name = "path")
-    private String path;
+    @Value("${web.upload-path}")
+    private String uploadPath;
+
+    @Value("${web.image-path}")
+    private String imgPath;
 
     @Autowired
     private TeacherService teacherService;
@@ -80,16 +83,16 @@ public class TeacherController {
     @PostMapping(value = "course/add")
     public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic, RedirectAttributes redirectAttributes) throws IOException {
         String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
-        FileOutputStream fos = new FileOutputStream(new File(path + filename));
+        FileOutputStream fos = new FileOutputStream(new File(uploadPath + imgPath + filename));
         FileInputStream fs = (FileInputStream) pic.getInputStream();
         byte[] buffer = new byte[1024];
-        int len = 0;
+        int len;
         while ((len = fs.read(buffer)) != -1) {
             fos.write(buffer, 0, len);
         }
         fos.close();
         fs.close();
-        Course course = teacherService.addCourse(dto, filename);
+        Course course = teacherService.addCourse(dto, imgPath + filename);
         if (course != null) {
             redirectAttributes.addFlashAttribute("msg", "添加成功");
         } else {
