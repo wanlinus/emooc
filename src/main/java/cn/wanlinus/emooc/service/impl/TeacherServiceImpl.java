@@ -127,7 +127,7 @@ public class TeacherServiceImpl implements TeacherService {
             dto.setComments(commentRepository.commentsNum(c.getId()));
             dto.setDate(CommonUtils.dateFormatSimple(c.getCreateTime()));
             dto.setPicPath(c.getImagePath());
-            dto.setWatch(userStudyRepository.studyNum(c.getId()));
+            dto.setStudy(userStudyRepository.studyNum(c.getId()));
             dto.setScore(c.getScore());
             list.add(dto);
         }

@@ -23,14 +23,16 @@ import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.persistence.CourseClassificationRepository;
-import cn.wanlinus.emooc.persistence.CourseDirectionRepository;
-import cn.wanlinus.emooc.persistence.CourseRepository;
-import cn.wanlinus.emooc.persistence.CourseTypeRepository;
+import cn.wanlinus.emooc.dto.ThTopCoursesDTO;
+import cn.wanlinus.emooc.persistence.*;
 import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +55,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseTypeRepository courseTypeRepository;
+
+    @Autowired
+    private UserStudyRepository userStudyRepository;
+
+    @Autowired
+    private CourseCommentRepository commentRepository;
 
     @Override
     public List<CourseDirection> getAllCourseDirection() {
@@ -82,5 +90,26 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> topCourse(Teacher teacher) {
         return courseRepository.findTopByTeacherId(teacher.getId());
 
+    }
+
+    @Override
+    public List<ThTopCoursesDTO> pageCourse(Pageable pageable) {
+        Page<Course> page = courseRepository.findAll(pageable);
+        List<ThTopCoursesDTO> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (Course c : page.getContent()) {
+            ThTopCoursesDTO dto = new ThTopCoursesDTO();
+            dto.setId(c.getId());
+            dto.setName(c.getName());
+            dto.setScore(c.getScore());
+            dto.setPicPath(c.getImagePath());
+            dto.setStudy(userStudyRepository.studyNum(c.getId()));
+            dto.setComments(commentRepository.commentsNum(c.getId()));
+            dto.setClassification(c.getClassification().getName());
+            dto.setDate(sdf.format(c.getCreateTime()));
+            list.add(dto);
+            //TODO
+        }
+        return null;
     }
 }

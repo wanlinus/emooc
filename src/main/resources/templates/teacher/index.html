@@ -252,7 +252,7 @@
                         setTimeout(function () {
                             var lis = [];
                             for (var i = 0; i < list.length; i++) {
-                                lis.push('<li>' + list[i].name + '</li>');
+                                lis.push('<li>' + JSON.stringify(list[i]) + '</li>');
                             }
                             next(lis.join(''), page < 6); //假设总页数为 6
                         }, 500);

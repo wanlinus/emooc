@@ -22,10 +22,7 @@ package cn.wanlinus.emooc.controller;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThTopCoursesDTO;
-import cn.wanlinus.emooc.service.CourseClassificationService;
-import cn.wanlinus.emooc.service.CourseDirectionService;
-import cn.wanlinus.emooc.service.CourseTypeService;
-import cn.wanlinus.emooc.service.TeacherService;
+import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -60,6 +57,9 @@ public class TeacherController {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private CourseService courseService;
 
     @Autowired
     private CourseDirectionService directionService;
@@ -108,6 +108,8 @@ public class TeacherController {
     @GetMapping("course/page")
     @ResponseBody
     public List<ThTopCoursesDTO> courseList(Pageable pageable) {
+        courseService.pageCourse(pageable);
+
         System.out.println(pageable);
         List<ThTopCoursesDTO> list = new ArrayList<>();
         ThTopCoursesDTO dto = new ThTopCoursesDTO();

@@ -48,9 +48,9 @@ public class ThTopCoursesDTO implements Serializable {
     private String picPath;
 
     /**
-     * 观看个数
+     * 学习
      */
-    private Integer watch;
+    private Integer study;
 
     /**
      * 评论个数
@@ -99,12 +99,12 @@ public class ThTopCoursesDTO implements Serializable {
         this.picPath = picPath;
     }
 
-    public Integer getWatch() {
-        return watch;
+    public Integer getStudy() {
+        return study;
     }
 
-    public void setWatch(Integer watch) {
-        this.watch = watch;
+    public void setStudy(Integer study) {
+        this.study = study;
     }
 
     public Integer getComments() {
@@ -138,7 +138,7 @@ public class ThTopCoursesDTO implements Serializable {
                 ", name='" + name + '\'' +
                 ", date=" + date +
                 ", picPath='" + picPath + '\'' +
-                ", watch=" + watch +
+                ", study=" + study +
                 ", comments=" + comments +
                 ", score=" + score +
                 ", classification='" + classification + '\'' +
