@@ -22,7 +22,6 @@ package cn.wanlinus.emooc.service;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
@@ -78,5 +77,13 @@ public interface TeacherService {
      *
      * @return 顶置课程列表
      */
-    List<ThTopCoursesDTO> topCourses();
+    List<ThCourseDTO> topCourses();
+
+    /**
+     * 教师分布课程分页显示
+     *
+     * @param pageable 分页信息
+     * @return ThCourseDTO
+     */
+    List<ThCourseDTO> pageCourse(Pageable pageable);
 }

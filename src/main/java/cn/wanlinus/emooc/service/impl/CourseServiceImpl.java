@@ -23,7 +23,7 @@ import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.dto.ThTopCoursesDTO;
+import cn.wanlinus.emooc.dto.ThCourseDTO;
 import cn.wanlinus.emooc.persistence.*;
 import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.cid;
+import static cn.wanlinus.emooc.utils.CommonUtils.dateFormatSimple;
 
 /**
  * @author wanli
@@ -93,23 +94,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<ThTopCoursesDTO> pageCourse(Pageable pageable) {
-        Page<Course> page = courseRepository.findAll(pageable);
-        List<ThTopCoursesDTO> list = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        for (Course c : page.getContent()) {
-            ThTopCoursesDTO dto = new ThTopCoursesDTO();
-            dto.setId(c.getId());
-            dto.setName(c.getName());
-            dto.setScore(c.getScore());
-            dto.setPicPath(c.getImagePath());
-            dto.setStudy(userStudyRepository.studyNum(c.getId()));
-            dto.setComments(commentRepository.commentsNum(c.getId()));
-            dto.setClassification(c.getClassification().getName());
-            dto.setDate(sdf.format(c.getCreateTime()));
-            list.add(dto);
-            //TODO
+    public List<ThCourseDTO> pageCourse(Teacher teacher, Pageable pageable) {
+        List<ThCourseDTO> dtoList = new ArrayList<>();
+        List<Course> pages = courseRepository.pageCourses(teacher.getId(), pageable.getOffset(), pageable.getPageSize());
+        if (pages != null && !pages.isEmpty()) {
+            for (Course c : pages) {
+                ThCourseDTO dto = new ThCourseDTO();
+                dto.setId(c.getId());
+                dto.setName(c.getName());
+                dto.setClassification(c.getClassification().getName());
+                dto.setComments(commentRepository.commentsNum(c.getId()));
+                dto.setDate(dateFormatSimple(c.getCreateTime()));
+                dto.setPicPath(c.getImagePath());
+                dto.setScore(c.getScore());
+                dto.setStudy(userStudyRepository.studyNum(c.getId()));
+                dtoList.add(dto);
+            }
+        } else {
+            dtoList = null;
         }
-        return null;
+        return dtoList;
     }
 }

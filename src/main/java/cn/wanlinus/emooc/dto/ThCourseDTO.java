@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @author wanli
  * @date 2018-04-24 00:50
  */
-public class ThTopCoursesDTO implements Serializable {
+public class ThCourseDTO implements Serializable {
 
     /**
      * 课程ID
@@ -133,7 +133,7 @@ public class ThTopCoursesDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ThTopCoursesDTO{" +
+        return "ThCourseDTO{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", date=" + date +

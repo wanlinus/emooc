@@ -35,7 +35,7 @@ public class UserRepositoryImpl extends BaseCustomPersistenceImpl implements Use
 
     private static final String SELECT_GROUP_BY_GENDER = "SELECT user_gender AS 'gender',count(user_gender) AS 'number' FROM tb_user GROUP BY user_gender";
 
-    @Override
+    @Deprecated
     public Map<String, Integer> genderPie() {
         Query query = this.getEntityManager().createNativeQuery(SELECT_GROUP_BY_GENDER);
         query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);

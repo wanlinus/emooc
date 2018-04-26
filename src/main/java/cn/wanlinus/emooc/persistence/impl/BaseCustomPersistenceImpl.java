@@ -39,7 +39,7 @@ public class BaseCustomPersistenceImpl implements BaseCustomPersistence {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public EntityManager getEntityManager() {
+    EntityManager getEntityManager() {
         return entityManager;
     }
 

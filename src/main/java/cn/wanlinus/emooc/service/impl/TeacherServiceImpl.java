@@ -44,7 +44,8 @@ import java.util.Date;
 import java.util.List;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
-import static cn.wanlinus.emooc.utils.CommonUtils.*;
+import static cn.wanlinus.emooc.utils.CommonUtils.endDate;
+import static cn.wanlinus.emooc.utils.CommonUtils.startDate;
 
 /**
  * @author wanli
@@ -62,10 +63,17 @@ public class TeacherServiceImpl implements TeacherService {
     private CourseCommentRepository commentRepository;
     @Autowired
     private UserStudyRepository userStudyRepository;
-
-
     @Autowired
     private EmoocLogRepository logRepository;
+
+    /**
+     * 获取当前教师
+     *
+     * @return Teacher
+     */
+    private Teacher getTeacher() {
+        return teacherRepository.findByUsername(getUsername());
+    }
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
@@ -112,15 +120,15 @@ public class TeacherServiceImpl implements TeacherService {
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
     public Course addCourse(ThAddCourseDTO dto, String filename) {
         dto.setPath(filename);
-        return courseService.saveCourse(teacherRepository.findByUsername(getUsername()), dto);
+        return courseService.saveCourse(getTeacher(), dto);
     }
 
     @Override
-    public List<ThTopCoursesDTO> topCourses() {
-        List<ThTopCoursesDTO> list = new ArrayList<>();
-        List<Course> courses = courseRepository.findTopByTeacherId(teacherRepository.findByUsername(getUsername()).getId());
+    public List<ThCourseDTO> topCourses() {
+        List<ThCourseDTO> list = new ArrayList<>();
+        List<Course> courses = courseRepository.findTopByTeacherId(getTeacher().getId());
         for (Course c : courses) {
-            ThTopCoursesDTO dto = new ThTopCoursesDTO();
+            ThCourseDTO dto = new ThCourseDTO();
             dto.setId(c.getId());
             dto.setName(c.getName());
             dto.setClassification(c.getClassification().getName());
@@ -132,5 +140,10 @@ public class TeacherServiceImpl implements TeacherService {
             list.add(dto);
         }
         return list;
+    }
+
+    @Override
+    public List<ThCourseDTO> pageCourse(Pageable pageable) {
+        return courseService.pageCourse(getTeacher(), pageable);
     }
 }

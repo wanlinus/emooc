@@ -37,4 +37,16 @@ public interface CourseRepository extends BaseRepository<Course, String> {
      */
     @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_SCORE DESC LIMIT 0,5", nativeQuery = true)
     List<Course> findTopByTeacherId(String teacherId);
+
+
+    /**
+     * 分页查询教师课程
+     *
+     * @param id       教师ID
+     * @param offset   偏移量
+     * @param pageSize 每页数量
+     * @return 分页信息
+     */
+    @Query(value = "SELECT * FROM tb_course AS c WHERE c.course_teach_id = ?1 ORDER BY c.course_create_time DESC LIMIT ?2, ?3", nativeQuery = true)
+    List<Course> pageCourses(String id, int offset, int pageSize);
 }

@@ -21,7 +21,7 @@ package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.dto.ThTopCoursesDTO;
+import cn.wanlinus.emooc.dto.ThCourseDTO;
 import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +36,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.filename;
@@ -107,16 +106,7 @@ public class TeacherController {
 
     @GetMapping("course/page")
     @ResponseBody
-    public List<ThTopCoursesDTO> courseList(Pageable pageable) {
-        courseService.pageCourse(pageable);
-
-        System.out.println(pageable);
-        List<ThTopCoursesDTO> list = new ArrayList<>();
-        ThTopCoursesDTO dto = new ThTopCoursesDTO();
-        dto.setId("123");
-        dto.setName("nihao");
-        dto.setPicPath("sad");
-        list.add(dto);
-        return list;
+    public List<ThCourseDTO> courseList(Pageable pageable) {
+        return teacherService.pageCourse(pageable);
     }
 }
