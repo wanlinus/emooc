@@ -29,18 +29,18 @@ import java.io.Serializable;
  * @date 2018-04-15 02:48
  */
 @Entity
-@Table(name = "tb_user_study")
+@Table(name = "TB_USER_STUDY")
 public class UserStudy implements Serializable {
     @Id
-    @Column(name = "study_id")
+    @Column(name = "STUDY_ID")
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "study_user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "STUDY_USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "study_course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "STUDY_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
 
     public UserStudy() {

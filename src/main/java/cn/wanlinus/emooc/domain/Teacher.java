@@ -34,37 +34,37 @@ import java.io.Serializable;
  * @date 2018-03-07 09:47
  */
 @Entity
-@Table(name = "tb_teacher")
+@Table(name = "TB_TEACHER")
 public class Teacher implements Serializable {
     @Id
-    @Column(name = "teacher_id")
+    @Column(name = "TEACHER_ID")
     private String id;
 
-    @Column(name = "teacher_username")
+    @Column(name = "TEACHER_USERNAME")
     private String username;
 
-    @Column(name = "teacher_password")
+    @Column(name = "TEACHER_PASSWORD")
     private String password;
 
-    @Column(name = "teacher_gender")
+    @Column(name = "TEACHER_GENDER")
     private Gender gender;
 
-    @Column(name = "teacher_email")
+    @Column(name = "TEACHER_EMAIL")
     private String email;
 
-    @Column(name = "teacher_position")
+    @Column(name = "TEACHER_POSITION")
     private String position;
 
-    @Column(name = "teacher_detail")
+    @Column(name = "TEACHER_DETAIL")
     private String detail;
 
-    @Column(name = "teacher_avatar")
+    @Column(name = "TEACHER_AVATAR")
     private String avatar;
 
-    @Column(name = "teacher_signature")
+    @Column(name = "TEACHER_SIGNATURE")
     private String signature;
 
-    @Column(name = "teacher_status")
+    @Column(name = "TEACHER_STATUS")
     private TeacherStatus status;
 
     public String getId() {

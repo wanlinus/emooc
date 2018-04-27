@@ -35,61 +35,61 @@ import java.util.Date;
  * @date 2018-02-22 10:24
  */
 @Entity
-@Table(name = "tb_user")
+@Table(name = "TB_USER")
 public class User implements Serializable {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     private String id;
 
-    @Column(name = "user_username")
+    @Column(name = "USER_USERNAME")
     private String username;
 
-    @Column(name = "user_password")
+    @Column(name = "USER_PASSWORD")
     private String password;
 
-    @Column(name = "user_realname")
+    @Column(name = "USER_REALNAME")
     private String realname;
 
-    @Column(name = "user_email")
+    @Column(name = "USER_EMAIL")
     private String email;
 
-    @Column(name = "user_telephone")
+    @Column(name = "USER_TELEPHONE")
     private String telephone;
 
-    @Column(name = "user_position")
+    @Column(name = "USER_POSITION")
     private String position;
 
-    @Column(name = "user_experience")
+    @Column(name = "USER_EXPERIENCE")
     private Integer experience;
 
-    @Column(name = "user_address")
+    @Column(name = "USER_ADDRESS")
     private String address;
 
-    @Column(name = "user_birthday")
+    @Column(name = "USER_BIRTHDAY")
     private Date birthday;
 
-    @Column(name = "user_learn_time")
+    @Column(name = "USER_LEARN_TIME")
     private Integer learnTime;
 
-    @Column(name = "user_integral")
+    @Column(name = "USER_INTEGRAL")
     private Integer integral;
 
-    @Column(name = "user_signature")
+    @Column(name = "USER_SIGNATURE")
     private String signature;
 
-    @Column(name = "user_avatar")
+    @Column(name = "USER_AVATAR")
     private String avatar;
 
-    @Column(name = "user_gender")
+    @Column(name = "USER_GENDER")
     private Gender gender;
 
-    @Column(name = "user_balance")
+    @Column(name = "USER_BALANCE")
     private Double balance;
 
-    @Column(name = "user_register_time")
+    @Column(name = "USER_REGISTER_TIME")
     private Date registerTime;
 
-    @Column(name = "user_status")
+    @Column(name = "USER_STATUS")
     private UserStatus userStatus;
 
     public User() {

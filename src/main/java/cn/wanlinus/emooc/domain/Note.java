@@ -30,25 +30,25 @@ import java.util.Date;
  * @date 2018-04-15 02:47
  */
 @Entity
-@Table(name = "tb_note")
+@Table(name = "TB_NOTE")
 public class Note implements Serializable {
 
     @Id
-    @Column(name = "note_id")
+    @Column(name = "NOTE_ID")
     private String id;
 
-    @Column(name = "note_time")
+    @Column(name = "NOTE_TIME")
     private Date time;
 
-    @Column(name = "note_detail")
+    @Column(name = "NOTE_DETAIL")
     private String detail;
 
     @ManyToOne
-    @JoinColumn(name = "note_user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "NOTE_USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "note_course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "NOTE_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
 
     public Note() {

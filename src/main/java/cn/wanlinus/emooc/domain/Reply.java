@@ -30,20 +30,20 @@ import java.util.Date;
  * @date 2018-04-15 02:48
  */
 @Entity
-@Table(name = "tb_reply")
+@Table(name = "TB_REPLY")
 public class Reply implements Serializable {
     @Id
-    @Column(name = "reply_id")
+    @Column(name = "REPLY_ID")
     private String id;
 
-    @Column(name = "reply_time")
+    @Column(name = "REPLY_TIME")
     private Date time;
 
-    @Column(name = "reply_detail")
+    @Column(name = "REPLY_DETAIL")
     private String detail;
 
     @ManyToOne
-    @JoinColumn(name = "reply_comment_id", referencedColumnName = "comment_id")
+    @JoinColumn(name = "REPLY_COMMENT_ID", referencedColumnName = "COMMENT_ID")
     private CourseComment comment;
 
     public Reply() {

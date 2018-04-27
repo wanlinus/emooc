@@ -32,14 +32,14 @@ import java.io.Serializable;
  * @date 2018-04-15 02:47
  */
 @Entity
-@Table(name = "tb_course_type")
+@Table(name = "TB_COURSE_TYPE")
 public class CourseType implements Serializable {
 
     @Id
-    @Column(name = "type_id")
+    @Column(name = "TYPE_ID")
     private String id;
 
-    @Column(name = "type_name")
+    @Column(name = "TYPE_NAME")
     private String name;
 
     public CourseType() {

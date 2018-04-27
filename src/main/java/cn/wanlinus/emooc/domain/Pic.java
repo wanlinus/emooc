@@ -32,14 +32,14 @@ import java.io.Serializable;
  * @date 2018-04-15 02:47
  */
 @Entity
-@Table(name = "tb_pic")
+@Table(name = "TB_PIC")
 public class Pic implements Serializable {
 
     @Id
-    @Column(name = "pic_id")
+    @Column(name = "PIC_ID")
     private String id;
 
-    @Column(name = "pic_path")
+    @Column(name = "PIC_PATH")
     private String path;
 
     public Pic() {

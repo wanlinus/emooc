@@ -30,49 +30,49 @@ import java.util.Date;
  * @date 2018-04-15 02:30
  */
 @Entity
-@Table(name = "tb_course")
+@Table(name = "TB_COURSE")
 public class Course implements Serializable {
     @Id
-    @Column(name = "course_id")
+    @Column(name = "COURSE_ID")
     private String id;
 
-    @Column(name = "course_name")
+    @Column(name = "COURSE_NAME")
     private String name;
 
-    @Column(name = "course_tariff")
+    @Column(name = "COURSE_TARIFF")
     private Double tariff;
 
-    @Column(name = "course_grade")
+    @Column(name = "COURSE_GRADE")
     private Character grade;
 
-    @Column(name = "course_duration")
+    @Column(name = "COURSE_DURATION")
     private Integer duration;
 
-    @Column(name = "course_score")
+    @Column(name = "COURSE_SCORE")
     private Double score;
 
-    @Column(name = "course_notice")
+    @Column(name = "COURSE_NOTICE")
     private String notice;
 
-    @Column(name = "course_wtcanlearn")
+    @Column(name = "COURSE_WTCANLEARN")
     private String wtcanlearn;
 
-    @Column(name = "course_image")
+    @Column(name = "COURSE_IMAGE")
     private String imagePath;
 
-    @Column(name = "course_create_time")
+    @Column(name = "COURSE_CREATE_TIME")
     private Date createTime;
 
     @ManyToOne
-    @JoinColumn(name = "course_teach_id", referencedColumnName = "teacher_id")
+    @JoinColumn(name = "COURSE_TEACH_ID", referencedColumnName = "TEACHER_ID")
     private Teacher teacher;
 
     @ManyToOne
-    @JoinColumn(name = "course_classification_id", referencedColumnName = "classification_id")
+    @JoinColumn(name = "COURSE_CLASSIFICATION_ID", referencedColumnName = "CLASSIFICATION_ID")
     private CourseClassification classification;
 
     @ManyToOne
-    @JoinColumn(name = "course_type_id", referencedColumnName = "type_id")
+    @JoinColumn(name = "COURSE_TYPE_ID", referencedColumnName = "TYPE_ID")
     private CourseType type;
 
     public Course() {

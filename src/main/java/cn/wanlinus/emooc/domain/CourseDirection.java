@@ -34,14 +34,14 @@ import java.util.List;
  * @date 2018-04-15 02:43
  */
 @Entity
-@Table(name = "tb_course_direction", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "direction_id")})
+@Table(name = "TB_COURSE_DIRECTION", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "DIRECTION_ID")})
 public class CourseDirection implements Serializable {
     @Id
-    @Column(name = "direction_id")
+    @Column(name = "DIRECTION_ID")
     private String id;
 
-    @Column(name = "direction_name")
+    @Column(name = "DIRECTION_NAME")
     private String name;
 
     public CourseDirection() {

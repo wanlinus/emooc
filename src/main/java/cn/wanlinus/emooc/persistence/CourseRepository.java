@@ -47,6 +47,6 @@ public interface CourseRepository extends BaseRepository<Course, String> {
      * @param pageSize 每页数量
      * @return 分页信息
      */
-    @Query(value = "SELECT * FROM tb_course AS c WHERE c.course_teach_id = ?1 ORDER BY c.course_create_time DESC LIMIT ?2, ?3", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_CREATE_TIME DESC LIMIT ?2, ?3", nativeQuery = true)
     List<Course> pageCourses(String id, int offset, int pageSize);
 }

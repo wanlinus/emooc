@@ -37,34 +37,34 @@ import java.util.Date;
  * @date 2018-04-16 16:30
  */
 @Entity
-@Table(name = "tb_log")
+@Table(name = "TB_LOG")
 public class EmoocLog implements Serializable {
     @Id
-    @Column(name = "log_id")
+    @Column(name = "LOG_ID")
     private String id;
 
-    @Column(name = "log_who")
+    @Column(name = "LOG_WHO")
     private String who;
 
-    @Column(name = "log_role")
+    @Column(name = "LOG_ROLE")
     private EmoocRole role;
 
-    @Column(name = "log_time")
+    @Column(name = "LOG_TIME")
     private Date time;
 
-    @Column(name = "log_type")
+    @Column(name = "LOG_TYPE")
     private EmoocLogType type;
 
-    @Column(name = "log_result")
+    @Column(name = "LOG_RESULT")
     private Boolean result;
 
-    @Column(name = "log_ip")
+    @Column(name = "LOG_IP")
     private String ip;
 
-    @Column(name = "log_equipment")
+    @Column(name = "LOG_EQUIPMENT")
     private String equipment;
 
-    @Column(name = "log_comment")
+    @Column(name = "LOG_COMMENT")
     private String comment;
 
     public EmoocLog() {

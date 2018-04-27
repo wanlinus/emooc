@@ -33,6 +33,6 @@ public interface CourseCommentRepository extends BaseRepository<CourseComment, S
      * @param courseId 课程ID
      * @return 评论数
      */
-    @Query(value = "SELECT count(*) FROM TB_COURSE_COMMENT comment WHERE comment.COMMENT_COURSE_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM TB_COURSE_COMMENT comment WHERE comment.COMMENT_COURSE_ID = ?1", nativeQuery = true)
     Integer commentsNum(String courseId);
 }

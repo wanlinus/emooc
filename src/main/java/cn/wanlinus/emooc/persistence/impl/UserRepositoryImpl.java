@@ -33,7 +33,7 @@ import java.util.*;
 public class UserRepositoryImpl extends BaseCustomPersistenceImpl implements UserCustomPersistence {
 
 
-    private static final String SELECT_GROUP_BY_GENDER = "SELECT user_gender AS 'gender',count(user_gender) AS 'number' FROM tb_user GROUP BY user_gender";
+    private static final String SELECT_GROUP_BY_GENDER = "SELECT USER_GENDER AS 'gender',count(USER_GENDER) AS 'number' FROM TB_USER GROUP BY USER_GENDER";
 
     @Deprecated
     public Map<String, Integer> genderPie() {

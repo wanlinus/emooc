@@ -30,27 +30,27 @@ import java.util.Date;
  * @date 2018-04-15 02:39
  */
 @Entity
-@Table(name = "tb_course_comment")
+@Table(name = "TB_COURSE_COMMENT")
 public class CourseComment implements Serializable {
     @Id
-    @Column(name = "comment_id")
+    @Column(name = "COMMENT_ID")
     private String id;
 
-    @Column(name = "comment_time")
+    @Column(name = "COMMENT_TIME")
     private Date time;
 
-    @Column(name = "comment_detail")
+    @Column(name = "COMMENT_DETAIL")
     private String detail;
 
-    @Column(name = "comment_support")
+    @Column(name = "COMMENT_SUPPORT")
     private Integer support;
 
     @ManyToOne
-    @JoinColumn(name = "comment_user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "COMMENT_USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "comment_course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "COMMENT_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
 
     public CourseComment() {

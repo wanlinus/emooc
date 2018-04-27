@@ -53,6 +53,6 @@ public interface UserRepository extends BaseRepository<User, String>, UserCustom
      * @return
      * @date 2018-3-25 02:19:58
      */
-    @Query(value = "SELECT user.gender AS gender,count(user.gender) AS number FROM User AS user GROUP BY user.gender")
+    @Query(value = "SELECT user.gender AS gender,COUNT(user.gender) AS number FROM User AS user GROUP BY user.gender")
     Map<String, Integer> genderPie();
 }

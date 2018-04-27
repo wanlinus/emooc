@@ -29,20 +29,20 @@ import java.io.Serializable;
  * @date 2018-04-15 02:45
  */
 @Entity
-@Table(name = "tb_course_section")
+@Table(name = "TB_COURSE_SECTION")
 public class CourseSection implements Serializable {
     @Id
-    @Column(name = "section_id")
+    @Column(name = "SECTION_ID")
     private String id;
 
-    @Column(name = "section_name")
+    @Column(name = "SECTION_NAME")
     private String name;
 
-    @Column(name = "section_detail")
+    @Column(name = "SECTION_DETAIL")
     private String detail;
 
     @ManyToOne
-    @JoinColumn(name = "section_course_id", referencedColumnName = "course_id")
+    @JoinColumn(name = "SECTION_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
 
     public CourseSection() {

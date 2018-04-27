@@ -30,18 +30,18 @@ import java.io.Serializable;
  * @date 2018-04-15 02:37
  */
 @Entity
-@Table(name = "tb_course_classification")
+@Table(name = "TB_COURSE_CLASSIFICATION")
 public class CourseClassification implements Serializable {
     @Id
-    @Column(name = "classification_id")
+    @Column(name = "CLASSIFICATION_ID")
     private String id;
 
-    @Column(name = "classification_name")
+    @Column(name = "CLASSIFICATION_NAME")
     private String name;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classification_direction_id", referencedColumnName = "direction_id")
+    @JoinColumn(name = "CLASSIFICATION_DIRECTION_ID", referencedColumnName = "DIRECTION_ID")
     private CourseDirection direction;
 
     public CourseClassification() {

@@ -29,23 +29,23 @@ import java.io.Serializable;
  * @date 2018-04-15 02:47
  */
 @Entity
-@Table(name = "tb_course_video")
+@Table(name = "TB_COURSE_VIDEO")
 public class CourseVideo implements Serializable {
     @Id
-    @Column(name = "video_id")
+    @Column(name = "VIDEO_ID")
     private String id;
 
-    @Column(name = "video_name")
+    @Column(name = "VIDEO_NAME")
     private String name;
 
-    @Column(name = "video_duration")
+    @Column(name = "VIDEO_DURATION")
     private Integer duration;
 
-    @Column(name = "video_sha1")
+    @Column(name = "VIDEO_SHA1")
     private String sha1;
 
     @ManyToOne
-    @JoinColumn(name = "video_section_id", referencedColumnName = "section_id")
+    @JoinColumn(name = "VIDEO_SECTION_ID", referencedColumnName = "SECTION_ID")
     private CourseSection section;
 
     public CourseVideo() {

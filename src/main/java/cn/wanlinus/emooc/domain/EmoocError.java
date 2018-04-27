@@ -33,19 +33,19 @@ import java.util.Date;
  * @date 2018-04-06 22:58
  */
 @Entity
-@Table(name = "tb_error")
+@Table(name = "TB_ERROR")
 public class EmoocError implements Serializable {
     @Id
-    @Column(name = "error_id")
+    @Column(name = "ERROR_ID")
     private String id;
 
-    @Column(name = "error_who")
+    @Column(name = "ERROR_WHO")
     private String who;
 
-    @Column(name = "error_time")
+    @Column(name = "ERROR_TIME")
     private Date time;
 
-    @Column(name = "error_details")
+    @Column(name = "ERROR_DETAILS")
     private String details;
 
 

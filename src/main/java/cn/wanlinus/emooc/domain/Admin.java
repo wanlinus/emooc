@@ -32,19 +32,19 @@ import java.io.Serializable;
  * @date 2018-02-22 11:00
  */
 @Entity
-@Table(name = "tb_admin")
+@Table(name = "TB_ADMIN")
 public class Admin implements Serializable {
     @Id
-    @Column(name = "admin_id")
+    @Column(name = "ADMIN_ID")
     private String id;
 
-    @Column(name = "admin_name")
+    @Column(name = "ADMIN_NAME")
     private String name;
 
-    @Column(name = "admin_password")
+    @Column(name = "ADMIN_PASSWORD")
     private String password;
 
-    @Column(name = "admin_email")
+    @Column(name = "ADMIN_EMAIL")
     private String email;
 
     public Admin() {

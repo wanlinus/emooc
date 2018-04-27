@@ -40,7 +40,7 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param endNum   结束条数
      * @return 用户日志列表
      */
-    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=0 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_LOG AS log WHERE log.LOG_ROLE=0 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2", nativeQuery = true)
     List<EmoocLog> getTopUserLog(Integer startNum, Integer endNum);
 
     /**
@@ -50,7 +50,7 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param endNum   结束条数
      * @return 教师日志
      */
-    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=1 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_LOG AS log WHERE log.LOG_ROLE=1 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2", nativeQuery = true)
     List<EmoocLog> getTopTeacherLog(Integer startNum, Integer endNum);
 
     /**
@@ -60,7 +60,7 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param endNum   结束条数
      * @return 管理员日志
      */
-    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=2 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2;", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_LOG AS log WHERE log.LOG_ROLE=2 ORDER BY log.LOG_TIME DESC LIMIT ?1, ?2;", nativeQuery = true)
     List<EmoocLog> getTopAdminLog(Integer startNum, Integer endNum);
 
     /**
@@ -69,7 +69,7 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param role 身份
      * @return 教师日志条数
      */
-    @Query(value = "select count(log) from EmoocLog as log where log.role=?1")
+    @Query(value = "SELECT COUNT(log) FROM EmoocLog AS log WHERE log.role=?1")
     Long countLog(EmoocRole role);
 
 
@@ -81,7 +81,7 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param size       数据量
      * @return 日志数据
      */
-    @Query(value = "SELECT * FROM tb_log AS log WHERE log.LOG_ROLE=?1 ORDER BY log.log_time DESC LIMIT ?2 , ?3", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_LOG AS log WHERE log.LOG_ROLE=?1 ORDER BY log.LOG_TIME DESC LIMIT ?2 , ?3", nativeQuery = true)
     List<EmoocLog> pageRoleLogger(Integer role, int startIndex, Integer size);
 
     /**
@@ -93,6 +93,6 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      * @param endTime   结束时间
      * @return 登陆量
      */
-    @Query(value = "SELECT count(log) FROM EmoocLog log WHERE log.role=?1 AND log.type=?2 AND log.time BETWEEN ?3 AND ?4 AND log.result=true")
+    @Query(value = "SELECT COUNT(log) FROM EmoocLog log WHERE log.role=?1 AND log.type=?2 AND log.time BETWEEN ?3 AND ?4 AND log.result=true")
     Long countRoleType(EmoocRole role, EmoocLogType type, Date startTime, Date endTime);
 }

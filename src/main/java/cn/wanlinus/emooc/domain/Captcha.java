@@ -32,17 +32,17 @@ import java.util.Date;
  * @date 2018-04-15 02:27
  */
 @Entity
-@Table(name = "tb_captcha")
+@Table(name = "TB_CAPTCHA")
 public class Captcha implements Serializable {
     @Id
-    @Column(name = "captcha_id")
+    @Column(name = "CAPTCHA_ID")
     private String id;
 
-    @Column(name = "captcha_time")
+    @Column(name = "CAPTCHA_TIME")
     private Date time;
 
     @ManyToOne
-    @JoinColumn(name = "captcha_user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "CAPTCHA_USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
     public Captcha() {
