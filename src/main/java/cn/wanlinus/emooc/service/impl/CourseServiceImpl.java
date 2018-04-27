@@ -27,11 +27,9 @@ import cn.wanlinus.emooc.dto.ThCourseDTO;
 import cn.wanlinus.emooc.persistence.*;
 import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,11 +106,18 @@ public class CourseServiceImpl implements CourseService {
                 dto.setPicPath(c.getImagePath());
                 dto.setScore(c.getScore());
                 dto.setStudy(userStudyRepository.studyNum(c.getId()));
+                dto.setNotice(c.getNotice());
                 dtoList.add(dto);
             }
         } else {
             dtoList = null;
         }
         return dtoList;
+    }
+
+
+    @Override
+    public Course getCourse(String courseId) {
+        return courseRepository.findOne(courseId);
     }
 }

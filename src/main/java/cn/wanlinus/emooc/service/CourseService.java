@@ -68,4 +68,12 @@ public interface CourseService {
      * @return ThCourseDTO
      */
     List<ThCourseDTO> pageCourse(Teacher teacher, Pageable pageable);
+
+    /**
+     * 根据课程Id获取课程
+     *
+     * @param courseId 课程ID
+     * @return 相应课程
+     */
+    Course getCourse(String courseId);
 }

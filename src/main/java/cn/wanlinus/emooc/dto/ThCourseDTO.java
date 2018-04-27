@@ -67,6 +67,8 @@ public class ThCourseDTO implements Serializable {
      */
     private String classification;
 
+    private String notice;
+
     public String getId() {
         return id;
     }
@@ -131,17 +133,26 @@ public class ThCourseDTO implements Serializable {
         this.classification = classification;
     }
 
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
     @Override
     public String toString() {
         return "ThCourseDTO{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", date=" + date +
+                ", date='" + date + '\'' +
                 ", picPath='" + picPath + '\'' +
                 ", study=" + study +
                 ", comments=" + comments +
                 ", score=" + score +
                 ", classification='" + classification + '\'' +
+                ", notice='" + notice + '\'' +
                 '}';
     }
 }

@@ -137,6 +137,7 @@ public class TeacherServiceImpl implements TeacherService {
             dto.setPicPath(c.getImagePath());
             dto.setStudy(userStudyRepository.studyNum(c.getId()));
             dto.setScore(c.getScore());
+            dto.setNotice(c.getNotice());
             list.add(dto);
         }
         return list;
@@ -145,5 +146,26 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<ThCourseDTO> pageCourse(Pageable pageable) {
         return courseService.pageCourse(getTeacher(), pageable);
+    }
+
+    @Override
+    public Course getCourse(String courseId) {
+        Course course = courseService.getCourse(courseId);
+        return !course.getTeacher().getUsername().equals(getUsername()) ? null : course;
+    }
+
+    @Override
+    public TeacherDetailsDTO getInfo() {
+        Teacher teacher = getTeacher();
+        TeacherDetailsDTO detailsDTO = new TeacherDetailsDTO();
+        detailsDTO.setId(teacher.getId());
+        detailsDTO.setAvatar(teacher.getAvatar());
+        detailsDTO.setDetails(teacher.getDetail());
+        detailsDTO.setEmail(teacher.getEmail());
+        detailsDTO.setGender(teacher.getGender().getName());
+        detailsDTO.setPosition(teacher.getPosition());
+        detailsDTO.setSignature(teacher.getSignature());
+        detailsDTO.setUsername(teacher.getUsername());
+        return detailsDTO;
     }
 }

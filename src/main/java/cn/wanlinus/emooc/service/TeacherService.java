@@ -86,4 +86,19 @@ public interface TeacherService {
      * @return ThCourseDTO
      */
     List<ThCourseDTO> pageCourse(Pageable pageable);
+
+    /**
+     * 获取教师相应的课程
+     *
+     * @param courseId 课程ID
+     * @return 相应的课程
+     */
+    Course getCourse(String courseId);
+
+    /**
+     * 获取教师基本信息
+     *
+     * @return 教师基本信息
+     */
+    TeacherDetailsDTO getInfo();
 }

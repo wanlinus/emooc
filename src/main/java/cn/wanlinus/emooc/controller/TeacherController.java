@@ -20,9 +20,13 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Course;
+import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
-import cn.wanlinus.emooc.service.*;
+import cn.wanlinus.emooc.service.CourseClassificationService;
+import cn.wanlinus.emooc.service.CourseDirectionService;
+import cn.wanlinus.emooc.service.CourseTypeService;
+import cn.wanlinus.emooc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -58,9 +63,6 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @Autowired
-    private CourseService courseService;
-
-    @Autowired
     private CourseDirectionService directionService;
 
     @Autowired
@@ -70,8 +72,11 @@ public class TeacherController {
     private CourseTypeService typeService;
 
     @GetMapping(value = {"", "/", "index"})
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        TeacherDetailsDTO detailsDTO = teacherService.getInfo();
+        session.setAttribute("avatar", detailsDTO.getAvatar());
         model.addAttribute("tops", teacherService.topCourses());
+        model.addAttribute("teacherInfo", detailsDTO);
         return "teacher/index";
     }
 
@@ -86,7 +91,11 @@ public class TeacherController {
     @PostMapping(value = "course/add")
     public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic, RedirectAttributes redirectAttributes) throws IOException {
         String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
-        FileOutputStream fos = new FileOutputStream(new File(uploadPath + imgPath + filename));
+        File file = new File(uploadPath + imgPath + filename);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        FileOutputStream fos = new FileOutputStream(file);
         FileInputStream fs = (FileInputStream) pic.getInputStream();
         byte[] buffer = new byte[1024];
         int len;
@@ -108,5 +117,11 @@ public class TeacherController {
     @ResponseBody
     public List<ThCourseDTO> courseList(Pageable pageable) {
         return teacherService.pageCourse(pageable);
+    }
+
+    @GetMapping("course/section/{courseId}")
+    public String addSection(@PathVariable String courseId, Model model) {
+        model.addAttribute("course", teacherService.getCourse(courseId));
+        return "teacher/course/index";
     }
 }

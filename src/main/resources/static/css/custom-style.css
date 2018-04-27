@@ -28,6 +28,13 @@
     border: 1px solid #999999;
 }
 
+.emooc-teacher-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+
 .admin-num-container {
     height: 150px;
     background-color: #f2f2f2;
