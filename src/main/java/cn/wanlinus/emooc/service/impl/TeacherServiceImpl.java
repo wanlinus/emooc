@@ -128,19 +128,35 @@ public class TeacherServiceImpl implements TeacherService {
         List<ThCourseDTO> list = new ArrayList<>();
         List<Course> courses = courseRepository.findTopByTeacherId(getTeacher().getId());
         for (Course c : courses) {
-            ThCourseDTO dto = new ThCourseDTO();
-            dto.setId(c.getId());
-            dto.setName(c.getName());
-            dto.setClassification(c.getClassification().getName());
-            dto.setComments(commentRepository.commentsNum(c.getId()));
-            dto.setDate(CommonUtils.dateFormatSimple(c.getCreateTime()));
-            dto.setPicPath(c.getImagePath());
-            dto.setStudy(userStudyRepository.studyNum(c.getId()));
-            dto.setScore(c.getScore());
-            dto.setNotice(c.getNotice());
-            list.add(dto);
+            list.add(course2DTO(c));
         }
         return list;
+    }
+
+    @Override
+    public ThCourseDTO getCourseDetails(String courseId) {
+        return course2DTO(courseService.getCourse(courseId));
+
+    }
+
+    /**
+     * 将课程转化为DTO
+     *
+     * @param course
+     * @return
+     */
+    private ThCourseDTO course2DTO(Course course) {
+        ThCourseDTO dto = new ThCourseDTO();
+        dto.setId(course.getId());
+        dto.setName(course.getName());
+        dto.setClassification(course.getClassification().getName());
+        dto.setComments(commentRepository.commentsNum(course.getId()));
+        dto.setDate(CommonUtils.dateFormatSimple(course.getCreateTime()));
+        dto.setPicPath(course.getImagePath());
+        dto.setStudy(userStudyRepository.studyNum(course.getId()));
+        dto.setScore(course.getScore());
+        dto.setNotice(course.getNotice());
+        return dto;
     }
 
     @Override
@@ -168,4 +184,6 @@ public class TeacherServiceImpl implements TeacherService {
         detailsDTO.setUsername(teacher.getUsername());
         return detailsDTO;
     }
+
+
 }

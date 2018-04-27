@@ -67,6 +67,9 @@ public class ThCourseDTO implements Serializable {
      */
     private String classification;
 
+    /**
+     * 注意事项
+     */
     private String notice;
 
     public String getId() {

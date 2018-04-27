@@ -101,4 +101,12 @@ public interface TeacherService {
      * @return 教师基本信息
      */
     TeacherDetailsDTO getInfo();
+
+    /**
+     * 获取课程详细信息
+     *
+     * @param courseId 课程ID
+     * @return 课程传输对象
+     */
+    ThCourseDTO getCourseDetails(String courseId);
 }

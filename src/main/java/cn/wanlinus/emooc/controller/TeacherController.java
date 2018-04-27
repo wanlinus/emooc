@@ -113,6 +113,12 @@ public class TeacherController {
         return "redirect:/teacher/course/add";
     }
 
+    @GetMapping("course/details/{id}")
+    public String courseDerails(@PathVariable("id") String courseId, Model model) {
+        model.addAttribute("courseDetails", teacherService.getCourseDetails(courseId));
+        return "teacher/course/details";
+    }
+
     @GetMapping("course/page")
     @ResponseBody
     public List<ThCourseDTO> courseList(Pageable pageable) {
