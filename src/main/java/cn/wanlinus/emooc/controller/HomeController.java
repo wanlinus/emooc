@@ -120,7 +120,6 @@ public class HomeController extends WebMvcConfigurerAdapter {
         return new ResultData<>(userService.checkEmail(email));
     }
 
-
     @PostMapping("register")
     @ResponseBody
     public ResultData<Boolean> register(@RequestBody @Valid UserRegisterDTO dto, Errors errors) {

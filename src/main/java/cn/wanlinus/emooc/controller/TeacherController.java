@@ -119,6 +119,13 @@ public class TeacherController {
         return "teacher/course/details";
     }
 
+    @GetMapping("course/details/section")
+    public String courseSection(Integer id) {
+        System.out.println(id);
+        return "teacher/course/section";
+    }
+
+
     @GetMapping("course/page")
     @ResponseBody
     public List<ThCourseDTO> courseList(Pageable pageable) {

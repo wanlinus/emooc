@@ -67,6 +67,9 @@ public class Teacher implements Serializable {
     @Column(name = "TEACHER_STATUS")
     private TeacherStatus status;
 
+    public Teacher() {
+    }
+
     public String getId() {
         return id;
     }

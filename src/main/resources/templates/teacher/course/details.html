@@ -40,7 +40,16 @@
                 <cite style="z-index: 1000">asdasdasasd</cite><img th:src="${courseDetails.picPath}"
                                                                    style="width: 100%; margin: auto" alt="">
             </div>
-            <span th:text="${courseDetails}"></span>
+            <div>
+                <h2 th:text="${courseDetails.name}" style="text-align: center; padding: 10px;"></h2>
+            </div>
+            <div class="layui-container">
+                创建时间 <span th:text="${courseDetails.date}"></span>
+                评分 <span th:text="${courseDetails.score}"></span>
+                学习人数: <span th:text="${courseDetails.study}"></span>
+                <a class="layui-btn" th:href="${'/teacher/course/details/section?id='+ courseDetails.id}">添加新章节</a>
+            </div>
+            <div th:text="${courseDetails}"></div>
         </div>
         <div class="layui-col-md4">
             <div class="fly-panel">

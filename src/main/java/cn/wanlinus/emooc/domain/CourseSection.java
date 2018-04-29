@@ -35,6 +35,9 @@ public class CourseSection implements Serializable {
     @Column(name = "SECTION_ID")
     private String id;
 
+    @Column(name = "SECTION_INDEX")
+    private Integer index;
+
     @Column(name = "SECTION_NAME")
     private String name;
 
@@ -54,6 +57,14 @@ public class CourseSection implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public String getName() {

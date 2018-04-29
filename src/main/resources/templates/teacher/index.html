@@ -26,7 +26,7 @@
                         <a th:href="${top.picPath}" class="fly-avatar"><img th:src="${top.picPath}" alt=""/></a>
                         <h2>
                             <a class="layui-badge" th:text="${top.classification}"></a>
-                            <a th:href="${'/teacher/course/details/'+top.id}" th:text="${top.name}"></a>
+                            <a th:href="${'/teacher/course/details/'+ top.id}" th:text="${top.name}"></a>
                         </h2>
                         <div class="fly-list-info">
                             <span th:text="${top.date}"></span>
