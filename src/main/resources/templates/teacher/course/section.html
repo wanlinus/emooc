@@ -35,6 +35,36 @@
 <div th:replace="teacher/layout::top"></div>
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>添加章节
+                    <small th:text="${course.name}"></small>
+                </legend>
+            </fieldset>
+            <form action="" role="form" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="L_section_name">章节名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" id="L_section_name" name="name">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_section_description" class="layui-form-label">章节描述</label>
+                    <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="description" id="L_section_description" cols="30"
+                              rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="submit" class="layui-btn">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-col-md6">
+
+        </div>
     </div>
 </div>
 </body>

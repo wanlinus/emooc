@@ -47,7 +47,7 @@
                 创建时间 <span th:text="${courseDetails.date}"></span>
                 评分 <span th:text="${courseDetails.score}"></span>
                 学习人数: <span th:text="${courseDetails.study}"></span>
-                <a class="layui-btn" th:href="${'/teacher/course/details/section?id='+ courseDetails.id}">添加新章节</a>
+                <a class="layui-btn" th:href="${'/teacher/course/section/'+ courseDetails.id}">添加新章节</a>
             </div>
             <div th:text="${courseDetails}"></div>
         </div>
