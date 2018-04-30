@@ -20,6 +20,10 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.dto.StatisticsDTO;
+import cn.wanlinus.emooc.enums.EmoocLogType;
+import cn.wanlinus.emooc.enums.EmoocRole;
+import cn.wanlinus.emooc.persistence.AdminRepository;
+import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.service.*;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +54,31 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private EmoocLogRepository logRepository;
+
+
+    @Override
+    public Long countAdminLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_ADMIN.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+    }
+
+    @Override
+    public List<Long> adminLoginStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countAdminLogin(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
     @Override
     public StatisticsDTO statistics() {
         StatisticsDTO dto = new StatisticsDTO();
@@ -61,6 +90,7 @@ public class AdminServiceImpl implements AdminService {
         }
         Collections.reverse(list);
         dto.setDate(list);
+        dto.setAdmin(adminLoginStatistics(new Date(), MONTH));
         dto.setUserRegister(userService.userRegisterStatistics(new Date(), MONTH));
         dto.setUserLogin(userService.userLoginStatistics(new Date(), MONTH));
         dto.setTeacherRegister(teacherService.teacherRegisterStatistics(new Date(), MONTH));
@@ -69,4 +99,5 @@ public class AdminServiceImpl implements AdminService {
         dto.setVideo(null);
         return dto;
     }
+
 }

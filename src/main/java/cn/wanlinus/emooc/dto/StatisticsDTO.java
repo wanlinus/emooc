@@ -31,6 +31,8 @@ import java.util.List;
 public class StatisticsDTO implements Serializable {
     private List<String> date;
 
+    private List<Long> admin;
+
     private List<Long> userRegister;
     private List<Long> userLogin;
 
@@ -47,6 +49,14 @@ public class StatisticsDTO implements Serializable {
 
     public void setDate(List<String> date) {
         this.date = date;
+    }
+
+    public List<Long> getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(List<Long> admin) {
+        this.admin = admin;
     }
 
     public List<Long> getUserRegister() {
@@ -101,6 +111,7 @@ public class StatisticsDTO implements Serializable {
     public String toString() {
         return "StatisticsDTO{" +
                 "date=" + date +
+                ", admin=" + admin +
                 ", userRegister=" + userRegister +
                 ", userLogin=" + userLogin +
                 ", teacherRegister=" + teacherRegister +

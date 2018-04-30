@@ -21,6 +21,9 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.dto.StatisticsDTO;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author wanli
  * @date 2018-04-16 19:43
@@ -33,4 +36,21 @@ public interface AdminService {
      * @return StatisticsDTO
      */
     StatisticsDTO statistics();
+
+    /**
+     * 计数某日登陆量
+     *
+     * @param date 指定天数
+     * @return 登陆量
+     */
+    Long countAdminLogin(Date date);
+
+    /**
+     * 指定date前days登陆统计量
+     *
+     * @param date 指定日期
+     * @param days 天数
+     * @return 统计量
+     */
+    List<Long> adminLoginStatistics(Date date, Integer days);
 }

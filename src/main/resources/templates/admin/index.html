@@ -195,7 +195,7 @@
             }
         },
         legend: {
-            data: ['用户注册', '用户登陆', '讲师注册', '讲师登陆', '课程添加', '视频添加'],
+            data: ['管理员登陆', '用户注册', '用户登陆', '讲师注册', '讲师登陆', '课程添加', '视频添加'],
             selected: {
                 '用户注册': false,
                 '讲师注册': false,
@@ -216,8 +216,8 @@
                 type: 'value',
                 name: '人数',
                 min: 0,
-                max: 30,
-                interval: 50,
+                max: 50,
+                interval: 10,
                 axisLabel: {
                     formatter: '{value} 人'
                 }
@@ -234,6 +234,11 @@
             }
         ],
         series: [
+            {
+                name: '管理员登陆',
+                type: 'bar',
+                data: []
+            },
             {
                 name: '用户注册',
                 type: 'bar',
@@ -289,12 +294,13 @@
             url: '/admin/statistics',
             success: function (responseData) {
                 statisticsOption.xAxis[0].data = responseData.date;
-                statisticsOption.series[0].data = responseData.userRegister;
-                statisticsOption.series[1].data = responseData.userLogin;
-                statisticsOption.series[2].data = responseData.teacherRegister;
-                statisticsOption.series[3].data = responseData.teacherLogin;
-                statisticsOption.series[4].data = responseData.course;
-                statisticsOption.series[5].data = responseData.video;
+                statisticsOption.series[0].data = responseData.admin;
+                statisticsOption.series[1].data = responseData.userRegister;
+                statisticsOption.series[2].data = responseData.userLogin;
+                statisticsOption.series[3].data = responseData.teacherRegister;
+                statisticsOption.series[4].data = responseData.teacherLogin;
+                statisticsOption.series[5].data = responseData.course;
+                statisticsOption.series[6].data = responseData.video;
                 statisticsCharts.setOption(statisticsOption)
             }
         })
