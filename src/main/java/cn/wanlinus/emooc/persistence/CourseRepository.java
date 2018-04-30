@@ -22,6 +22,7 @@ package cn.wanlinus.emooc.persistence;
 import cn.wanlinus.emooc.domain.Course;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,4 +50,13 @@ public interface CourseRepository extends BaseRepository<Course, String> {
      */
     @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_CREATE_TIME DESC LIMIT ?2, ?3", nativeQuery = true)
     List<Course> pageCourses(String id, int offset, int pageSize);
+
+    /**
+     * 查询某日新增课程
+     *
+     * @param date 指定日期
+     * @return 新增课程数
+     */
+    @Query(value = "SELECT count(*) FROM TB_COURSE AS c WHERE  date_format(c.COURSE_CREATE_TIME, '%Y-%m-%d') = date_format(?1, '%Y-%m-%d')", nativeQuery = true)
+    Long courseNewlyIncreased(Date date);
 }

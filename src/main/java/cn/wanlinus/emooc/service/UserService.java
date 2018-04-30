@@ -106,10 +106,31 @@ public interface UserService {
     Long countUserLogin(Date day);
 
     /**
+     * 统计传入日期前days天用户登陆量
+     *
+     * @param date 指定日期
+     * @param days 天数
+     * @return 统计人数数组
+     */
+    List<Long> userLoginStatistics(Date date, Integer days);
+
+
+    /**
      * 计算今日用户注册量
      *
      * @param date 日期
      * @return 注册量
      */
     Long countUserRegister(Date date);
+
+    /**
+     * 统计传入日期用户注册量
+     *
+     * @param date 相应日期
+     * @param days 前多少天
+     * @return 统计人数数组
+     */
+    List<Long> userRegisterStatistics(Date date, Integer days);
+
+
 }

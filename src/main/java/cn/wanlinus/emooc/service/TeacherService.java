@@ -61,7 +61,26 @@ public interface TeacherService {
      * @param date 指定天数
      * @return 登陆量
      */
-    Long countTeachersLogin(Date date);
+    Long countTeacherLogin(Date date);
+
+    /**
+     * 统计传入日期前days天用户登陆量
+     *
+     * @param date 传入日期
+     * @param days 天数
+     * @return 统计量
+     */
+    List<Long> teacherLoginStatistics(Date date, Integer days);
+
+
+    /**
+     * 计算指定日期教师注册量
+     *
+     * @param date 指定日期
+     * @return 注册量
+     */
+    Long countTeacherRegister(Date date);
+
 
     /**
      * 添加课程
@@ -109,4 +128,15 @@ public interface TeacherService {
      * @return 课程传输对象
      */
     ThCourseDTO getCourseDetails(String courseId);
+
+    /**
+     * 传入日期前days天讲师注册统计
+     *
+     * @param date 指定日期
+     * @param days 传入天数
+     * @return 统计人数数组
+     */
+    List<Long> teacherRegisterStatistics(Date date, Integer days);
+
+
 }

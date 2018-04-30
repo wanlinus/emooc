@@ -26,6 +26,7 @@ import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,4 +77,27 @@ public interface CourseService {
      * @return 相应课程
      */
     Course getCourse(String courseId);
+
+    /**
+     * 对所有课程计数
+     *
+     * @return 课程数
+     */
+    Long countCourses();
+
+    /**
+     * 今日新增课程
+     *
+     * @return 新增课程数
+     */
+    Long currentDayNewlyIncreased();
+
+    /**
+     * 统计传入日期前days天课程添加数组
+     *
+     * @param date 传入日期
+     * @param days 天数
+     * @return 新增课程数组
+     */
+    List<Long> coursesAddStatistics(Date date, Integer days);
 }

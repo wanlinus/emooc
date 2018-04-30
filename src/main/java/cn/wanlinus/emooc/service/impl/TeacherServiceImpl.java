@@ -39,13 +39,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
-import static cn.wanlinus.emooc.utils.CommonUtils.endDate;
-import static cn.wanlinus.emooc.utils.CommonUtils.startDate;
 
 /**
  * @author wanli
@@ -112,8 +108,27 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Long countTeachersLogin(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_TEACHER, EmoocLogType.LOGIN, startDate(date), endDate(date));
+    public Long countTeacherLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_TEACHER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+    }
+
+    @Override
+    public List<Long> teacherLoginStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countTeacherLogin(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Collections.reverse(list);
+        return list;
+
+    }
+
+    @Override
+    public Long countTeacherRegister(Date date) {
+        return logRepository.countLogType(EmoocLogType.TEACHER_REGISTER.ordinal(), date);
     }
 
     @Override
@@ -137,6 +152,19 @@ public class TeacherServiceImpl implements TeacherService {
     public ThCourseDTO getCourseDetails(String courseId) {
         return course2DTO(courseService.getCourse(courseId));
 
+    }
+
+    @Override
+    public List<Long> teacherRegisterStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countTeacherRegister(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
     }
 
     /**

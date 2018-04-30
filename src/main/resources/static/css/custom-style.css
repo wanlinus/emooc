@@ -35,6 +35,22 @@
     margin: 10px auto;
 }
 
+.emooc-col-md3 {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    float: left;
+    width: 25%;
+}
+
+.emooc-col-md3-space5 {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    float: left;
+    width: calc(25% - 10px);
+}
+
 .admin-num-container {
     height: 150px;
     background-color: #f2f2f2;

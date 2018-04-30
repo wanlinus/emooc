@@ -19,16 +19,13 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.service.AdminService;
-import cn.wanlinus.emooc.service.EmoocLogService;
-import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.service.UserService;
+import cn.wanlinus.emooc.dto.StatisticsDTO;
+import cn.wanlinus.emooc.service.*;
+import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author wanli
@@ -37,6 +34,10 @@ import java.util.Map;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    /**
+     * 获取30天的数据
+     */
+    public static final int MONTH = 30;
     @Autowired
     private EmoocLogService logService;
 
@@ -46,20 +47,26 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private CourseService courseService;
 
     @Override
-    public Map<String, Object> indexData() {
-        Map<String, Object> map = new HashMap<>(16);
-        map.put("userLogs", logService.getTopUserLog(0, 12));
-        map.put("teacherLogs", logService.getTopTeacherLog(0, 12));
-        map.put("userNum", userService.countUsers());
-        map.put("userRegister", userService.countUserRegister(new Date()));
-        map.put("userLogin", userService.countUserLogin(new Date()));
-        map.put("allTeachers", teacherService.countTeachers());
-        map.put("teachersLogin", teacherService.countTeachersLogin(new Date()));
-        //这两个数据先写死
-        map.put("allCourses", 1000);
-        map.put("addCourses", 50);
-        return map;
+    public StatisticsDTO statistics() {
+        StatisticsDTO dto = new StatisticsDTO();
+        List<String> list = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < MONTH; i++) {
+            list.add(CommonUtils.dateFormatSimple(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Collections.reverse(list);
+        dto.setDate(list);
+        dto.setUserRegister(userService.userRegisterStatistics(new Date(), MONTH));
+        dto.setUserLogin(userService.userLoginStatistics(new Date(), MONTH));
+        dto.setTeacherRegister(teacherService.teacherRegisterStatistics(new Date(), MONTH));
+        dto.setTeacherLogin(teacherService.teacherLoginStatistics(new Date(), MONTH));
+        dto.setCourse(courseService.coursesAddStatistics(new Date(), MONTH));
+        dto.setVideo(null);
+        return dto;
     }
 }

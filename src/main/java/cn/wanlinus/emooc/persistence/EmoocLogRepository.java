@@ -87,12 +87,31 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
     /**
      * 查询某一时间段不同身份操作类型
      *
-     * @param role      身份
-     * @param type      操作类型
-     * @param startTime 开始时间
-     * @param endTime   结束时间
-     * @return 登陆量
+     * @param role 身份
+     * @param type 操作类型
+     * @param date 日期
+     * @return 操作量
      */
-    @Query(value = "SELECT COUNT(log) FROM EmoocLog log WHERE log.role=?1 AND log.type=?2 AND log.time BETWEEN ?3 AND ?4 AND log.result=true")
-    Long countRoleType(EmoocRole role, EmoocLogType type, Date startTime, Date endTime);
+    @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_ROLE = ?1 AND log.LOG_TYPE = ?2 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT(?3 , '%Y-%m-%d') AND log.LOG_RESULT=1", nativeQuery = true)
+    Long countRoleType(Integer role, Integer type, Date date);
+
+
+    /**
+     * 查询在某一时间段所有操作类型
+     *
+     * @param type 操作类型
+     * @param date 日期
+     * @return 操作量
+     */
+    @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_TYPE = ?1 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT(?2 , '%Y-%m-%d') AND log.LOG_RESULT=1", nativeQuery = true)
+    Long countLogType(Integer type, Date date);
+
+    /**
+     * 获取传入日期添加课程数
+     *
+     * @param time 指定日期
+     * @return 添加课程总数
+     */
+    @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_TYPE = 3 AND log.LOG_RESULT = 1 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
+    Long countCourses(Date time);
 }

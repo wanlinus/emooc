@@ -17,20 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
+package cn.wanlinus.emooc;
 
-import cn.wanlinus.emooc.dto.StatisticsDTO;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * @author wanli
- * @date 2018-04-16 19:43
+ * @date 2018-04-30 15:57
  */
-public interface AdminService {
-    /**
-     * 管理页面
-     * 用户注册, 讲师注册,添加课程,添加视频统计
-     *
-     * @return StatisticsDTO
-     */
-    StatisticsDTO statistics();
+public class CalendarTest {
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        System.out.println(sdf.format(calendar.getTime()));
+
+    }
 }

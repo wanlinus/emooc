@@ -23,9 +23,7 @@ import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocRole;
-import cn.wanlinus.emooc.service.EmoocLogService;
-import cn.wanlinus.emooc.service.TeacherService;
-import cn.wanlinus.emooc.service.UserService;
+import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,9 +45,13 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
+    private AdminService adminService;
+    @Autowired
     private UserService userService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private CourseService courseService;
     @Autowired
     private EmoocLogService logService;
 
@@ -63,15 +65,19 @@ public class AdminController {
     public String home(Model model) {
         model.addAttribute("userLogs", logService.getTopUserLog(0, 12));
         model.addAttribute("teacherLogs", logService.getTopTeacherLog(0, 12));
+        //用户详情
         model.addAttribute("userNum", userService.countUsers());
         model.addAttribute("userRegister", userService.countUserRegister(new Date()));
-        model.addAttribute("userLogin", userService.countUserLogin(new Date()));
-
+        model.addAttribute("todayUserLogin", userService.countUserLogin(new Date()));
+        //讲师详情
         model.addAttribute("allTeachers", teacherService.countTeachers());
-        model.addAttribute("teachersLogin", teacherService.countTeachersLogin(new Date()));
-        //这两个数据先写死
-        model.addAttribute("allCourses", 1000);
-        model.addAttribute("addCourses", 50);
+        model.addAttribute("teacherRegister", teacherService.countTeacherRegister(new Date()));
+        model.addAttribute("todayTeachersLogin", teacherService.countTeacherLogin(new Date()));
+        //课程详情
+        model.addAttribute("allCourses", courseService.countCourses());
+        model.addAttribute("todayAddCourses", courseService.currentDayNewlyIncreased());
+        model.addAttribute("allVideos", 100);
+        model.addAttribute("todayAddVideos", 100);
         return "admin/index";
     }
 
@@ -90,10 +96,21 @@ public class AdminController {
      *
      * @return GenderPieDTO
      */
-    @GetMapping("/gender-pie")
+    @GetMapping("gender-pie")
     @ResponseBody
     public List<GenderPieDTO> genderPie() {
         return userService.genderPie();
+    }
+
+    /**
+     * 返回管理员主页用户注册和课程添加数据
+     *
+     * @return StatisticsDTO
+     */
+    @GetMapping(value = "statistics")
+    @ResponseBody
+    public StatisticsDTO statistics() {
+        return adminService.statistics();
     }
 
     /**

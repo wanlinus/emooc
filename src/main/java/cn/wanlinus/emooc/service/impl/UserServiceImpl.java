@@ -37,12 +37,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.*;
+import static cn.wanlinus.emooc.utils.CommonUtils.md5Encrypt;
+import static cn.wanlinus.emooc.utils.CommonUtils.uid;
 
 /**
  * @author wanli
@@ -125,13 +123,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countUserLogin(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_USER, EmoocLogType.LOGIN, startDate(date), endDate(date));
+        return logRepository.countRoleType(EmoocRole.ROLE_USER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+    }
+
+    @Override
+    public List<Long> userLoginStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countUserLogin(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
     }
 
 
     @Override
     public Long countUserRegister(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_USER, EmoocLogType.USER_REGISTER, startDate(date), endDate(date));
+        return logRepository.countLogType(EmoocLogType.USER_REGISTER.ordinal(), date);
+    }
+
+    @Override
+    public List<Long> userRegisterStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countUserRegister(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
     }
 
 }

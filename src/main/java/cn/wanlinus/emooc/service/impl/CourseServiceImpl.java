@@ -30,9 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.cid;
 import static cn.wanlinus.emooc.utils.CommonUtils.dateFormatSimple;
@@ -60,6 +58,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseCommentRepository commentRepository;
+
+    @Autowired
+    private EmoocLogRepository logRepository;
 
     @Override
     public List<CourseDirection> getAllCourseDirection() {
@@ -119,5 +120,30 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourse(String courseId) {
         return courseRepository.findOne(courseId);
+    }
+
+    @Override
+    public Long countCourses() {
+        return courseRepository.count();
+
+    }
+
+    @Override
+    public Long currentDayNewlyIncreased() {
+        return courseRepository.courseNewlyIncreased(new Date());
+
+    }
+
+    @Override
+    public List<Long> coursesAddStatistics(Date date, Integer days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(logRepository.countCourses(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
     }
 }

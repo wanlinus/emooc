@@ -11,53 +11,73 @@
     <div th:replace="admin/layout:: header"></div>
     <div th:replace="admin/layout::side"></div>
     <div class="layui-body" style="padding: 15px;">
-        <h2>欢迎您: <span sec:authentication="name"></span></h2>
-        <hr>
-
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>欢迎您: <span sec:authentication="name"></span></legend>
+        </fieldset>
         <div class="emooc-container">
             <div class="layui-row">
                 <div class="layui-col-md7">
-
                     <div class="layui-row layui-col-space5">
-
-                        <div class="layui-col-md3 admin-num-container">
-                            <h3>用户总人数:</h3>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>用户总量</h3>
                             <div th:text="${userNum}" class="admin-num">100</div>
                         </div>
-                        <div class="layui-col-md3 admin-num-container">
+                        <div class="emooc-col-md3-space5 admin-num-container">
                             <h3>今日注册</h3>
                             <div th:text="${userRegister}" class="admin-num"></div>
                         </div>
-                        <div class="layui-col-md3 admin-num-container">
+                        <div class="emooc-col-md3-space5 admin-num-container">
                             <h3>今日登陆</h3>
-                            <div th:text="${userLogin}" class="admin-num"></div>
+                            <div th:text="${todayUserLogin}" class="admin-num"></div>
                         </div>
                     </div>
                     <hr>
                     <div class="layui-row layui-col-space5">
-                        <div class="layui-col-md3 admin-num-container">
-                            <h3>教师总数: </h3>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>教师总数</h3>
                             <div th:text="${allTeachers}" class="admin-num">50</div>
                         </div>
-                        <div class="layui-col-md3 admin-num-container">
-                            <h3>今日登陆:</h3>
-                            <div th:text="${teachersLogin}" class="admin-num">1000</div>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>今日注册</h3>
+                            <div th:text="${teacherRegister}" class="admin-num"></div>
+                        </div>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>今日登陆</h3>
+                            <div th:text="${todayTeachersLogin}" class="admin-num">1000</div>
                         </div>
                     </div>
                     <hr>
                     <div class="layui-row layui-col-space5">
-                        <div class="layui-col-md3 admin-num-container">
-                            <h3>总课程数:</h3>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>课程总量</h3>
                             <div th:text="${allCourses}" class="admin-num">1000</div>
                         </div>
-                        <div class="layui-col-md3 admin-num-container">
-                            <h3>今日新增</h3>
-                            <div th:text="${allCourses}" class="admin-num">1000</div>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>今日新增课程</h3>
+                            <div th:text="${todayAddCourses}" class="admin-num">1000</div>
+                        </div>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>总视频数</h3>
+                            <div th:text="${allVideos}" class="admin-num">1000</div>
+                        </div>
+                        <div class="emooc-col-md3-space5 admin-num-container">
+                            <h3>今日新增视频</h3>
+                            <div th:text="${todayAddVideos}" class="admin-num">1000</div>
                         </div>
                     </div>
                 </div>
                 <div class="layui-col-md5">
-                    <div class="layui-col-md4" id="gender" style="height: 260px; width: 300px">
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-md4" id="gender" style="height: 260px; width: 300px"></div>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="layui-row">
+                <div class="layui-row layui-col-space5">
+                    <div>
+                        <div class="" id="statistics" style="height: 600px; width:100%"></div>
                     </div>
                 </div>
             </div>
@@ -69,65 +89,41 @@
                 <a th:href="@{tms}">
                     <h2><span style="color: red;">*</span>教师管理>> </h2>
                 </a>
-                <div class="layui-row">
-                    <div class="layui-col-md12">
-                        <table class="layui-table">
-                            <thead>
-                            <tr>
-                                <th> 教师姓名:</th>
-                                <th> 操作:</th>
-                                <th> 操作时间:</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="teacherLog:${teacherLogs}">
-                                <td th:text="${teacherLog.who}"></td>
-                                <td th:text="${teacherLog.type.description}"></td>
-                                <td th:text="${#dates.format(teacherLog.time, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+                <table class="layui-table"
+                       lay-data="{height: 512,limit:10, cellMinWidth: 80, url:'/admin/logger/teacher',
+                       page:true, id:'teacher'}" lay-filter="users">
+                    <thead>
+                    <tr>
+                        <th lay-data="{field: 'who'}">姓名</th>
+                        <th lay-data="{field: 'operation'}">操作</th>
+                        <th lay-data="{field:'time'}">时间</th>
+                        <th lay-data="{field: 'equipment'}">设备</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
             <div class="layui-col-md6">
                 <a th:href="@{sms}" style="text-decoration: blink">
                     <h2><span style="color: red;">*</span>用户管理>> </h2>
                 </a>
-                <div class="layui-row">
-                    <div class="layui-col-md12">
-                        <table class="layui-table">
-                            <thead>
-                            <tr>
-                                <th>用户名</th>
-                                <th>详情:</th>
-                                <th>操作设备:</th>
-                                <th>IP:</th>
-                                <th>操作时间:</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="userLog: ${userLogs}" style="white-space:nowrap">
-                                <td th:text="${userLog.who}"></td>
-                                <td th:text="${userLog.type.description}"></td>
-                                <td style="overflow:hidden;text-overflow:ellipsis;max-width: 150px"
-                                    th:text="${userLog.equipment}"></td>
-                                <td th:text="${userLog.ip}"></td>
-                                <td th:text="${#dates.format(userLog.time, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="container">
+                    <table class="layui-table"
+                           lay-data="{height: 512,limit:10, url:'/admin/logger/user', page:true, id:'teacher'}"
+                           lay-filter="users">
+                        <thead>
+                        <tr>
+                            <th lay-data="{field: 'who'}">姓名</th>
+                            <th lay-data="{field: 'operation'}">操作</th>
+                            <th lay-data="{field:'time'}">时间</th>
+                            <th lay-data="{field: 'equipment'}">设备</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
 
             </div>
         </div>
-        <div class="layui-row layui-col-space5">
-            <div class="layui-col-md8" style="border: 1px solid red; height: 300px;">
-            </div>
 
-        </div>
         <div th:replace="admin/layout::adminFooter"></div>
     </div>
 
@@ -139,11 +135,9 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
 <script>
-    var dom = document.getElementById("gender");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    option = {
+    const domGender = document.getElementById("gender");
+    const genderCharts = echarts.init(domGender);
+    genderOption = {
         title: {
             text: 'EMooc男女比例图',
             subtext: '',
@@ -174,8 +168,111 @@
         }
         ]
     };
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+</script>
+<script>
+    const statisticsDom = document.getElementById("statistics");
+    const statisticsCharts = echarts.init(statisticsDom);
+    statisticsOption = {
+        title: {
+            text: 'EMooc资源统计',
+            subtext: '近30日统计量',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'line', //line cross shadow
+                crossStyle: {
+                    color: '#999'
+                },
+            }
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: false, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data: ['用户注册', '用户登陆', '讲师注册', '讲师登陆', '课程添加', '视频添加'],
+            selected: {
+                '用户注册': false,
+                '讲师注册': false,
+                '视频添加': false
+            }
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: [],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '人数',
+                min: 0,
+                max: 30,
+                interval: 50,
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            },
+            {
+                type: 'value',
+                name: '节',
+                min: 0,
+                max: 10,
+                interval: 5,
+                axisLabel: {
+                    formatter: '{value} 节'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '用户注册',
+                type: 'bar',
+                data: []
+            },
+            {
+                name: '用户登陆',
+                type: 'bar',
+                data: []
+            }
+            ,
+            {
+                name: '讲师注册',
+                type: 'bar',
+                data: []
+            },
+            {
+                name: '讲师登陆',
+                type: 'bar',
+                data: []
+            },
+            {
+                name: '课程添加',
+                // type: 'line',
+                type: 'bar',
+                yAxisIndex: 1,
+                data: []
+            },
+            {
+                name: '视频添加',
+                type: 'bar',
+                yAxisIndex: 1,
+                data: []
+
+            }
+        ]
+    };
+    if (statisticsOption && typeof statisticsOption === "object") {
+        statisticsCharts.setOption(statisticsOption, true);
     }
 </script>
 <script>
@@ -183,10 +280,24 @@
         $.get({
             url: '/admin/gender-pie',
             success: function (responseData) {
-                option.series[0].data = responseData;
-                myChart.setOption(option);
+                genderOption.series[0].data = responseData;
+                genderCharts.setOption(genderOption);
             }
         });
+
+        $.get({
+            url: '/admin/statistics',
+            success: function (responseData) {
+                statisticsOption.xAxis[0].data = responseData.date;
+                statisticsOption.series[0].data = responseData.userRegister;
+                statisticsOption.series[1].data = responseData.userLogin;
+                statisticsOption.series[2].data = responseData.teacherRegister;
+                statisticsOption.series[3].data = responseData.teacherLogin;
+                statisticsOption.series[4].data = responseData.course;
+                statisticsOption.series[5].data = responseData.video;
+                statisticsCharts.setOption(statisticsOption)
+            }
+        })
     });
 </script>
 </html>
