@@ -62,6 +62,9 @@ public class CourseServiceImpl implements CourseService {
     private CourseTypeRepository courseTypeRepository;
 
     @Autowired
+    private CourseVideoRepository videoRepository;
+
+    @Autowired
     private UserStudyRepository userStudyRepository;
 
     @Autowired
@@ -166,5 +169,10 @@ public class CourseServiceImpl implements CourseService {
         section.setName(dto.getTitle());
         section.setCreateTime(new Date());
         return sectionRepository.save(section);
+    }
+
+    @Override
+    public Long countCourseSectionVideos() {
+        return videoRepository.count();
     }
 }

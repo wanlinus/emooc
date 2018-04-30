@@ -74,7 +74,7 @@ public class AdminController {
         //课程详情
         model.addAttribute("allCourses", courseService.countCourses());
         model.addAttribute("todayAddCourses", courseService.currentDayNewlyIncreased());
-        model.addAttribute("allVideos", 100);
+        model.addAttribute("allVideos", courseService.countCourseSectionVideos());
         model.addAttribute("todayAddVideos", 100);
         return "admin/index";
     }

@@ -110,4 +110,11 @@ public interface CourseService {
      * @return 添加的课程
      */
     CourseSection addSection(SectionAddDTO dto);
+
+    /**
+     * 对所有课程Video计数
+     *
+     * @return
+     */
+    Long countCourseSectionVideos();
 }
