@@ -28,6 +28,7 @@ import cn.wanlinus.emooc.service.*;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -62,11 +63,13 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countAdminLogin(Date date) {
         return logRepository.countRoleType(EmoocRole.ROLE_ADMIN.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Long> adminLoginStatistics(Date date, Integer days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -80,6 +83,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public StatisticsDTO statistics() {
         StatisticsDTO dto = new StatisticsDTO();
         List<String> list = new ArrayList<>();

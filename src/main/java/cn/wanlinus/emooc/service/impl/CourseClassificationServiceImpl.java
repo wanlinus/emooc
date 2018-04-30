@@ -24,6 +24,7 @@ import cn.wanlinus.emooc.persistence.CourseClassificationRepository;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,11 +38,13 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
     private CourseClassificationRepository classificationRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassification> getClassifications() {
         return classificationRepository.findAll();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassification> getClassifications(String directionId) {
         return classificationRepository.findByDirectionId(directionId);
 

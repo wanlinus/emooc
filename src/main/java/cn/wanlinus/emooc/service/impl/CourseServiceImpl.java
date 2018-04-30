@@ -19,11 +19,15 @@
 
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
+import cn.wanlinus.emooc.domain.CourseSection;
 import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.dto.SectionAddDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
+import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.persistence.*;
 import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.cid;
+import static cn.wanlinus.emooc.utils.CommonUtils.csid;
 import static cn.wanlinus.emooc.utils.CommonUtils.dateFormatSimple;
 
 /**
@@ -46,6 +51,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseDirectionRepository courseDirectionRepository;
+
+    @Autowired
+    private CourseSectionRepository sectionRepository;
 
     @Autowired
     private CourseClassificationRepository classificationRepository;
@@ -145,5 +153,18 @@ public class CourseServiceImpl implements CourseService {
         }
         Collections.reverse(list);
         return list;
+    }
+
+    @Override
+    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_SECTION)
+    public CourseSection addSection(SectionAddDTO dto) {
+        CourseSection section = new CourseSection();
+        section.setId(csid());
+        section.setIndex(sectionRepository.countCourseSectionByCourseId(dto.getCourseId()) + 1);
+        section.setCourse(courseRepository.findOne(dto.getCourseId()));
+        section.setDetail(dto.getDescription());
+        section.setName(dto.getTitle());
+        section.setCreateTime(new Date());
+        return sectionRepository.save(section);
     }
 }

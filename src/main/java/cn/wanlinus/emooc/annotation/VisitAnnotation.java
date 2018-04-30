@@ -17,21 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence;
+package cn.wanlinus.emooc.annotation;
 
-import cn.wanlinus.emooc.domain.CourseSection;
+import java.lang.annotation.*;
 
 /**
  * @author wanli
- * @date 2018-04-15 13:59
+ * @date 2018-04-30 22:42
  */
-public interface CourseSectionRepository extends BaseRepository<CourseSection, String> {
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface VisitAnnotation {
 
-    /**
-     * 通过课程ID对Section计数
-     *
-     * @param courseId 课程ID
-     * @return Section个数
-     */
-    Integer countCourseSectionByCourseId(String courseId);
+    String value() default "";
 }

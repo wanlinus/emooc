@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author wanli
@@ -43,6 +44,9 @@ public class CourseSection implements Serializable {
 
     @Column(name = "SECTION_DETAIL")
     private String detail;
+
+    @Column(name = "SECTION_CREATE_TIME")
+    private Date createTime;
 
     @ManyToOne
     @JoinColumn(name = "SECTION_COURSE_ID", referencedColumnName = "COURSE_ID")
@@ -81,6 +85,14 @@ public class CourseSection implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Course getCourse() {

@@ -63,8 +63,6 @@ public class AdminController {
      */
     @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
-        model.addAttribute("userLogs", logService.getTopUserLog(0, 12));
-        model.addAttribute("teacherLogs", logService.getTopTeacherLog(0, 12));
         //用户详情
         model.addAttribute("userNum", userService.countUsers());
         model.addAttribute("userRegister", userService.countUserRegister(new Date()));

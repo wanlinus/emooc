@@ -44,11 +44,13 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     private EmoocLogRepository emoocLogRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EmoocLog> getTopUserLog(Integer startNum, Integer endNum) {
         return emoocLogRepository.getTopUserLog(startNum, endNum);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EmoocLog> getTopTeacherLog(Integer startNum, Integer endNum) {
         return emoocLogRepository.getTopTeacherLog(startNum, endNum);
     }

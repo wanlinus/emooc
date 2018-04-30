@@ -24,6 +24,7 @@ import cn.wanlinus.emooc.persistence.CourseTypeRepository;
 import cn.wanlinus.emooc.service.CourseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     private CourseTypeRepository typeRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseType> getTypes() {
         return typeRepository.findAll();
     }

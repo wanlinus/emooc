@@ -41,7 +41,10 @@
                                                                    style="width: 100%; margin: auto" alt="">
             </div>
             <div>
-                <h2 th:text="${courseDetails.name}" style="text-align: center; padding: 10px;"></h2>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend th:text="${courseDetails.name}"></legend>
+                </fieldset>
+
             </div>
             <div class="layui-container">
                 创建时间 <span th:text="${courseDetails.date}"></span>

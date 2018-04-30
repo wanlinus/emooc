@@ -21,7 +21,9 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseDirection;
+import cn.wanlinus.emooc.domain.CourseSection;
 import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.dto.SectionAddDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
 import org.springframework.data.domain.Pageable;
@@ -100,4 +102,12 @@ public interface CourseService {
      * @return 新增课程数组
      */
     List<Long> coursesAddStatistics(Date date, Integer days);
+
+    /**
+     * 添加课程章节
+     *
+     * @param dto 添加课程章节数据传输对象
+     * @return 添加的课程
+     */
+    CourseSection addSection(SectionAddDTO dto);
 }

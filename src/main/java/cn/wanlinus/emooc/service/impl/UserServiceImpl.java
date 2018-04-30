@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<GenderPieDTO> genderPie() {
         Map<String, Integer> mm = userRepository.genderPie();
         List<GenderPieDTO> pies = new ArrayList<>();
@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @RegisterAnnotation(type = EmoocLogType.USER_REGISTER)
     @Transactional(rollbackFor = Exception.class)
+    @RegisterAnnotation(type = EmoocLogType.USER_REGISTER)
     public User register(UserRegisterDTO dto) {
         try {
             User user = new User(uid(), dto.getUsername(), md5Encrypt(dto.getPassword()), dto.getEmail());
@@ -138,7 +138,6 @@ public class UserServiceImpl implements UserService {
         Collections.reverse(list);
         return list;
     }
-
 
     @Override
     public Long countUserRegister(Date date) {

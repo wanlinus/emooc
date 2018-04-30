@@ -17,21 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence;
+package cn.wanlinus.emooc.aspect;
 
-import cn.wanlinus.emooc.domain.CourseSection;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 /**
  * @author wanli
- * @date 2018-04-15 13:59
+ * @date 2018-04-30 22:42
  */
-public interface CourseSectionRepository extends BaseRepository<CourseSection, String> {
+@Aspect
+@Component
+public class VisitAspect {
 
-    /**
-     * 通过课程ID对Section计数
-     *
-     * @param courseId 课程ID
-     * @return Section个数
-     */
-    Integer countCourseSectionByCourseId(String courseId);
+
 }

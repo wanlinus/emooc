@@ -22,6 +22,7 @@ package cn.wanlinus.emooc.service.impl;
 import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.Course;
+import cn.wanlinus.emooc.domain.CourseSection;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocLogType;
@@ -71,8 +72,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.findByUsername(getUsername());
     }
 
-    @Transactional(rollbackFor = RuntimeException.class)
     @Override
+    @Transactional(rollbackFor = RuntimeException.class)
     public LayuiPaginationDataDTO<TeacherDetailsDTO> pageTeacher(LayuiPaginationDTO layuiPaginationDTO) {
         Pageable pageable = new PageRequest(layuiPaginationDTO.getPage() - 1, layuiPaginationDTO.getLimit());
         Page<Teacher> page = teacherRepository.findAll(pageable);
@@ -85,8 +86,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 
     @Override
-    @AdminAnnotation(type = EmoocLogType.TEACHER_REGISTER)
     @Transactional(rollbackFor = Exception.class)
+    @AdminAnnotation(type = EmoocLogType.TEACHER_REGISTER)
     public Teacher addTeacher(TeacherDetailsDTO dto) {
         Teacher teacher = new Teacher();
         teacher.setUsername(dto.getUsername());
@@ -103,16 +104,19 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countTeachers() {
         return teacherRepository.count();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countTeacherLogin(Date date) {
         return logRepository.countRoleType(EmoocRole.ROLE_TEACHER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Long> teacherLoginStatistics(Date date, Integer days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -127,11 +131,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countTeacherRegister(Date date) {
         return logRepository.countLogType(EmoocLogType.TEACHER_REGISTER.ordinal(), date);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
     public Course addCourse(ThAddCourseDTO dto, String filename) {
         dto.setPath(filename);
@@ -139,6 +145,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<ThCourseDTO> topCourses() {
         List<ThCourseDTO> list = new ArrayList<>();
         List<Course> courses = courseRepository.findTopByTeacherId(getTeacher().getId());
@@ -149,12 +156,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public ThCourseDTO getCourseDetails(String courseId) {
         return course2DTO(courseService.getCourse(courseId));
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Long> teacherRegisterStatistics(Date date, Integer days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -165,6 +174,12 @@ public class TeacherServiceImpl implements TeacherService {
         }
         Collections.reverse(list);
         return list;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public CourseSection addSection(SectionAddDTO dto) {
+        return courseService.addSection(dto);
     }
 
     /**
@@ -188,17 +203,20 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<ThCourseDTO> pageCourse(Pageable pageable) {
         return courseService.pageCourse(getTeacher(), pageable);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Course getCourse(String courseId) {
         Course course = courseService.getCourse(courseId);
         return !course.getTeacher().getUsername().equals(getUsername()) ? null : course;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public TeacherDetailsDTO getInfo() {
         Teacher teacher = getTeacher();
         TeacherDetailsDTO detailsDTO = new TeacherDetailsDTO();
@@ -212,6 +230,4 @@ public class TeacherServiceImpl implements TeacherService {
         detailsDTO.setUsername(teacher.getUsername());
         return detailsDTO;
     }
-
-
 }

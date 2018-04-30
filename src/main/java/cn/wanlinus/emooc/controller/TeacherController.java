@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Course;
+import cn.wanlinus.emooc.dto.SectionAddDTO;
 import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
@@ -126,9 +127,14 @@ public class TeacherController {
     }
 
     @GetMapping("course/section/{courseId}")
-    public String addSection(@PathVariable String courseId, Model model) {
+    public String addSectionUI(@PathVariable String courseId, Model model) {
         model.addAttribute("course", teacherService.getCourse(courseId));
         System.err.println(courseId);
         return "teacher/course/section";
+    }
+
+    @PostMapping("course/section")
+    public Boolean addSection(SectionAddDTO dto) {
+        return teacherService.addSection(dto) != null;
     }
 }

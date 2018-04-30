@@ -41,11 +41,12 @@
                     <small th:text="${course.name}"></small>
                 </legend>
             </fieldset>
-            <form action="" role="form" class="layui-form">
+            <form th:action="@{/teacher/course/section}" method="post" role="form" class="layui-form">
+                <input type="hidden" th:value="${course.id}" name="courseId">
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="L_section_name">章节名称</label>
                     <div class="layui-input-block">
-                        <input type="text" class="layui-input" id="L_section_name" name="name">
+                        <input type="text" class="layui-input" id="L_section_name" name="title">
                     </div>
                 </div>
                 <div class="layui-form-item">

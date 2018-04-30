@@ -84,6 +84,24 @@ public final class CommonUtils {
     }
 
     /**
+     * 生成课程章节ID
+     *
+     * @return csid
+     */
+    public static String csid() {
+        return "CS" + System.currentTimeMillis();
+    }
+
+    /**
+     * 生成课程章节视频ID
+     *
+     * @return csvid
+     */
+    public static String csvid() {
+        return "CSV" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id

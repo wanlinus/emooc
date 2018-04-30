@@ -17,29 +17,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.enums;
+package cn.wanlinus.emooc.dto;
+
+import java.io.Serializable;
 
 /**
  * @author wanli
- * @date 2018-04-21 13:41
+ * @date 2018-04-30 23:09
  */
-public enum EmoocLogType {
-    /**
-     * 描述
-     */
-    LOGIN("登陆"),
-    USER_REGISTER("用户注册"),
-    TEACHER_REGISTER("教师注册"),
-    TEACHER_ADD_COURSE("教师添加课程"),
-    TEACHER_ADD_SECTION("教师添加章节"),
-    TEACHER_ADD_VIDEO("教师添加视频"),
-    UNKNOWN("未知");
-
-
+public class SectionAddDTO implements Serializable {
+    private String courseId;
+    private String title;
     private String description;
 
-    EmoocLogType(String description) {
-        this.description = description;
+    public SectionAddDTO() {
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -48,5 +55,14 @@ public enum EmoocLogType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "SectionAddDTO{" +
+                "courseId='" + courseId + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
