@@ -59,6 +59,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private CourseCommentRepository commentRepository;
     @Autowired
+    private CourseSectionRepository sectionRepository;
+    @Autowired
     private UserStudyRepository userStudyRepository;
     @Autowired
     private EmoocLogRepository logRepository;
@@ -180,6 +182,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(rollbackFor = Exception.class)
     public CourseSection addSection(SectionAddDTO dto) {
         return courseService.addSection(dto);
+    }
+
+    @Override
+    public List<CourseSection> getSections(String courseId) {
+        return sectionRepository.getAllByCourseId(courseId);
     }
 
     /**

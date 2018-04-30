@@ -116,6 +116,7 @@ public class TeacherController {
 
     @GetMapping("course/details/{id}")
     public String courseDerails(@PathVariable("id") String courseId, Model model) {
+        model.addAttribute("sections", teacherService.getSections(courseId));
         model.addAttribute("courseDetails", teacherService.getCourseDetails(courseId));
         return "teacher/course/details";
     }
@@ -137,4 +138,16 @@ public class TeacherController {
     public Boolean addSection(SectionAddDTO dto) {
         return teacherService.addSection(dto) != null;
     }
+
+    @GetMapping("course/section/video/{sectionId}")
+    public String addVideoUI(@PathVariable String sectionId, Model model) {
+        model.addAttribute("sectionId", sectionId);
+        return "teacher/course/addVideo";
+    }
+
+    @PostMapping("course/section/video")
+    public String addVideo() {
+        return null;
+    }
 }
+

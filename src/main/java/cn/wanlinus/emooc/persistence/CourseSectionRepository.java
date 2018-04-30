@@ -21,6 +21,8 @@ package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.CourseSection;
 
+import java.util.List;
+
 /**
  * @author wanli
  * @date 2018-04-15 13:59
@@ -34,4 +36,12 @@ public interface CourseSectionRepository extends BaseRepository<CourseSection, S
      * @return Section个数
      */
     Integer countCourseSectionByCourseId(String courseId);
+
+    /**
+     * 根据课程ID获取该课程的所有章节
+     *
+     * @param courseId 课程ID
+     * @return 该课程的所有ID
+     */
+    List<CourseSection> getAllByCourseId(String courseId);
 }
