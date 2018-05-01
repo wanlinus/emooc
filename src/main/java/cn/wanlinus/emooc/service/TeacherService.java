@@ -21,6 +21,7 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseSection;
+import cn.wanlinus.emooc.domain.CourseVideo;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Pageable;
@@ -155,4 +156,12 @@ public interface TeacherService {
      * @return 课程的章节
      */
     List<CourseSection> getSections(String courseId);
+
+    /**
+     * 添加课程视频
+     *
+     * @param dto 课程
+     * @return 课程章节视频对象
+     */
+    CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto);
 }

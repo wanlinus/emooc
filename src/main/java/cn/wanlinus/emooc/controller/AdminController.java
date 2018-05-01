@@ -75,7 +75,7 @@ public class AdminController {
         model.addAttribute("allCourses", courseService.countCourses());
         model.addAttribute("todayAddCourses", courseService.currentDayNewlyIncreased());
         model.addAttribute("allVideos", courseService.countCourseSectionVideos());
-        model.addAttribute("todayAddVideos", 100);
+        model.addAttribute("todayAddVideos", courseService.currentDayVideoNewlyIncreased());
         return "admin/index";
     }
 

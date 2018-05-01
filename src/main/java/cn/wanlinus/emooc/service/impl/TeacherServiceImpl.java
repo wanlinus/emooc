@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseSection;
+import cn.wanlinus.emooc.domain.CourseVideo;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocLogType;
@@ -187,6 +188,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<CourseSection> getSections(String courseId) {
         return sectionRepository.getAllByCourseId(courseId);
+    }
+
+    @Override
+    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_VIDEO)
+    public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
+        return courseService.addSectionVideo(dto);
     }
 
     /**

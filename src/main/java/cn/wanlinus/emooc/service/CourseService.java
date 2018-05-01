@@ -19,10 +19,8 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.domain.CourseSection;
-import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.domain.*;
+import cn.wanlinus.emooc.dto.CourseSectionVideoAddDTO;
 import cn.wanlinus.emooc.dto.SectionAddDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
@@ -117,4 +115,30 @@ public interface CourseService {
      * @return
      */
     Long countCourseSectionVideos();
+
+
+    /**
+     * 添加课程章节视频
+     *
+     * @param dto 食品添加传输对象
+     * @return 课程视频对象
+     */
+    CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto);
+
+    /**
+     * 对课程视频进行统计
+     *
+     * @param date 传入日期
+     * @param days 天数
+     * @return 统计量
+     */
+    List<Long> courseVideosStatistics(Date date, int days);
+
+    /**
+     * 当日课程视频添加总数
+     *
+     * @return 统计量
+     */
+    Long currentDayVideoNewlyIncreased();
+
 }

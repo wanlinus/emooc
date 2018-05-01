@@ -20,10 +20,7 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.dto.SectionAddDTO;
-import cn.wanlinus.emooc.dto.TeacherDetailsDTO;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.dto.ThCourseDTO;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseTypeService;
@@ -38,13 +35,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.filename;
+import static cn.wanlinus.emooc.utils.CommonUtils.preFilename;
 
 /**
  * @author wanli
@@ -59,6 +53,9 @@ public class TeacherController {
 
     @Value("${web.image-path}")
     private String imgPath;
+
+    @Value("${web.video-path}")
+    private String videoPath;
 
     @Autowired
     private TeacherService teacherService;
@@ -91,7 +88,7 @@ public class TeacherController {
 
     @PostMapping(value = "course/add")
     public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic, RedirectAttributes redirectAttributes) throws IOException {
-        String filename = filename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
+        String filename = preFilename() + pic.getOriginalFilename().substring(pic.getOriginalFilename().lastIndexOf("."));
         File file = new File(uploadPath + imgPath + filename);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -135,19 +132,35 @@ public class TeacherController {
     }
 
     @PostMapping("course/section")
-    public Boolean addSection(SectionAddDTO dto) {
-        return teacherService.addSection(dto) != null;
-    }
-
-    @GetMapping("course/section/video/{sectionId}")
-    public String addVideoUI(@PathVariable String sectionId, Model model) {
-        model.addAttribute("sectionId", sectionId);
-        return "teacher/course/addVideo";
+    @ResponseBody
+    public String addSection(SectionAddDTO dto) {
+        if (teacherService.addSection(dto) != null) {
+            return "成功";
+        } else {
+            return "失败";
+        }
     }
 
     @PostMapping("course/section/video")
-    public String addVideo() {
-        return null;
+    @ResponseBody
+    public String addVideo(CourseSectionVideoAddDTO dto) throws IOException {
+        String filename = videoPath + preFilename() + dto.getVideo().getOriginalFilename().substring(dto.getVideo().getOriginalFilename().lastIndexOf("."));
+        File file = new File(uploadPath + filename);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        FileInputStream fs = (FileInputStream) dto.getVideo().getInputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fs.read(buffer)) != -1) {
+            fos.write(buffer, 0, len);
+        }
+        fos.close();
+        fs.close();
+        dto.setSha1(String.valueOf(file.hashCode()));
+        dto.setVideoPath(filename);
+        return teacherService.addSectionVideo(dto) != null ? "true" : "false";
     }
 }
 

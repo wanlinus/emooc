@@ -20,10 +20,8 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
-import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.CourseDirection;
-import cn.wanlinus.emooc.domain.CourseSection;
-import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.domain.*;
+import cn.wanlinus.emooc.dto.CourseSectionVideoAddDTO;
 import cn.wanlinus.emooc.dto.SectionAddDTO;
 import cn.wanlinus.emooc.dto.ThAddCourseDTO;
 import cn.wanlinus.emooc.dto.ThCourseDTO;
@@ -33,12 +31,11 @@ import cn.wanlinus.emooc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.cid;
-import static cn.wanlinus.emooc.utils.CommonUtils.csid;
-import static cn.wanlinus.emooc.utils.CommonUtils.dateFormatSimple;
+import static cn.wanlinus.emooc.utils.CommonUtils.*;
 
 /**
  * @author wanli
@@ -50,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
     private CourseRepository courseRepository;
 
     @Autowired
-    private CourseDirectionRepository courseDirectionRepository;
+    private CourseDirectionRepository directionRepository;
 
     @Autowired
     private CourseSectionRepository sectionRepository;
@@ -75,7 +72,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseDirection> getAllCourseDirection() {
-        return courseDirectionRepository.findAll();
+        return directionRepository.findAll();
     }
 
     @Override
@@ -160,6 +157,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_SECTION)
+    @Transactional(rollbackFor = Exception.class)
     public CourseSection addSection(SectionAddDTO dto) {
         CourseSection section = new CourseSection();
         section.setId(csid());
@@ -174,5 +172,38 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Long countCourseSectionVideos() {
         return videoRepository.count();
+    }
+
+    @Override
+    public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
+        CourseVideo video = new CourseVideo();
+        video.setId(csvid());
+        video.setName(dto.getName());
+        //先设置为0,以后能够处理视频文件再细化
+        video.setDuration(0);
+        video.setPath(dto.getVideoPath());
+        video.setSha1(dto.getSha1());
+        video.setCreateTime(new Date());
+        CourseSection section = sectionRepository.findOne(dto.getSectionId());
+        video.setSection(section);
+        return videoRepository.save(video);
+    }
+
+    @Override
+    public List<Long> courseVideosStatistics(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(logRepository.countVideos(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
+    @Override
+    public Long currentDayVideoNewlyIncreased() {
+        return videoRepository.countVideos(new Date());
     }
 }

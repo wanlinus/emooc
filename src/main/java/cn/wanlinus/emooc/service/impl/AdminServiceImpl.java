@@ -100,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
         dto.setTeacherRegister(teacherService.teacherRegisterStatistics(new Date(), MONTH));
         dto.setTeacherLogin(teacherService.teacherLoginStatistics(new Date(), MONTH));
         dto.setCourse(courseService.coursesAddStatistics(new Date(), MONTH));
-        dto.setVideo(null);
+        dto.setVideo(courseService.courseVideosStatistics(new Date(),MONTH));
         return dto;
     }
 

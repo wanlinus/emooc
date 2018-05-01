@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-<!--
-  ~ Copyright (C) 2018 - wanli <wanlinus@qq.com>
-  ~
-  ~ This file is part of emooc
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
 
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="teacher/layout::teacherHead">
@@ -59,8 +41,16 @@
                             <small></small></span></h2>
                         <div class="layui-colla-content">
                             <div th:text="${section.detail}"></div>
-                            <a th:href="${'/teacher/course/section/video/' + section.id}"
-                               class="layui-btn">添加视频</a>
+
+
+                            <div>
+                                <form th:action="@{/teacher/course/section/video}" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" th:value="${section.id}" name="sectionId">
+                                    <input type="file" name="video" accept="video/*">
+                                    <input type="submit" class="layui-btn" value="添加视频">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

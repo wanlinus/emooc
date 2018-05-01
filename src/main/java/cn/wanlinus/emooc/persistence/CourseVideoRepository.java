@@ -20,10 +20,22 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.CourseVideo;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Date;
 
 /**
  * @author wanli
  * @date 2018-04-15 14:01
  */
 public interface CourseVideoRepository extends BaseRepository<CourseVideo, String> {
+
+    /**
+     * 查询某日课程视频添加总数
+     *
+     * @param date 传入日期
+     * @return 当日添加视频总数
+     */
+    @Query(value = "SELECT count(*) FROM TB_COURSE_VIDEO AS video WHERE date_format(video.VIDEO_CREATE_TIME,'%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
+    Long countVideos(Date date);
 }

@@ -144,7 +144,7 @@ public final class CommonUtils {
      *
      * @return 文件名
      */
-    public static String filename() {
+    public static String preFilename() {
         return "emooc-" + UUID.randomUUID();
     }
 

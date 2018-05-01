@@ -114,4 +114,13 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      */
     @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_TYPE = 3 AND log.LOG_RESULT = 1 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
     Long countCourses(Date time);
+
+    /**
+     * 获取传入日期添加视频数
+     *
+     * @param time 指定日期
+     * @return 添加视频总数
+     */
+    @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_TYPE = 5 AND log.LOG_RESULT = 1 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
+    Long countVideos(Date time);
 }

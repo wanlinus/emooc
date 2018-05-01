@@ -17,45 +17,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.domain;
+package cn.wanlinus.emooc.dto;
 
-import com.alibaba.fastjson.JSON;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author wanli
- * @date 2018-04-15 02:47
+ * @date 2018-05-01 18:17
  */
-@Entity
-@Table(name = "TB_COURSE_VIDEO")
-public class CourseVideo implements Serializable {
-    @Id
-    @Column(name = "VIDEO_ID")
+public class CourseSectionVideoAddDTO implements Serializable {
     private String id;
-
-    @Column(name = "VIDEO_NAME")
     private String name;
-
-    @Column(name = "VIDEO_DURATION")
     private Integer duration;
-
-    @Column(name = "VIDEO_SHA1")
     private String sha1;
-
-    @Column(name = "VIDEO_CREATE_TIME")
     private Date createTime;
+    private MultipartFile video;
+    private String videoPath;
+    private String sectionId;
 
-    @Column(name = "VIDEO_PATH")
-    private String path;
-
-    @ManyToOne
-    @JoinColumn(name = "VIDEO_SECTION_ID", referencedColumnName = "SECTION_ID")
-    private CourseSection section;
-
-    public CourseVideo() {
+    public CourseSectionVideoAddDTO() {
     }
 
     public String getId() {
@@ -98,24 +81,41 @@ public class CourseVideo implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getPath() {
-        return path;
+    public MultipartFile getVideo() {
+        return video;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setVideo(MultipartFile video) {
+        this.video = video;
     }
 
-    public CourseSection getSection() {
-        return section;
+    public String getVideoPath() {
+        return videoPath;
     }
 
-    public void setSection(CourseSection section) {
-        this.section = section;
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "CourseSectionVideoAddDTO{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", sha1='" + sha1 + '\'' +
+                ", createTime=" + createTime +
+                ", video=" + video +
+                ", videoPath='" + videoPath + '\'' +
+                ", sectionId='" + sectionId + '\'' +
+                '}';
     }
 }
