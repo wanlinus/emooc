@@ -64,6 +64,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private UserStudyRepository userStudyRepository;
     @Autowired
+    private CourseVideoRepository videoRepository;
+    @Autowired
     private EmoocLogRepository logRepository;
 
     /**
@@ -194,6 +196,36 @@ public class TeacherServiceImpl implements TeacherService {
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_VIDEO)
     public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
         return courseService.addSectionVideo(dto);
+    }
+
+    @Override
+    public List<SectionDisplayDTO> getSectionsDisplay(String courseId) {
+        List<CourseSection> listSection = getSections(courseId);
+        List<SectionDisplayDTO> dtoList = new ArrayList<>();
+        for (CourseSection section : listSection) {
+            SectionDisplayDTO dto = new SectionDisplayDTO();
+            List<VideoDisplayDTO> videoDtoList = new ArrayList<>();
+            List<CourseVideo> videos = videoRepository.findAllBySectionId(section.getId());
+            for (CourseVideo v : videos) {
+                VideoDisplayDTO d = new VideoDisplayDTO();
+                d.setVideoId(v.getId());
+                d.setVideoName(v.getName());
+                d.setVideoDuration(v.getDuration());
+                d.setVideoPath(v.getPath());
+                videoDtoList.add(d);
+            }
+            dto.setVideos(videoDtoList);
+            dto.setSectionId(section.getId());
+            dto.setSectionName(section.getName());
+            dto.setSectionDetails(section.getDetail());
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
+
+    @Override
+    public CourseVideo getCourseVideo(String videoId) {
+        return courseService.getCourseVideo(videoId);
     }
 
     /**

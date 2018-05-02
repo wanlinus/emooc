@@ -113,7 +113,7 @@ public class TeacherController {
 
     @GetMapping("course/details/{id}")
     public String courseDerails(@PathVariable("id") String courseId, Model model) {
-        model.addAttribute("sections", teacherService.getSections(courseId));
+        model.addAttribute("sections", teacherService.getSectionsDisplay(courseId));
         model.addAttribute("courseDetails", teacherService.getCourseDetails(courseId));
         return "teacher/course/details";
     }
@@ -139,6 +139,13 @@ public class TeacherController {
         } else {
             return "失败";
         }
+    }
+
+    @GetMapping("course/section/video/{videoId}")
+    public String play(@PathVariable() String videoId, Model model) {
+
+        model.addAttribute("videoPath", teacherService.getCourseVideo(videoId).getPath());
+        return "teacher/course/video";
     }
 
     @PostMapping("course/section/video")

@@ -141,4 +141,11 @@ public interface CourseService {
      */
     Long currentDayVideoNewlyIncreased();
 
+    /**
+     * 获取视频对象
+     *
+     * @param videoId 视频ID
+     * @return 视频对象
+     */
+    CourseVideo getCourseVideo(String videoId);
 }

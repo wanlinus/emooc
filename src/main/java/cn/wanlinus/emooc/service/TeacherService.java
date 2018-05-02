@@ -164,4 +164,20 @@ public interface TeacherService {
      * @return 课程章节视频对象
      */
     CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto);
+
+    /**
+     * 获取章节显示数据传输对象
+     *
+     * @param courseId 课程ID
+     * @return SectionDisplayDTO
+     */
+    List<SectionDisplayDTO> getSectionsDisplay(String courseId);
+
+    /**
+     * 获取课程视频
+     *
+     * @param videoId 视频ID
+     * @return 视频对象
+     */
+    CourseVideo getCourseVideo(String videoId);
 }

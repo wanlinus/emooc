@@ -206,4 +206,9 @@ public class CourseServiceImpl implements CourseService {
     public Long currentDayVideoNewlyIncreased() {
         return videoRepository.countVideos(new Date());
     }
+
+    @Override
+    public CourseVideo getCourseVideo(String videoId) {
+        return videoRepository.findOne(videoId);
+    }
 }

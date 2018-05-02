@@ -140,7 +140,7 @@
 <script src="/static/layui/layui.js"></script>
 <script th:src="@{/layui/layui.js}"></script>
 <script>
-    layui.use('flow', function () {
+    layui.use(['flow', 'element', 'layer'], function () {
         let flow = layui.flow;
         let num = 0;
         let list = [];

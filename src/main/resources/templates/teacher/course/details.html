@@ -19,8 +19,8 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md8">
             <div style="text-align: center; height: 200px; overflow: hidden; border-radius: 5px">
-                <cite style="z-index: 1000">asdasdasasd</cite><img th:src="${courseDetails.picPath}"
-                                                                   style="width: 100%; margin: auto" alt="">
+                <cite style="z-index: 1000"></cite>
+                <img th:src="${courseDetails.picPath}" style="width: 100%; margin: auto" alt="">
             </div>
             <div>
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -37,16 +37,26 @@
             <div>
                 <div class="layui-collapse" lay-filter="test" th:each="section:${sections}">
                     <div class="layui-colla-item">
-                        <h2 class="layui-colla-title"><span th:text="${section.name}">
+                        <h2 class="layui-colla-title"><span th:text="${section.sectionName}">
                             <small></small></span></h2>
                         <div class="layui-colla-content">
-                            <div th:text="${section.detail}"></div>
 
-
+                            <ul class="fly-list" th:each="video:${section.videos}">
+                                <li>
+                                    <a class="fly-avatar">
+                                        <img src="" alt=""/></a>
+                                    <h2>
+                                        <a th:href="${'/teacher/course/section/video/'+ video.videoId}"
+                                           th:text="${video.videoId} + ${video.videoName}"></a>
+                                    </h2>
+                                </li>
+                            </ul>
+                            <div th:text="${section.sectionDetails}"></div>
                             <div>
                                 <form th:action="@{/teacher/course/section/video}" method="post"
                                       enctype="multipart/form-data">
-                                    <input type="hidden" th:value="${section.id}" name="sectionId">
+                                    <input type="hidden" th:value="${section.sectionId}" name="sectionId">
+                                    <label for="l_name">标题</label><input id="l_name" type="text" name="name">
                                     <input type="file" name="video" accept="video/*">
                                     <input type="submit" class="layui-btn" value="添加视频">
                                 </form>

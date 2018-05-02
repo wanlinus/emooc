@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.domain.CourseVideo;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -38,4 +39,12 @@ public interface CourseVideoRepository extends BaseRepository<CourseVideo, Strin
      */
     @Query(value = "SELECT count(*) FROM TB_COURSE_VIDEO AS video WHERE date_format(video.VIDEO_CREATE_TIME,'%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
     Long countVideos(Date date);
+
+    /**
+     * 通过章节Id查找所有视频
+     *
+     * @param sectionId 章节ID
+     * @return 相关视频
+     */
+    List<CourseVideo> findAllBySectionId(String sectionId);
 }
