@@ -44,6 +44,10 @@ public class CourseDirection implements Serializable {
     @Column(name = "DIRECTION_NAME")
     private String name;
 
+    @OneToMany
+    @JoinColumn(name = "CLASSIFICATION_DIRECTION_ID", referencedColumnName = "DIRECTION_ID")
+    private List<CourseClassification> classifications;
+
     public CourseDirection() {
     }
 
@@ -63,6 +67,13 @@ public class CourseDirection implements Serializable {
         this.name = name;
     }
 
+    public List<CourseClassification> getClassifications() {
+        return classifications;
+    }
+
+    public void setClassifications(List<CourseClassification> classifications) {
+        this.classifications = classifications;
+    }
 
     @Override
     public String toString() {

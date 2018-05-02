@@ -17,15 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence;
+package cn.wanlinus.emooc;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
-
-import java.util.List;
+import cn.wanlinus.emooc.persistence.CourseDirectionRepository;
+import com.alibaba.fastjson.JSON;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author wanli
- * @date 2018-04-15 13:54
+ * @date 2018-05-03 00:01
  */
-public interface CourseClassificationRepository extends BaseRepository<CourseClassification, String> {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class CourseDirectionText {
+
+    @Autowired
+    private CourseDirectionRepository repository;
+
+    @Test
+    public void aaa() {
+        System.out.println(JSON.toJSONString(repository.getOne(String.valueOf(1))));
+    }
 }

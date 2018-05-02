@@ -42,4 +42,9 @@ public class CourseDirectionServiceImpl implements CourseDirectionService {
     public List<CourseDirection> getDirections() {
         return directionRepository.findAll();
     }
+
+    @Override
+    public CourseDirection getDirection(String directionId) {
+        return directionRepository.findOne(directionId);
+    }
 }

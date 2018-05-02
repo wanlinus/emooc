@@ -43,10 +43,4 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
         return classificationRepository.findAll();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<CourseClassification> getClassifications(String directionId) {
-        return classificationRepository.findByDirectionId(directionId);
-
-    }
 }

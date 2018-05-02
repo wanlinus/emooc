@@ -60,6 +60,76 @@
     width: calc(25% - 10px);
 }
 
+.emooc-wrap {
+    width: 100%;
+    background-color: #fff;
+    padding-bottom: 12px;
+}
+
+.emooc-wrap .emooc-top {
+    margin: auto;
+}
+
+.emooc-wrap div {
+    display: block;
+}
+
+.emooc-course-content {
+    padding-top: 12px;
+    float: none;
+    width: 100%;
+    box-shadow: none;
+}
+
+.emooc-course-nav-box {
+
+}
+
+.emooc-course-nav-row {
+    position: relative;
+    padding: 16px 0 5px;
+    border-bottom: 1px solid #edf1f2;
+}
+
+.emooc-course-nav-row .hd {
+    width: 52px;
+    height: 20px;
+    line-height: 30px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #07111b;
+    text-align: right;
+}
+
+.emooc-l {
+    float: left;
+}
+
+.emooc-bd {
+    margin-left: 64px;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.emooc-course-nav-item {
+    display: inline-block;
+    margin: 0 4px;
+}
+
+.emooc-course-nav-item a {
+    display: block;
+    line-height: 14px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.emooc-course-nav-item a:link {
+    color: #1c1f21;
+}
+
 .admin-num-container {
     height: 150px;
     background-color: #f2f2f2;

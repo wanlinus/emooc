@@ -63,9 +63,7 @@
                                 <strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li sec:authorize="isAuthenticated()">
-                                    <form class="navbar-form" th:action="@{/logout}" th:method="post">
-                                        <input class="form-control" type="submit" th:value="退出"/>
-                                    </form>
+                                    <a th:href="@{/logout}">退出</a>
                                 </li>
                                 <li sec:authorize="!isAuthenticated()">
                                     <a th:href="@{/login}">登陆</a>

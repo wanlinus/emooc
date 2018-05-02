@@ -120,10 +120,10 @@
 <script>
     $("#direction").change(function () {
         $.ajax({
-            url: "/course/classifications/" + $("#direction")[0].value,
+            url: "/course/direction/" + $("#direction")[0].value,
             success: function (responseData) {
                 console.log(responseData);
-                const b = eval(responseData);
+                let b = responseData.classifications;
                 $("#classification option").remove();
                 for (let i = 0; i < b.length; i++) {
                     $("#classification").append("<option value='" + b[i].id + "'>" + b[i].name + "</option>")

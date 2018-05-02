@@ -34,4 +34,12 @@ public interface CourseDirectionService {
      * @return 课程方向
      */
     List<CourseDirection> getDirections();
+
+    /**
+     * 返回指定课程方向
+     *
+     * @param directionId 指定课程ID
+     * @return 课程方向
+     */
+    CourseDirection getDirection(String directionId);
 }

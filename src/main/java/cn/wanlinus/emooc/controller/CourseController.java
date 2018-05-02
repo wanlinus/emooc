@@ -67,16 +67,16 @@ public class CourseController {
         return typeService.getTypes();
     }
 
-    @GetMapping("directions")
+    @GetMapping("direction")
     @ResponseBody
     public List<CourseDirection> directions() {
         return directionService.getDirections();
     }
 
-    @GetMapping("classifications/{directionId}")
+    @GetMapping("direction/{directionId}")
     @ResponseBody
-    public List<CourseClassification> classifications(@PathVariable String directionId) {
-        return classificationService.getClassifications(directionId);
+    public CourseDirection getCourseDirection(@PathVariable("directionId") String directionId) {
+        return directionService.getDirection(directionId);
     }
 
     @GetMapping("classifications")

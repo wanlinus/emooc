@@ -81,7 +81,7 @@ public class TeacherController {
     @GetMapping(value = "course/add")
     public String add(Model model) {
         model.addAttribute("directions", directionService.getDirections());
-        model.addAttribute("classifications", classificationService.getClassifications(String.valueOf(1)));
+        model.addAttribute("classifications", directionService.getDirection(String.valueOf(1)).getClassifications());
         model.addAttribute("types", typeService.getTypes());
         return "teacher/course/add";
     }
