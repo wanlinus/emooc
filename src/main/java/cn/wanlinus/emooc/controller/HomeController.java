@@ -79,7 +79,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         String page = null;
         String role = AuthUtils.getRole();
         if (ROLE_USER.equals(role)) {
-            page = "redirect:/user/index";
+            page = "redirect:/course/index";
         } else if (ROLE_TEACHER.equals(role)) {
             page = "redirect:/teacher/index";
         } else if (ROLE_ADMIN.equals(role)) {

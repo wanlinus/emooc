@@ -54,7 +54,7 @@ public class CourseController {
     @Autowired
     private CourseClassificationService classificationService;
 
-    @GetMapping(value = "")
+    @GetMapping(value = {"", "index"})
     public String index(Model model) {
         List<CourseDirection> list = courseService.getAllCourseDirection();
         model.addAttribute("direction", JSON.toJSONString(list));
