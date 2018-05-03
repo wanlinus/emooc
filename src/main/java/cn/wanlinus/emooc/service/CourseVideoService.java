@@ -19,35 +19,43 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
-import cn.wanlinus.emooc.domain.CourseDirection;
+import cn.wanlinus.emooc.domain.CourseVideo;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:07
+ * @date 2018-05-03 19:12
  */
-public interface CourseDirectionService {
+public interface CourseVideoService {
     /**
-     * 获取所有课程方向
+     * 对所有视频进行计数
      *
-     * @return 课程方向
+     * @return 返回统计量
      */
-    List<CourseDirection> getDirections();
+    Long countVideos();
 
     /**
-     * 返回指定课程方向
+     * 对相应日期的视频进行计数
      *
-     * @param directionId 指定课程ID
-     * @return 课程方向
+     * @param date 相应日期
+     * @return 视频统计量
      */
-    CourseDirection getDirection(String directionId);
+    Long countVideos(Date date);
 
     /**
-     * 获取所有的课程方向
+     * 保存视频
      *
-     * @return 课程方向集合
+     * @param video 需要保存的视频对象
+     * @return 数据库中的对象
      */
-    List<CourseDirection> getAllDirections();
+    CourseVideo saveVideo(CourseVideo video);
+
+    /**
+     * 通过视频Id查找相应视频
+     *
+     * @param videoId 需要查找的视频Id
+     * @return 相应的视频对象
+     */
+    CourseVideo findVideo(String videoId);
 }

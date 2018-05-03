@@ -148,4 +148,42 @@ public interface CourseService {
      * @return 视频对象
      */
     CourseVideo getCourseVideo(String videoId);
+
+    /**
+     * 获取所有的课程分类
+     *
+     * @return 课程分类列表
+     */
+    List<CourseClassification> getAllClassifications();
+
+    /**
+     * 获得所有课程
+     *
+     * @return 课程列表
+     */
+    List<Course> getAllCourses();
+
+    /**
+     * 获取所有课程 根据时间倒叙排序
+     *
+     * @return 课程列表
+     */
+    List<Course> getAllCoursesDescDate();
+
+    /**
+     * 获取指定课程方向
+     *
+     * @param directionId 指定课程方向ID
+     * @return 相应的课程
+     */
+    CourseDirection getCourseDirection(String directionId);
+
+    /**
+     * 获取指定教室排行课程
+     *
+     * @param teacherId 指定讲师
+     * @param number    个数
+     * @return 相应课程集合
+     */
+    List<Course> getTopCourses(String teacherId, Integer number);
 }

@@ -22,6 +22,7 @@ package cn.wanlinus.emooc.service.impl;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.LoggerDTO;
+import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.service.EmoocLogService;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,18 +43,18 @@ import java.util.List;
 public class EmoocLogServiceImpl implements EmoocLogService {
 
     @Autowired
-    private EmoocLogRepository emoocLogRepository;
+    private EmoocLogRepository logRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EmoocLog> getTopUserLog(Integer startNum, Integer endNum) {
-        return emoocLogRepository.getTopUserLog(startNum, endNum);
+        return logRepository.getTopUserLog(startNum, endNum);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EmoocLog> getTopTeacherLog(Integer startNum, Integer endNum) {
-        return emoocLogRepository.getTopTeacherLog(startNum, endNum);
+        return logRepository.getTopTeacherLog(startNum, endNum);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     public LayuiPaginationDataDTO<LoggerDTO> pageRoleLogger(EmoocRole role, int page, Integer limit) {
         LayuiPaginationDataDTO<LoggerDTO> dto = new LayuiPaginationDataDTO<>();
         try {
-            dto.setCount(emoocLogRepository.countLog(role));
-            List<EmoocLog> logs = emoocLogRepository.pageRoleLogger(role.ordinal(), limit * page, limit);
+            dto.setCount(logRepository.countLog(role));
+            List<EmoocLog> logs = logRepository.pageRoleLogger(role.ordinal(), limit * page, limit);
             List<LoggerDTO> list = new ArrayList<>();
             for (EmoocLog log : logs) {
                 LoggerDTO d = new LoggerDTO();
@@ -83,5 +85,40 @@ public class EmoocLogServiceImpl implements EmoocLogService {
             e.printStackTrace();
         }
         return dto;
+    }
+
+    @Override
+    public Long countCourseLogs(Date time) {
+        return logRepository.countCourses(time);
+    }
+
+    @Override
+    public Long countVideoLogs(Date time) {
+        return logRepository.countVideos(time);
+    }
+
+    @Override
+    public Long countTeacherLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_TEACHER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+    }
+
+    @Override
+    public Long countTeacherRegister(Date date) {
+        return logRepository.countLogType(EmoocLogType.TEACHER_REGISTER.ordinal(), date);
+    }
+
+    @Override
+    public Long countUserLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_USER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+    }
+
+    @Override
+    public Long countUserRegister(Date date) {
+        return logRepository.countLogType(EmoocLogType.USER_REGISTER.ordinal(), date);
+    }
+
+    @Override
+    public Long countAdminLogin(Date date) {
+        return logRepository.countRoleType(EmoocRole.ROLE_ADMIN.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
     }
 }

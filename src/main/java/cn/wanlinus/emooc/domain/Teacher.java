@@ -23,11 +23,9 @@ import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
 import com.alibaba.fastjson.JSON;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wanli
@@ -66,6 +64,12 @@ public class Teacher implements Serializable {
 
     @Column(name = "TEACHER_STATUS")
     private TeacherStatus status;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Course> courses;
 
     public Teacher() {
     }
@@ -148,6 +152,22 @@ public class Teacher implements Serializable {
 
     public void setStatus(TeacherStatus status) {
         this.status = status;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

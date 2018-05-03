@@ -19,11 +19,13 @@
 
 package cn.wanlinus.emooc.domain;
 
+import cn.wanlinus.emooc.enums.EmoocCourseGrade;
 import com.alibaba.fastjson.JSON;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -43,7 +45,7 @@ public class Course implements Serializable {
     private Double tariff;
 
     @Column(name = "COURSE_GRADE")
-    private Character grade;
+    private EmoocCourseGrade grade;
 
     @Column(name = "COURSE_DURATION")
     private Integer duration;
@@ -75,6 +77,18 @@ public class Course implements Serializable {
     @JoinColumn(name = "COURSE_TYPE_ID", referencedColumnName = "TYPE_ID")
     private CourseType type;
 
+    @OneToMany(mappedBy = "course")
+    private List<CourseSection> sections;
+
+    @OneToMany(mappedBy = "course")
+    private List<CourseComment> courseComments;
+
+    @OneToMany(mappedBy = "course")
+    private List<UserStudy> studies;
+
+    @OneToMany(mappedBy = "course")
+    private List<Note> notes;
+
     public Course() {
     }
 
@@ -102,11 +116,11 @@ public class Course implements Serializable {
         this.tariff = tariff;
     }
 
-    public Character getGrade() {
+    public EmoocCourseGrade getGrade() {
         return grade;
     }
 
-    public void setGrade(Character grade) {
+    public void setGrade(EmoocCourseGrade grade) {
         this.grade = grade;
     }
 
@@ -180,6 +194,38 @@ public class Course implements Serializable {
 
     public void setType(CourseType type) {
         this.type = type;
+    }
+
+    public List<CourseSection> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<CourseSection> sections) {
+        this.sections = sections;
+    }
+
+    public List<CourseComment> getCourseComments() {
+        return courseComments;
+    }
+
+    public void setCourseComments(List<CourseComment> courseComments) {
+        this.courseComments = courseComments;
+    }
+
+    public List<UserStudy> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(List<UserStudy> studies) {
+        this.studies = studies;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     @Override

@@ -60,7 +60,7 @@
         </nav>
     </div>
 </header>
-<div class="container" style="padding: 20px 0;background: #f3f5f7;">
+<div class="container" style="padding: 0 0 20px 0">
     <div class="emooc-wrap">
         <div class="emooc-top">
             <div class="emooc-course-content">
@@ -69,36 +69,11 @@
                         <span class="hd emooc-l">方向：</span>
                         <div class="emooc-bd">
                             <ul class="">
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list">全部</a>
+                                <li class="emooc-course-nav-item on">
+                                    <a th:href="@{/course}">全部</a>
                                 </li>
-                                <li class=" emooc-course-nav-item on">
-                                    <a href="/course/list?c=fe" data-ct="fe">前端开发</a>
-                                </li>
-                                <li class=" emooc-course-nav-item">
-                                    <a href="/course/list?c=be" data-ct="be">后端开发</a>
-                                </li>
-                                <li class=" emooc-course-nav-item">
-                                    <a href="/course/list?c=mobile" data-ct="mobile">移动开发</a>
-                                </li>
-                                <li class=" emooc-course-nav-item">
-                                    <a href="/course/list?c=data" data-ct="data">数据库</a>
-                                </li>
-                                <li class=" emooc-course-nav-item
-                                    ">
-                                    <a href="/course/list?c=ai" data-ct="ai">人工智能</a>
-                                </li>
-                                <li class=" emooc-course-nav-item
-                                    ">
-                                    <a href="/course/list?c=cb" data-ct="cb">云计算&amp;大数据</a>
-                                </li>
-                                <li class=" emooc-course-nav-item
-                                    ">
-                                    <a href="/course/list?c=op" data-ct="op">运维&amp;测试</a>
-                                </li>
-                                <li class=" emooc-course-nav-item
-                                    ">
-                                    <a href="/course/list?c=photo" data-ct="photo">UI设计</a>
+                                <li class="emooc-course-nav-item" th:each="direction:${directions}">
+                                    <a th:href="${'/course/direction/' + direction.id}" th:text="${direction.name}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -107,74 +82,13 @@
                         <span class="hd emooc-l">分类：</span>
                         <div class="emooc-bd">
                             <ul class="">
-                                <li class=" emooc-course-nav-item on">
+                                <li class="emooc-course-nav-item on">
                                     <a href="/course/list?c=fe">全部</a>
                                 </li>
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=html" data-id="7" data-ct="fe">HTML/CSS</a>
+                                <li class=" emooc-course-nav-item" th:each="classification : ${classifications}">
+                                    <a href="/course/list?c=html" data-id="7" data-ct="fe"
+                                       th:text="${classification.name}">HTML/CSS</a>
                                 </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=javascript" data-id="44" data-ct="fe">JavaScript</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=html5" data-id="221" data-ct="fe">Html5</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=css3" data-id="1262" data-ct="fe">CSS3</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=jquery" data-id="219" data-ct="fe">jQuery</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=nodejs" data-id="222" data-ct="fe">Node.js</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=bootstrap" data-id="1263" data-ct="fe">Bootstrap</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=angular" data-id="1123" data-ct="fe">Angular</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=reactjs" data-id="1374" data-ct="fe">React.JS</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=vuejs" data-id="1423" data-ct="fe">Vue.js</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=sassless" data-id="1429" data-ct="fe">Sass/Less</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=webapp" data-id="1260" data-ct="fe">WebApp</a>
-                                </li>
-
-
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=fetool" data-id="1261" data-ct="fe">前端工具</a>
-                                </li>
-
                             </ul>
                         </div>
                     </div>
@@ -185,7 +99,7 @@
                         <div class="emooc-bd">
                             <ul class="">
 
-                                <li class=" emooc-course-nav-item on">
+                                <li class="emooc-course-nav-item on">
                                     <a href="/course/list?c=fe">全部</a>
                                 </li>
                                 <li class=" emooc-course-nav-item ">
@@ -209,6 +123,68 @@
             </div>
         </div>
     </div>
+    <div class="emooc-course-tool-bar clearfix">
+        <div class="emooc-tool-left emooc-l">
+            <a href="/course/list?c=javascript" class="sort-item active">全部</a>
+            <a href="/course/list?c=javascript&amp;is_easy=1" class="sort-item">入门</a>
+            <a href="/course/list?c=javascript&amp;is_easy=2" class="sort-item">初级</a>
+            <a href="/course/list?c=javascript&amp;is_easy=3" class="sort-item">中级</a>
+            <a href="/course/list?c=javascript&amp;is_easy=4" class="sort-item">高级</a>
+        </div>
+        <div class="emooc-l">
+        <span class="emooc-tool-item" style="display: none;">
+            <a class="emooc-follow-learn emooc-tool-chk" href="javascript:void(0);">跟我学</a>
+        </span>
+        </div>
+        <div class="emooc-tool-right r">
+            <span class="emooc-tool-item emooc-total-num">共<b th:text="${courses.size()}">98</b>个课程</span>
+            <span class="emooc-tool-item emooc-tool-pager">
+            <a href="javascript:void(0)" class="emooc-pager-action pager-prev  disabled"><i class="icon-left2"></i></a>
+            <a href="/course/list?c=javascript&amp;page=2" class="emooc-pager-action pager-next">
+                <i class="icon-right2"></i>
+            </a>
+        </span>
+        </div>
+    </div>
+    <div class="emooc-course-list">
+        <div class="emooc-moco-course-list">
+            <div class="clearfix">
+
+                <div class="emooc-course-card-container" th:each="course:${courses}">
+                    <a target="_blank" href="/learn/955" class="emooc-course-card">
+                        <div class="emooc-course-card-top">
+                            <img class="emooc-course-banner lazy"
+                                 data-original="//img1.mukewang.com/5a97d4000001d97906000338-240-135.jpg"
+                                 th:src="${course.imagePath}"
+                                 style="display: inline;">
+                            <div class="emooc-course-label">
+                                <label th:text="${course.classification.name}">JavaScript</label>
+                            </div>
+                        </div>
+                        <div class="emooc-course-card-content">
+                            <h3 class="emooc-course-card-name" th:text="${course.name}">ES6快速入门</h3>
+                            <div class="clearfix emooc-course-card-bottom">
+                                <div class="emooc-course-card-info">
+                                    <span th:text="${course.grade.description}">初级</span>
+                                    <span><i class="icon-set_sns"></i>20556</span>
+                                </div>
+                                <p class="emooc-course-card-desc" th:text="${course.notice}">
+                                    用最通俗、形象的方法描述ES6的强大并教会你正确的学习方法。</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="page"><span class="disabled_page">首页</span><span class="disabled_page">上一页</span><a
+                href="javascript:void(0)" class="active text-page-tag">1</a><a class="text-page-tag"
+                                                                               href="/course/list?c=javascript&amp;page=2">2</a><a
+                class="text-page-tag" href="/course/list?c=javascript&amp;page=3">3</a><a class="text-page-tag"
+                                                                                          href="/course/list?c=javascript&amp;page=4">4</a><a
+                href="/course/list?c=javascript&amp;page=2">下一页</a><a href="/course/list?c=javascript&amp;page=4">尾页</a>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

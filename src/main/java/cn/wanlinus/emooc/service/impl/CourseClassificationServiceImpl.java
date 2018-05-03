@@ -43,4 +43,9 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
         return classificationRepository.findAll();
     }
 
+    @Override
+    public CourseClassification get(String classificationId) {
+        return classificationRepository.findOne(classificationId);
+    }
+
 }

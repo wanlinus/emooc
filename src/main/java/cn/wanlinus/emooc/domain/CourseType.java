@@ -21,11 +21,9 @@ package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wanli
@@ -41,6 +39,9 @@ public class CourseType implements Serializable {
 
     @Column(name = "TYPE_NAME")
     private String name;
+
+    @OneToMany(mappedBy = "type")
+    private List<Course> courses;
 
     public CourseType() {
     }
@@ -59,6 +60,14 @@ public class CourseType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

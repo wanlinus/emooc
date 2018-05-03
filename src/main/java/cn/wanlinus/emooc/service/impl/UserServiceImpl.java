@@ -25,11 +25,10 @@ import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.EmoocLogType;
-import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
-import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
+import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private EmoocLogRepository logRepository;
+    private EmoocLogService logService;
 
 
     @Override
@@ -123,7 +122,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countUserLogin(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_USER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+        return logService.countUserLogin(date);
     }
 
     @Override
@@ -141,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countUserRegister(Date date) {
-        return logRepository.countLogType(EmoocLogType.USER_REGISTER.ordinal(), date);
+        return logService.countUserRegister(date);
     }
 
     @Override

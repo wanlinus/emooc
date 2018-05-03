@@ -44,8 +44,7 @@ public class CourseDirection implements Serializable {
     @Column(name = "DIRECTION_NAME")
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "CLASSIFICATION_DIRECTION_ID", referencedColumnName = "DIRECTION_ID")
+    @OneToMany(mappedBy = "direction")
     private List<CourseClassification> classifications;
 
     public CourseDirection() {

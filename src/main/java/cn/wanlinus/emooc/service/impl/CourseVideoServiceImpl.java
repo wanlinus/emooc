@@ -19,33 +19,41 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.CourseType;
-import cn.wanlinus.emooc.persistence.CourseTypeRepository;
-import cn.wanlinus.emooc.service.CourseTypeService;
+import cn.wanlinus.emooc.domain.CourseVideo;
+import cn.wanlinus.emooc.persistence.CourseVideoRepository;
+import cn.wanlinus.emooc.service.CourseVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:02
+ * @date 2018-05-03 19:12
  */
 @Service
-public class CourseTypeServiceImpl implements CourseTypeService {
+public class CourseVideoServiceImpl implements CourseVideoService {
 
     @Autowired
-    private CourseTypeRepository typeRepository;
+    private CourseVideoRepository videoRepository;
 
     @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<CourseType> getTypes() {
-        return typeRepository.findAll();
+    public Long countVideos() {
+        return videoRepository.count();
     }
 
     @Override
-    public CourseType get(String typeId) {
-        return typeRepository.getOne(typeId);
+    public Long countVideos(Date date) {
+        return videoRepository.countVideos(date);
+    }
+
+    @Override
+    public CourseVideo saveVideo(CourseVideo video) {
+        return videoRepository.save(video);
+    }
+
+    @Override
+    public CourseVideo findVideo(String videoId) {
+        return videoRepository.findOne(videoId);
     }
 }

@@ -19,33 +19,34 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.CourseType;
-import cn.wanlinus.emooc.persistence.CourseTypeRepository;
-import cn.wanlinus.emooc.service.CourseTypeService;
+import cn.wanlinus.emooc.domain.CourseSection;
+import cn.wanlinus.emooc.persistence.CourseSectionRepository;
+import cn.wanlinus.emooc.service.CourseSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:02
+ * @date 2018-05-03 18:52
  */
 @Service
-public class CourseTypeServiceImpl implements CourseTypeService {
+public class CourseSectionServiceImpl implements CourseSectionService {
 
     @Autowired
-    private CourseTypeRepository typeRepository;
+    private CourseSectionRepository sectionRepository;
 
     @Override
-    @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<CourseType> getTypes() {
-        return typeRepository.findAll();
+    public Integer countCourseSection(String courseId) {
+        return sectionRepository.countCourseSectionByCourseId(courseId);
     }
 
     @Override
-    public CourseType get(String typeId) {
-        return typeRepository.getOne(typeId);
+    public CourseSection save(CourseSection section) {
+        return sectionRepository.save(section);
+    }
+
+    @Override
+    public CourseSection find(String sectionId) {
+        return sectionRepository.findOne(sectionId);
     }
 }

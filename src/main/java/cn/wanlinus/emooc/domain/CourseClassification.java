@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wanli
@@ -43,6 +44,9 @@ public class CourseClassification implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLASSIFICATION_DIRECTION_ID", referencedColumnName = "DIRECTION_ID")
     private CourseDirection direction;
+
+    @OneToMany(mappedBy = "classification")
+    private List<Course> courses;
 
     public CourseClassification() {
     }
@@ -69,6 +73,14 @@ public class CourseClassification implements Serializable {
 
     public void setDirection(CourseDirection direction) {
         this.direction = direction;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

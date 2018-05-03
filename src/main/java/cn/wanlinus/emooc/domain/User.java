@@ -23,12 +23,10 @@ import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
 import com.alibaba.fastjson.JSON;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -91,6 +89,18 @@ public class User implements Serializable {
 
     @Column(name = "USER_STATUS")
     private UserStatus userStatus;
+
+    @OneToMany(mappedBy = "user")
+    private List<CourseComment> courseComments;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserStudy> studies;
+
+    @OneToMany(mappedBy = "user")
+    private List<Note> notes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions;
 
     public User() {
     }
@@ -244,6 +254,38 @@ public class User implements Serializable {
 
     public void setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public List<CourseComment> getCourseComments() {
+        return courseComments;
+    }
+
+    public void setCourseComments(List<CourseComment> courseComments) {
+        this.courseComments = courseComments;
+    }
+
+    public List<UserStudy> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(List<UserStudy> studies) {
+        this.studies = studies;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override

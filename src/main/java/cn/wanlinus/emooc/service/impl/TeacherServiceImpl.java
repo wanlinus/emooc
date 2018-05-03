@@ -27,12 +27,10 @@ import cn.wanlinus.emooc.domain.CourseVideo;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocLogType;
-import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
-import cn.wanlinus.emooc.persistence.*;
-import cn.wanlinus.emooc.service.CourseService;
-import cn.wanlinus.emooc.service.TeacherService;
+import cn.wanlinus.emooc.persistence.TeacherRepository;
+import cn.wanlinus.emooc.service.*;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,21 +50,15 @@ import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
-    private CourseService courseService;
-    @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseService courseService;
     @Autowired
-    private CourseCommentRepository commentRepository;
+    private CourseCommentService commentService;
     @Autowired
-    private CourseSectionRepository sectionRepository;
+    private UserStudyService userStudyService;
     @Autowired
-    private UserStudyRepository userStudyRepository;
-    @Autowired
-    private CourseVideoRepository videoRepository;
-    @Autowired
-    private EmoocLogRepository logRepository;
+    private EmoocLogService logService;
 
     /**
      * 获取当前教师
@@ -117,7 +109,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countTeacherLogin(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_TEACHER.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+        return logService.countTeacherLogin(date);
     }
 
     @Override
@@ -138,7 +130,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countTeacherRegister(Date date) {
-        return logRepository.countLogType(EmoocLogType.TEACHER_REGISTER.ordinal(), date);
+        return logService.countTeacherRegister(date);
     }
 
     @Override
@@ -153,7 +145,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<ThCourseDTO> topCourses() {
         List<ThCourseDTO> list = new ArrayList<>();
-        List<Course> courses = courseRepository.findTopByTeacherId(getTeacher().getId());
+        List<Course> courses = courseService.getTopCourses(getTeacher().getId(), 5);
         for (Course c : courses) {
             list.add(course2DTO(c));
         }
@@ -188,11 +180,6 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<CourseSection> getSections(String courseId) {
-        return sectionRepository.getAllByCourseId(courseId);
-    }
-
-    @Override
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_VIDEO)
     public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
         return courseService.addSectionVideo(dto);
@@ -200,12 +187,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<SectionDisplayDTO> getSectionsDisplay(String courseId) {
-        List<CourseSection> listSection = getSections(courseId);
+        List<CourseSection> listSection = courseService.getCourse(courseId).getSections();
         List<SectionDisplayDTO> dtoList = new ArrayList<>();
         for (CourseSection section : listSection) {
             SectionDisplayDTO dto = new SectionDisplayDTO();
             List<VideoDisplayDTO> videoDtoList = new ArrayList<>();
-            List<CourseVideo> videos = videoRepository.findAllBySectionId(section.getId());
+            List<CourseVideo> videos = section.getVideos();
             for (CourseVideo v : videos) {
                 VideoDisplayDTO d = new VideoDisplayDTO();
                 d.setVideoId(v.getId());
@@ -239,10 +226,10 @@ public class TeacherServiceImpl implements TeacherService {
         dto.setId(course.getId());
         dto.setName(course.getName());
         dto.setClassification(course.getClassification().getName());
-        dto.setComments(commentRepository.commentsNum(course.getId()));
+        dto.setComments(commentService.count(course.getId()));
         dto.setDate(CommonUtils.dateFormatSimple(course.getCreateTime()));
         dto.setPicPath(course.getImagePath());
-        dto.setStudy(userStudyRepository.studyNum(course.getId()));
+        dto.setStudy(userStudyService.countStudies(course.getId()));
         dto.setScore(course.getScore());
         dto.setNotice(course.getNotice());
         return dto;

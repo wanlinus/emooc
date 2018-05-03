@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -52,6 +53,9 @@ public class CourseComment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "COMMENT_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
+
+    @OneToMany(mappedBy = "comment")
+    private List<Reply> replies;
 
     public CourseComment() {
     }
@@ -102,6 +106,14 @@ public class CourseComment implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public List<Reply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
     }
 
     @Override

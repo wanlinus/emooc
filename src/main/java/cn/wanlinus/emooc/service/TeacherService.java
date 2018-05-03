@@ -150,14 +150,6 @@ public interface TeacherService {
     CourseSection addSection(SectionAddDTO dto);
 
     /**
-     * 获取指定课程章节
-     *
-     * @param courseId 课程名称
-     * @return 课程的章节
-     */
-    List<CourseSection> getSections(String courseId);
-
-    /**
      * 添加课程视频
      *
      * @param dto 课程

@@ -57,9 +57,6 @@ public class AdminController {
 
     /**
      * 管理员首页
-     *
-     * @param model
-     * @return
      */
     @RequestMapping(value = {"", "/", "/index", "index.html"})
     public String home(Model model) {
@@ -79,6 +76,9 @@ public class AdminController {
         return "admin/index";
     }
 
+    /**
+     * 管理员详情
+     */
     @GetMapping(value = "information")
     public String information() {
         return "admin/information";
@@ -113,8 +113,6 @@ public class AdminController {
 
     /**
      * 讲师管理系统
-     *
-     * @return
      */
     @GetMapping("tms")
     public String teacherManagerSystem() {

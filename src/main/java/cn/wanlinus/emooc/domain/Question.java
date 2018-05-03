@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 学生对来时问问题
@@ -52,8 +53,8 @@ public class Question implements Serializable {
     @JoinColumn(name = "QUESTION_TEACHER_ID", referencedColumnName = "TEACHER_ID")
     private Teacher teacher;
 
-    public Question() {
-    }
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
 
     public String getId() {
         return id;
@@ -93,6 +94,14 @@ public class Question implements Serializable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     @Override

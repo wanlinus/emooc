@@ -56,8 +56,9 @@ public class CourseController {
 
     @GetMapping(value = {"", "index"})
     public String index(Model model) {
-        List<CourseDirection> list = courseService.getAllCourseDirection();
-        model.addAttribute("direction", JSON.toJSONString(list));
+        model.addAttribute("directions", courseService.getAllCourseDirection());
+        model.addAttribute("classifications", courseService.getAllClassifications());
+        model.addAttribute("courses", courseService.getAllCoursesDescDate());
         return "course/index";
     }
 
@@ -71,6 +72,12 @@ public class CourseController {
     @ResponseBody
     public List<CourseDirection> directions() {
         return directionService.getDirections();
+    }
+
+    @GetMapping("direction/list/{directionId}")
+    public String direction(@PathVariable("directionId") String directionId, Model model) {
+        model.addAttribute("direction", courseService.getCourseDirection(directionId));
+        return "";
     }
 
     @GetMapping("direction/{directionId}")

@@ -34,4 +34,12 @@ public interface CourseTypeService {
      * @return 所有课程类型
      */
     List<CourseType> getTypes();
+
+    /**
+     * 根据类型Id查找类型
+     *
+     * @param typeId 课程类型ID
+     * @return 相应课程
+     */
+    CourseType get(String typeId);
 }

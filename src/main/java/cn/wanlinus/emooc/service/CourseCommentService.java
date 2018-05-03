@@ -19,35 +19,17 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
-import cn.wanlinus.emooc.domain.CourseDirection;
-
-import java.util.List;
-
 /**
  * @author wanli
- * @date 2018-04-22 21:07
+ * @date 2018-05-03 19:25
  */
-public interface CourseDirectionService {
-    /**
-     * 获取所有课程方向
-     *
-     * @return 课程方向
-     */
-    List<CourseDirection> getDirections();
+public interface CourseCommentService {
 
     /**
-     * 返回指定课程方向
+     * 统计指定课程评论数
      *
-     * @param directionId 指定课程ID
-     * @return 课程方向
+     * @param courseId 课程Id
+     * @return 统计量
      */
-    CourseDirection getDirection(String directionId);
-
-    /**
-     * 获取所有的课程方向
-     *
-     * @return 课程方向集合
-     */
-    List<CourseDirection> getAllDirections();
+    Integer count(String courseId);
 }

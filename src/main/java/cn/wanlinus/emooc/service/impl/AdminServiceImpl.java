@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 获取30天的数据
      */
-    public static final int MONTH = 30;
+    private static final int MONTH = 30;
     @Autowired
     private EmoocLogService logService;
 
@@ -55,17 +55,10 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private CourseService courseService;
 
-    @Autowired
-    private AdminRepository adminRepository;
-
-    @Autowired
-    private EmoocLogRepository logRepository;
-
-
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countAdminLogin(Date date) {
-        return logRepository.countRoleType(EmoocRole.ROLE_ADMIN.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
+        return logService.countAdminLogin(date);
     }
 
     @Override
@@ -100,8 +93,7 @@ public class AdminServiceImpl implements AdminService {
         dto.setTeacherRegister(teacherService.teacherRegisterStatistics(new Date(), MONTH));
         dto.setTeacherLogin(teacherService.teacherLoginStatistics(new Date(), MONTH));
         dto.setCourse(courseService.coursesAddStatistics(new Date(), MONTH));
-        dto.setVideo(courseService.courseVideosStatistics(new Date(),MONTH));
+        dto.setVideo(courseService.courseVideosStatistics(new Date(), MONTH));
         return dto;
     }
-
 }

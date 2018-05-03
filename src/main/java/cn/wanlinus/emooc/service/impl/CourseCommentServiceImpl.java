@@ -17,37 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
+package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
-import cn.wanlinus.emooc.domain.CourseDirection;
-
-import java.util.List;
+import cn.wanlinus.emooc.persistence.CourseCommentRepository;
+import cn.wanlinus.emooc.service.CourseCommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:07
+ * @date 2018-05-03 19:25
  */
-public interface CourseDirectionService {
-    /**
-     * 获取所有课程方向
-     *
-     * @return 课程方向
-     */
-    List<CourseDirection> getDirections();
+@Service
+public class CourseCommentServiceImpl implements CourseCommentService {
 
-    /**
-     * 返回指定课程方向
-     *
-     * @param directionId 指定课程ID
-     * @return 课程方向
-     */
-    CourseDirection getDirection(String directionId);
+    @Autowired
+    private CourseCommentRepository commentRepository;
 
-    /**
-     * 获取所有的课程方向
-     *
-     * @return 课程方向集合
-     */
-    List<CourseDirection> getAllDirections();
+    @Override
+    public Integer count(String courseId) {
+        return commentRepository.commentsNum(courseId);
+    }
 }

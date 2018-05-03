@@ -24,6 +24,7 @@ import cn.wanlinus.emooc.dto.LayuiPaginationDataDTO;
 import cn.wanlinus.emooc.dto.LoggerDTO;
 import cn.wanlinus.emooc.enums.EmoocRole;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,4 +61,59 @@ public interface EmoocLogService {
      */
     LayuiPaginationDataDTO<LoggerDTO> pageRoleLogger(EmoocRole role, int page, Integer limit);
 
+    /**
+     * 计数某日课程日志
+     *
+     * @param time 指定日期
+     * @return 统计量
+     */
+    Long countCourseLogs(Date time);
+
+    /**
+     * 计数某日视频日志
+     *
+     * @param time 指定日期
+     * @return 统计量
+     */
+    Long countVideoLogs(Date time);
+
+    /**
+     * 指定日期对教师登录情况进行计数
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countTeacherLogin(Date date);
+
+    /**
+     * 指定日期对教师注册情况进行计数
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countTeacherRegister(Date date);
+
+    /**
+     * 指定日期对用户登陆情况进行计数
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countUserLogin(Date date);
+
+    /**
+     * 指定日期对用户注册情况尽心统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countUserRegister(Date date);
+
+    /**
+     * 指定日期对管理员登陆情况进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countAdminLogin(Date date);
 }

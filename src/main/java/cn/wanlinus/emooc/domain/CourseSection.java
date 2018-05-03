@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wanli
@@ -49,10 +50,12 @@ public class CourseSection implements Serializable {
     @Column(name = "SECTION_CREATE_TIME")
     private Date createTime;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "SECTION_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
+
+    @OneToMany(mappedBy = "section")
+    private List<CourseVideo> videos;
 
     public CourseSection() {
     }
@@ -103,6 +106,14 @@ public class CourseSection implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public List<CourseVideo> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<CourseVideo> videos) {
+        this.videos = videos;
     }
 
     @Override

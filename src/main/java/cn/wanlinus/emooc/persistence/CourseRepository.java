@@ -34,10 +34,11 @@ public interface CourseRepository extends BaseRepository<Course, String> {
      * 通过教师Id查找该教师顶置课程
      *
      * @param teacherId 教师ID
+     * @param number    指定个数
      * @return 课程列表
      */
-    @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_SCORE DESC LIMIT 0,5", nativeQuery = true)
-    List<Course> findTopByTeacherId(String teacherId);
+    @Query(value = "SELECT * FROM TB_COURSE AS c WHERE c.COURSE_TEACH_ID = ?1 ORDER BY c.COURSE_SCORE DESC LIMIT 0,?2", nativeQuery = true)
+    List<Course> findTopByTeacherId(String teacherId, Integer number);
 
 
     /**

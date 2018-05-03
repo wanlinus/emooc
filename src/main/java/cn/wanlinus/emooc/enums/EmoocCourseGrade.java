@@ -17,37 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
-
-import cn.wanlinus.emooc.domain.CourseClassification;
-import cn.wanlinus.emooc.domain.CourseDirection;
-
-import java.util.List;
+package cn.wanlinus.emooc.enums;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:07
+ * @date 2018-05-03 17:03
  */
-public interface CourseDirectionService {
+public enum EmoocCourseGrade {
     /**
-     * 获取所有课程方向
-     *
-     * @return 课程方向
+     * 用于描述课程等级的枚举变量
      */
-    List<CourseDirection> getDirections();
+    GRADE_BASIC("初级"),
+    GRADE_PRIMARY("入门"),
+    GRADE_MEDIUM("中级"),
+    GRADE_ADVANCED("高级");
+    private String description;
 
-    /**
-     * 返回指定课程方向
-     *
-     * @param directionId 指定课程ID
-     * @return 课程方向
-     */
-    CourseDirection getDirection(String directionId);
+    EmoocCourseGrade(String description) {
+        this.description = description;
+    }
 
-    /**
-     * 获取所有的课程方向
-     *
-     * @return 课程方向集合
-     */
-    List<CourseDirection> getAllDirections();
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

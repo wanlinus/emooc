@@ -19,35 +19,34 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
-import cn.wanlinus.emooc.domain.CourseDirection;
-
-import java.util.List;
+import cn.wanlinus.emooc.domain.CourseSection;
 
 /**
  * @author wanli
- * @date 2018-04-22 21:07
+ * @date 2018-05-03 18:52
  */
-public interface CourseDirectionService {
+public interface CourseSectionService {
     /**
-     * 获取所有课程方向
+     * 通过课程ID计数相应课程
      *
-     * @return 课程方向
+     * @param courseId 课程ID
+     * @return 相应统计量
      */
-    List<CourseDirection> getDirections();
+    Integer countCourseSection(String courseId);
 
     /**
-     * 返回指定课程方向
+     * 保存课程章节
      *
-     * @param directionId 指定课程ID
-     * @return 课程方向
+     * @param section 需要保存的章节
+     * @return 保存的章节
      */
-    CourseDirection getDirection(String directionId);
+    CourseSection save(CourseSection section);
 
     /**
-     * 获取所有的课程方向
+     * 通过章节Id查找相应章节
      *
-     * @return 课程方向集合
+     * @param sectionId 指定章节Id
+     * @return 返回查找到的章节
      */
-    List<CourseDirection> getAllDirections();
+    CourseSection find(String sectionId);
 }

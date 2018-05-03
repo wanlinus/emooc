@@ -35,4 +35,11 @@ public interface CourseClassificationService {
      */
     List<CourseClassification> getClassifications();
 
+    /**
+     * 通过分类ID查找课程分类对象
+     *
+     * @param classificationId 课程分类ID
+     * @return 相应的分类对象
+     */
+    CourseClassification get(String classificationId);
 }
