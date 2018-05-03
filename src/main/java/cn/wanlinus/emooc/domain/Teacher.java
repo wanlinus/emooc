@@ -22,6 +22,7 @@ package cn.wanlinus.emooc.domain;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -65,9 +66,11 @@ public class Teacher implements Serializable {
     @Column(name = "TEACHER_STATUS")
     private TeacherStatus status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private List<Question> questions;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses;
 

@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,6 +41,7 @@ public class CourseType implements Serializable {
     @Column(name = "TYPE_NAME")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "type")
     private List<Course> courses;
 

@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import groovy.lang.Lazy;
 import org.hibernate.annotations.Fetch;
 

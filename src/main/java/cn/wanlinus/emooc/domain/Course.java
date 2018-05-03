@@ -21,6 +21,7 @@ package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.EmoocCourseGrade;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -77,15 +78,19 @@ public class Course implements Serializable {
     @JoinColumn(name = "COURSE_TYPE_ID", referencedColumnName = "TYPE_ID")
     private CourseType type;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<CourseSection> sections;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<CourseComment> courseComments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<UserStudy> studies;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<Note> notes;
 

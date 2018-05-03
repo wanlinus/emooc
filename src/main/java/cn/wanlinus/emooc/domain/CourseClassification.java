@@ -45,6 +45,7 @@ public class CourseClassification implements Serializable {
     @JoinColumn(name = "CLASSIFICATION_DIRECTION_ID", referencedColumnName = "DIRECTION_ID")
     private CourseDirection direction;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "classification")
     private List<Course> courses;
 

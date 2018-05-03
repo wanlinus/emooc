@@ -22,6 +22,7 @@ package cn.wanlinus.emooc.domain;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -90,15 +91,19 @@ public class User implements Serializable {
     @Column(name = "USER_STATUS")
     private UserStatus userStatus;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<CourseComment> courseComments;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserStudy> studies;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Note> notes;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Question> questions;
 

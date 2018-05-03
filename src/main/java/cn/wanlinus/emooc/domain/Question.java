@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.domain;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -53,6 +54,7 @@ public class Question implements Serializable {
     @JoinColumn(name = "QUESTION_TEACHER_ID", referencedColumnName = "TEACHER_ID")
     private Teacher teacher;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "question")
     private List<Answer> answers;
 

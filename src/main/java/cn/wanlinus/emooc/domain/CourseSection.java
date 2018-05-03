@@ -54,6 +54,7 @@ public class CourseSection implements Serializable {
     @JoinColumn(name = "SECTION_COURSE_ID", referencedColumnName = "COURSE_ID")
     private Course course;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "section")
     private List<CourseVideo> videos;
 
