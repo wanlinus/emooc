@@ -121,7 +121,7 @@
 <script>
     $("#direction").change(function () {
         $.ajax({
-            url: "/course/direction/" + $("#direction")[0].value,
+            url: "/course/rest/direction/" + $("#direction")[0].value,
             success: function (responseData) {
                 console.log(responseData);
                 let b = responseData.classifications;

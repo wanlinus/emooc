@@ -62,13 +62,13 @@ public class CourseController {
         return "course/index";
     }
 
-    @GetMapping("types")
+    @GetMapping("rest/types")
     @ResponseBody
     public List<CourseType> types() {
         return typeService.getTypes();
     }
 
-    @GetMapping("direction")
+    @GetMapping("rest/direction")
     @ResponseBody
     public List<CourseDirection> directions() {
         return directionService.getDirections();
@@ -80,13 +80,13 @@ public class CourseController {
         return "";
     }
 
-    @GetMapping("direction/{directionId}")
+    @GetMapping("rest/direction/{directionId}")
     @ResponseBody
     public CourseDirection getCourseDirection(@PathVariable("directionId") String directionId) {
         return directionService.getDirection(directionId);
     }
 
-    @GetMapping("classifications")
+    @GetMapping("rest/classifications")
     @ResponseBody
     public List<CourseClassification> classifications() {
         return classificationService.getClassifications();

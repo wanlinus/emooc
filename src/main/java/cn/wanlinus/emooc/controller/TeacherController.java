@@ -143,7 +143,6 @@ public class TeacherController {
 
     @GetMapping("course/section/video/{videoId}")
     public String play(@PathVariable() String videoId, Model model) {
-
         model.addAttribute("videoPath", teacherService.getCourseVideo(videoId).getPath());
         return "teacher/course/video";
     }
