@@ -20,10 +20,7 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.*;
-import cn.wanlinus.emooc.dto.CourseSectionVideoAddDTO;
-import cn.wanlinus.emooc.dto.SectionAddDTO;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.dto.ThCourseDTO;
+import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
@@ -41,7 +38,15 @@ public interface CourseService {
      *
      * @return 课程方向列表
      */
-    List<CourseDirection> getAllCourseDirection();
+    List<CourseDirection> getCourseDirections();
+
+    /**
+     * 获取包含选择信息的课程方向
+     *
+     * @param directionId 课程方向传输对象列表
+     * @return 课程方向数据传输对象
+     */
+    List<CourseDirectionDTO> getCourseDirectionDTOs(String directionId);
 
     /**
      * 保存课程
@@ -69,6 +74,18 @@ public interface CourseService {
      * @return ThCourseDTO
      */
     List<ThCourseDTO> pageCourse(Teacher teacher, Pageable pageable);
+
+
+    /**
+     * 对课程进行筛选分页
+     *
+     * @param pageSize         每页条数
+     * @param page             第几页
+     * @param directionId      方向Id
+     * @param classificationId 分类Id
+     * @return 课程集合
+     */
+    List<Course> pageCourse(Integer pageSize, Integer page, String directionId, String classificationId);
 
     /**
      * 根据课程Id获取课程
@@ -154,7 +171,15 @@ public interface CourseService {
      *
      * @return 课程分类列表
      */
-    List<CourseClassification> getAllClassifications();
+    List<CourseClassification> getClassifications();
+
+    /**
+     * 获取所有课程分类
+     *
+     * @param classificationId 是否着重标记
+     * @return 课程分类列表
+     */
+    List<CourseClassificationDTO> getClassifications(String classificationId);
 
     /**
      * 获得所有课程
@@ -162,6 +187,14 @@ public interface CourseService {
      * @return 课程列表
      */
     List<Course> getAllCourses();
+
+    /**
+     * 获取指定条件课程
+     *
+     * @param directionId 课程方向
+     * @return 课程列表
+     */
+    List<Course> pageCourse(String directionId);
 
     /**
      * 获取所有课程 根据时间倒叙排序
@@ -186,4 +219,44 @@ public interface CourseService {
      * @return 相应课程集合
      */
     List<Course> getTopCourses(String teacherId, Integer number);
+
+    /**
+     * 通过课程分类查找课程方向
+     *
+     * @param classificationId 课程分类Id
+     * @return 课程方向数据传输对象列表
+     */
+    List<CourseDirectionDTO> getDirectionByClassification(String classificationId);
+
+    /**
+     * 查询课程分类数据传输对象
+     *
+     * @param classificationId 课程分类ID
+     * @return 课程分类数据传输对象
+     */
+    List<CourseClassificationDTO> getClassificationDTOs(String classificationId);
+
+    /**
+     * 通过方向ID查找课程分类数据传输对象
+     *
+     * @param directionId 方向ID
+     * @return 课程分类数据传输对象
+     */
+    List<CourseClassificationDTO> getDirectionDTOsByClassification(String directionId);
+
+    /**
+     * 查询课程分类列表数据传输对象
+     *
+     * @param classificationId 课程分类ID
+     * @return 课程分类列表数据传输对象
+     */
+    CourseClassificationListDTO getClassificationDTOList(String classificationId);
+
+    /**
+     * 通过方向ID查找课程分类列表数据传输对象
+     *
+     * @param directionId 方向Id
+     * @return 课程分类列表数据传输对象
+     */
+    CourseClassificationListDTO getClassificationDTOListByDirection(String directionId);
 }

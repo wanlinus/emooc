@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>aaa</title>
@@ -67,10 +67,11 @@
                         <span class="hd emooc-l">方向：</span>
                         <div class="emooc-bd">
                             <ul class="">
-                                <li class="emooc-course-nav-item on">
+                                <li class="emooc-course-nav-item">
                                     <a th:href="@{/course}">全部</a>
                                 </li>
-                                <li class="emooc-course-nav-item" th:each="direction:${directions}">
+                                <li th:each="direction:${directions}"
+                                    th:class="${direction.flag}?'emooc-course-nav-item on': 'emooc-course-nav-item'">
                                     <a th:href="${'/course/direction?directionId='+direction.id}"
                                        th:text="${direction.name}"></a>
                                 </li>
@@ -81,10 +82,11 @@
                         <span class="hd emooc-l">分类：</span>
                         <div class="emooc-bd">
                             <ul class="">
-                                <li class="emooc-course-nav-item on">
-                                    <a href="/course/list?c=fe">全部</a>
+                                <li class="emooc-course-nav-item">
+                                    <a th:href="${'/course/direction?directionId='+ classifications.id }">全部</a>
                                 </li>
-                                <li class=" emooc-course-nav-item" th:each="classification:${classifications}">
+                                <li th:each="classification : ${classifications.list}"
+                                    th:class="${classification.flag} ? 'emooc-course-nav-item on': 'emooc-course-nav-item'">
                                     <a th:href="${'/course/direction?classificationId='+classification.id}"
                                        th:text="${classification.name}">HTML/CSS</a>
                                 </li>
@@ -97,23 +99,11 @@
                         <span class="hd emooc-l">类型：</span>
                         <div class="emooc-bd">
                             <ul class="">
-
-                                <li class="emooc-course-nav-item on">
-                                    <a href="/course/list?c=fe">全部</a>
-                                </li>
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=fe&amp;type=1">基础</a>
-                                </li>
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=fe&amp;type=2">案例</a>
-                                </li>
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=fe&amp;type=3">框架</a>
-                                </li>
-                                <li class=" emooc-course-nav-item ">
-                                    <a href="/course/list?c=fe&amp;type=4">工具</a>
-                                </li>
-
+                                <li class="emooc-course-nav-item on"><a href="/course/list?c=fe">全部</a></li>
+                                <li class=" emooc-course-nav-item "><a href="/course/list?c=fe&amp;type=1">基础</a></li>
+                                <li class=" emooc-course-nav-item "><a href="/course/list?c=fe&amp;type=2">案例</a></li>
+                                <li class=" emooc-course-nav-item "><a href="/course/list?c=fe&amp;type=3">框架</a></li>
+                                <li class=" emooc-course-nav-item "><a href="/course/list?c=fe&amp;type=4">工具</a></li>
                             </ul>
                         </div>
                     </div>
@@ -136,7 +126,7 @@
         </span>
         </div>
         <div class="emooc-tool-right r">
-            <span class="emooc-tool-item emooc-total-num">共<b th:text="${courses.size()}">98</b>个课程</span>
+            <span class="emooc-tool-item emooc-total-num">共<b th:text="${courses!= null}? ${courses.size()} : 0">98</b>个课程</span>
             <span class="emooc-tool-item emooc-tool-pager">
             <a href="javascript:void(0)" class="emooc-pager-action pager-prev  disabled"><i class="icon-left2"></i></a>
             <a href="/course/list?c=javascript&amp;page=2" class="emooc-pager-action pager-next">
@@ -148,7 +138,6 @@
     <div class="emooc-course-list">
         <div class="emooc-moco-course-list">
             <div class="clearfix">
-
                 <div class="emooc-course-card-container" th:each="course:${courses}">
                     <a target="_blank" href="/learn/955" class="emooc-course-card">
                         <div class="emooc-course-card-top">

@@ -21,13 +21,10 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.domain.*;
-import cn.wanlinus.emooc.dto.CourseSectionVideoAddDTO;
-import cn.wanlinus.emooc.dto.SectionAddDTO;
-import cn.wanlinus.emooc.dto.ThAddCourseDTO;
-import cn.wanlinus.emooc.dto.ThCourseDTO;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocCourseGrade;
 import cn.wanlinus.emooc.enums.EmoocLogType;
-import cn.wanlinus.emooc.persistence.*;
+import cn.wanlinus.emooc.persistence.CourseRepository;
 import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -102,8 +99,25 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public List<CourseDirection> getAllCourseDirection() {
+    public List<CourseDirection> getCourseDirections() {
         return directionService.getAllDirections();
+    }
+
+    @Override
+    public List<CourseDirectionDTO> getCourseDirectionDTOs(String directionId) {
+        List<CourseDirectionDTO> list = new ArrayList<>();
+        for (CourseDirection d : getCourseDirections()) {
+            CourseDirectionDTO dto = new CourseDirectionDTO();
+            dto.setId(d.getId());
+            dto.setName(d.getName());
+            if (d.getId().equals(directionId)) {
+                dto.setFlag(true);
+            } else {
+                dto.setFlag(false);
+            }
+            list.add(dto);
+        }
+        return list;
     }
 
     @Override
@@ -153,6 +167,11 @@ public class CourseServiceImpl implements CourseService {
             dtoList = null;
         }
         return dtoList;
+    }
+
+    @Override
+    public List<Course> pageCourse(Integer pageSize, Integer page, String directionId, String classificationId) {
+        return courseRepository.pageCourses(pageSize, page, directionId, classificationId);
     }
 
 
@@ -244,13 +263,40 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseClassification> getAllClassifications() {
+    public List<CourseClassification> getClassifications() {
         return classificationService.getClassifications();
+    }
+
+    @Override
+    public List<CourseClassificationDTO> getClassifications(String classificationId) {
+        List<CourseClassificationDTO> list = new ArrayList<>();
+        for (CourseClassification c : classificationService.get(classificationId).getDirection().getClassifications()) {
+            CourseClassificationDTO dto = new CourseClassificationDTO();
+            dto.setId(c.getId());
+            dto.setName(c.getName());
+            if (c.getId().equals(classificationId)) {
+                dto.setFlag(true);
+            } else {
+                dto.setFlag(false);
+            }
+            list.add(dto);
+        }
+        return list;
     }
 
     @Override
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
+    }
+
+    @Override
+    public List<Course> pageCourse(String directionId) {
+        CourseDirection direction = directionService.getDirection(directionId);
+        List<Course> courses = new ArrayList<>();
+        for (CourseClassification classification : direction.getClassifications()) {
+            courses.addAll(classification.getCourses());
+        }
+        return courses;
     }
 
     @Override
@@ -267,5 +313,80 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getTopCourses(String teacherId, Integer number) {
         return courseRepository.findTopByTeacherId(teacherId, number);
+    }
+
+    @Override
+    public List<CourseDirectionDTO> getDirectionByClassification(String classificationId) {
+        CourseDirection direction = classificationService.get(classificationId).getDirection();
+        List<CourseDirectionDTO> list = new ArrayList<>();
+        for (CourseDirection d : getCourseDirections()) {
+            CourseDirectionDTO dto = new CourseDirectionDTO();
+            dto.setName(d.getName());
+            dto.setId(d.getId());
+            if (d.getId().equals(direction.getId())) {
+                dto.setFlag(true);
+            } else {
+                dto.setFlag(false);
+            }
+            list.add(dto);
+        }
+        return list;
+    }
+
+    @Override
+    public List<CourseClassificationDTO> getClassificationDTOs(String classificationId) {
+        return classification2DTO(classificationService.get(classificationId).getDirection().getClassifications(), classificationId);
+    }
+
+    @Override
+    public List<CourseClassificationDTO> getDirectionDTOsByClassification(String directionId) {
+        return classification2DTO(directionId);
+    }
+
+    @Override
+    public CourseClassificationListDTO getClassificationDTOList(String classificationId) {
+        CourseClassificationListDTO listDTO = new CourseClassificationListDTO();
+        List<CourseClassificationDTO> list = null;
+        CourseDirection direction = classificationService.get(classificationId).getDirection();
+        list = classification2DTO(direction.getClassifications(), classificationId);
+        listDTO.setList(list);
+        listDTO.setId(direction.getId());
+        return listDTO;
+    }
+
+    @Override
+    public CourseClassificationListDTO getClassificationDTOListByDirection(String directionId) {
+        CourseClassificationListDTO listDTO = new CourseClassificationListDTO();
+        listDTO.setList(classification2DTO(directionId));
+        listDTO.setId(directionId);
+        return listDTO;
+    }
+
+    private List<CourseClassificationDTO> classification2DTO(String directionId) {
+        List<CourseClassificationDTO> list = new ArrayList<>();
+        for (CourseClassification c : directionService.getDirection(directionId).getClassifications()) {
+            CourseClassificationDTO dto = new CourseClassificationDTO();
+            dto.setId(c.getId());
+            dto.setFlag(false);
+            dto.setName(c.getName());
+            list.add(dto);
+        }
+        return list;
+    }
+
+    private List<CourseClassificationDTO> classification2DTO(List<CourseClassification> classifications, String compareId) {
+        List<CourseClassificationDTO> list = new ArrayList<>();
+        for (CourseClassification c : classifications) {
+            CourseClassificationDTO dto = new CourseClassificationDTO();
+            dto.setId(c.getId());
+            dto.setName(c.getName());
+            if (compareId.equals(c.getId())) {
+                dto.setFlag(true);
+            } else {
+                dto.setFlag(false);
+            }
+            list.add(dto);
+        }
+        return list;
     }
 }

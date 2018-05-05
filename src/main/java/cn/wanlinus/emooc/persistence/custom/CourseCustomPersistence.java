@@ -17,16 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence.impl;
+package cn.wanlinus.emooc.persistence.custom;
 
-import cn.wanlinus.emooc.persistence.custom.AdminCustomPersistence;
-import org.springframework.stereotype.Repository;
+import cn.wanlinus.emooc.domain.Course;
+
+import java.util.List;
 
 /**
  * @author wanli
- * @date 2018-03-25 00:57
+ * @date 2018-05-05 15:02
  */
-@Repository
-public class AdminRepositoryImpl extends BaseCustomPersistenceImpl implements AdminCustomPersistence {
-
+public interface CourseCustomPersistence extends BaseCustomPersistence {
+    /**
+     * 对课程进行筛选分页
+     *
+     * @param pageSize         每页条数
+     * @param page             第几页
+     * @param directionId      方向Id
+     * @param classificationId 分类Id
+     * @return 课程集合
+     */
+    List<Course> pageCourses(Integer pageSize, Integer page, String directionId, String classificationId);
 }

@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.CourseClassification;
+import cn.wanlinus.emooc.domain.CourseDirection;
 
 import java.util.List;
 
@@ -42,4 +43,12 @@ public interface CourseClassificationService {
      * @return 相应的分类对象
      */
     CourseClassification get(String classificationId);
+
+    /**
+     * 根据类型Id查找方向信息
+     *
+     * @param classificationId 类型Id
+     * @return 方向对象
+     */
+    CourseDirection getDirection(String classificationId);
 }

@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.CourseClassification;
+import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.persistence.CourseClassificationRepository;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
     @Override
     public CourseClassification get(String classificationId) {
         return classificationRepository.findOne(classificationId);
+    }
+
+    @Override
+    public CourseDirection getDirection(String classificationId) {
+        return get(classificationId).getDirection();
     }
 
 }

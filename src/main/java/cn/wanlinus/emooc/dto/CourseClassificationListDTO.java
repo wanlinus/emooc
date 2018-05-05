@@ -17,28 +17,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence.impl;
+package cn.wanlinus.emooc.dto;
 
-import cn.wanlinus.emooc.persistence.custom.BaseCustomPersistence;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * 用于提供EntityManager
- *
  * @author wanli
- * @date 2018-03-25 01:19
+ * @date 2018-05-05 17:59
  */
-public class BaseCustomPersistenceImpl implements BaseCustomPersistence {
+public class CourseClassificationListDTO implements Serializable {
+    private List<CourseClassificationDTO> list;
+    private String id;
 
-    @Autowired
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    EntityManager getEntityManager() {
-        return entityManager;
+    public CourseClassificationListDTO() {
     }
 
+    public List<CourseClassificationDTO> getList() {
+        return list;
+    }
+
+    public void setList(List<CourseClassificationDTO> list) {
+        this.list = list;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseClassificationListDTO{" +
+                "list=" + list +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

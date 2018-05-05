@@ -26,7 +26,6 @@ import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseService;
 import cn.wanlinus.emooc.service.CourseTypeService;
-import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,8 +55,8 @@ public class CourseController {
 
     @GetMapping(value = {"", "index"})
     public String index(Model model) {
-        model.addAttribute("directions", courseService.getAllCourseDirection());
-        model.addAttribute("classifications", courseService.getAllClassifications());
+        model.addAttribute("directions", courseService.getCourseDirections());
+        model.addAttribute("classifications", courseService.getClassifications());
         model.addAttribute("courses", courseService.getAllCoursesDescDate());
         return "course/index";
     }
@@ -74,10 +73,20 @@ public class CourseController {
         return directionService.getDirections();
     }
 
-    @GetMapping("direction/list/{directionId}")
-    public String direction(@PathVariable("directionId") String directionId, Model model) {
-        model.addAttribute("direction", courseService.getCourseDirection(directionId));
-        return "";
+    @GetMapping("direction")
+    public String direction(String directionId, String classificationId,
+                            @RequestParam(name = "pageSize", defaultValue = "15") Integer pageSize,
+                            @RequestParam(name = "page", defaultValue = "0") Integer page,
+                            Model model) {
+        if (directionId != null) {
+            model.addAttribute("directions", courseService.getCourseDirectionDTOs(directionId));
+            model.addAttribute("classifications", courseService.getClassificationDTOListByDirection(directionId));
+        } else {
+            model.addAttribute("directions", courseService.getDirectionByClassification(classificationId));
+            model.addAttribute("classifications", courseService.getClassificationDTOList(classificationId));
+        }
+        model.addAttribute("courses", courseService.pageCourse(pageSize, page, directionId, classificationId));
+        return "course/direction/index";
     }
 
     @GetMapping("rest/direction/{directionId}")

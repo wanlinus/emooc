@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.Course;
+import cn.wanlinus.emooc.persistence.custom.CourseCustomPersistence;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
@@ -29,7 +30,7 @@ import java.util.List;
  * @author wanli
  * @date 2018-04-15 13:54
  */
-public interface CourseRepository extends BaseRepository<Course, String> {
+public interface CourseRepository extends BaseRepository<Course, String>, CourseCustomPersistence {
     /**
      * 通过教师Id查找该教师顶置课程
      *
