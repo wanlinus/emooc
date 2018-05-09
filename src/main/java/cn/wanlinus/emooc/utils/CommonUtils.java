@@ -66,6 +66,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 生成验证码码Id
+     *
+     * @return capid
+     */
+    public static String capid() {
+        return "CAP" + System.currentTimeMillis();
+    }
+
+    /**
      * 生成教师ID
      *
      * @return tid
