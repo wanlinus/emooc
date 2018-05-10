@@ -103,21 +103,27 @@ public class HomeController extends WebMvcConfigurerAdapter {
      * @param username 需要检查的用户名
      * @return 查找到返回true否则返回false
      */
-    @GetMapping("check/name/{username}")
+    @GetMapping("check/name")
     @ResponseBody
-    public ResultData<Boolean> checkName(@PathVariable("username") String username) {
-        System.out.println(username);
-        return new ResultData<>(userService.checkName(username));
+    public ResultData<String> checkName(String username) {
+        return userService.checkName(username);
     }
 
     /**
      * @param email 需要查找的邮箱
      * @return 查找到返回true否则返回false
      */
-    @GetMapping("check/email/{email}")
+    @GetMapping("check/email")
     @ResponseBody
-    public ResultData<Boolean> checkEmail(@PathVariable("email") String email) {
-        return new ResultData<>(userService.checkEmail(email));
+    public ResultData<String> checkEmail(String email) {
+        return userService.checkEmail(email);
+
+    }
+
+    @GetMapping("check/all")
+    @ResponseBody
+    public ResultData<String> checkUsernameEmail(String username, String email) {
+        return userService.checkAll(username, email);
     }
 
     @PostMapping("register")
@@ -135,5 +141,18 @@ public class HomeController extends WebMvcConfigurerAdapter {
         }
         logger.info(resultData.getCode().toString());
         return resultData;
+    }
+
+    /**
+     * 用户激活
+     *
+     * @param userId  用户ID
+     * @param captcha 激活码Id
+     * @return ResultData
+     */
+    @GetMapping("active/user/{userId}/{captcha}")
+    @ResponseBody
+    public ResultData<String> activeUser(@PathVariable String userId, @PathVariable String captcha) {
+        return userService.active(userId, captcha);
     }
 }
