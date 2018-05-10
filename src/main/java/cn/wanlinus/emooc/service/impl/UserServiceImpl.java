@@ -20,6 +20,9 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.RegisterAnnotation;
+import cn.wanlinus.emooc.annotation.UserAnnotation;
+import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.domain.Captcha;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
@@ -27,19 +30,23 @@ import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
+import cn.wanlinus.emooc.persistence.CaptchaRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.md5Encrypt;
-import static cn.wanlinus.emooc.utils.CommonUtils.uid;
+import static cn.wanlinus.emooc.utils.CommonUtils.*;
 
 /**
  * @author wanli
@@ -53,6 +60,20 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private EmoocLogService logService;
+
+    @Autowired
+    private CaptchaRepository captchaRepository;
+
+    @Autowired
+    private SimpleMailMessage mailMessage;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+    @Value("${emooc.host}")
+    private String host;
+    @Value("${server.port}")
+    private String port;
 
 
     @Override
@@ -68,15 +89,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Boolean checkName(String username) {
-        return userRepository.findByUsername(username) != null;
+    public ResultData<String> checkName(String username) {
+        ResultData<String> resultData = new ResultData<>();
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            resultData.setCode(false);
+            resultData.setMessage("用户名被占用");
+        } else {
+            resultData.setCode(true);
+            resultData.setMessage("可以注册");
+        }
+        return resultData;
+
 
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public Boolean checkEmail(String email) {
-        return userRepository.findByEmail(email) != null;
+    public ResultData<String> checkEmail(String email) {
+        ResultData<String> resultData = new ResultData<>();
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            resultData.setCode(false);
+            resultData.setMessage("邮箱被占用");
+        } else {
+            resultData.setCode(true);
+            resultData.setMessage("可以注册");
+        }
+        return resultData;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public ResultData<String> checkAll(String username, String email) {
+        ResultData<String> resultData = new ResultData<>();
+        Boolean code = true;
+        String msg = "";
+        if (userRepository.findByUsername(username) != null) {
+            code = false;
+            msg = " 用户名被占用";
+        }
+        if (userRepository.findByEmail(email) != null) {
+            code = false;
+            msg += " 邮箱被占用";
+        }
+        msg += " 请重新输入";
+        resultData.setCode(code);
+        resultData.setMessage(msg);
+        return resultData;
     }
 
     @Override
@@ -88,7 +148,21 @@ public class UserServiceImpl implements UserService {
             user.setUserStatus(UserStatus.INACTIVE);
             user.setRegisterTime(new Date());
             user.setGender(Gender.UNDEFINED);
-            return userRepository.save(user);
+            User u = userRepository.save(user);
+            if (u != null) {
+                Captcha captcha = new Captcha();
+                captcha.setId(capid());
+                captcha.setUser(u);
+                captcha.setTime(new Date());
+                //30分钟
+                captcha.setEffectiveTime(30 * 60 * 1000);
+                captcha.setStatus(true);
+                Captcha code = captchaRepository.save(captcha);
+                String msg = "您的注册验证码为: " + code.getId() + "请输入到验证区\n" +
+                        "或点击<a href='https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'>验证用户</a>";
+                asyncSendMail(dto.getEmail(), msg);
+                return u;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,4 +230,48 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    @Override
+    @UserAnnotation(type = EmoocLogType.USER_ACTIVATED)
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> active(String userId, String captchaId) {
+        ResultData<String> resultData = new ResultData<>();
+        String msg;
+        Captcha captcha = captchaRepository.findOne(captchaId);
+        if (captcha != null) {
+            User user = captcha.getUser();
+            if (user != null) {
+                if ((System.currentTimeMillis() - captcha.getTime().getTime() <= captcha.getEffectiveTime()) && captcha.getStatus()) {
+                    user.setUserStatus(UserStatus.ACTIVATED);
+                    captcha.setStatus(false);
+                    resultData.setCode(true);
+                    msg = "激活成功";
+                } else {
+                    resultData.setCode(false);
+                    msg = "激活码失效";
+                }
+            } else {
+                resultData.setCode(false);
+                msg = "用户不存在";
+            }
+        } else {
+            resultData.setCode(false);
+            msg = "激活码错误";
+        }
+        resultData.setMessage(msg);
+        return resultData;
+    }
+
+    /**
+     * 异步发送邮件
+     *
+     * @param emailAddress 邮箱地址
+     * @param msg          信息
+     */
+    @Async
+    public void asyncSendMail(String emailAddress, String msg) {
+        mailMessage.setSubject("用户注册");
+        mailMessage.setTo(emailAddress);
+        mailMessage.setText(msg);
+        javaMailSender.send(mailMessage);
+    }
 }
