@@ -33,6 +33,7 @@ public enum EmoocLogType {
     TEACHER_ADD_COURSE("教师添加课程"),
     TEACHER_ADD_SECTION("教师添加章节"),
     TEACHER_ADD_VIDEO("教师添加视频"),
+    USER_ACTIVATED("用户激活"),
     UNKNOWN("未知");
 
 
