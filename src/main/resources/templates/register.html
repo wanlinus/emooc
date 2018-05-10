@@ -16,18 +16,19 @@
     <div id="form">
         <div>
             <label for="username">用户名:</label>
-            <input type="text" id="username" name="username" placeholder="用户名">
-            <span hidden="hidden" id="user-no">用户名不能为空</span>
-            <span hidden="hidden" id="user-yes">可以注册</span>
+            <input type="text" id="username" name="username" autofocus placeholder="用户名">
+            <span id="user-msg"></span>
         </div>
         <div>
             <label for="password">密码:</label>
             <input type="password" id="password" name="password" placeholder="密码">
         </div>
         <div>
-            <label for="email">Email:</label><input type="email" name="email" id="email">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <span id="email-msg"></span>
         </div>
-        <button id="register">注册</button>
+        <button id="register" class="btn btn-primary" disabled>注册</button>
         <input type="reset">
     </div>
 </div>
@@ -36,37 +37,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script>
     $(document).ready(function () {
-
         let submit = $("#register");
         let username = $("#username");
         let password = $("#password");
         let email = $("#email");
-        let userno = $("#user-no");
-        let useryes = $("#user-yes");
-
+        let userMsg = $("#user-msg");
+        let emailMsg = $("#email-msg");
         username.blur(function () {
-            $.get({
-                url: "check/name/" + username.val(),
-                success: function (data) {
-                    if (!data["data"]) {
-                        console.log(data);
-                        userno.hide();
-                        useryes.show();
-                    } else {
-                        console.log("sadsad")
+            if (username.val() != null && username.val() !== "") {
+                $.get({
+                    url: "check/name?username=" + username.val(),
+                    success: function (response) {
+                        userMsg.html(response.message);
+                        if (response.code) {
+                            submit.attr("disabled", false);
+                        } else {
+                            submit.attr("disabled", true);
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                userMsg.html("不能为空");
+            }
         });
         email.blur(function () {
-            $.get({
-                url: "check/email/" + email.val(),
-                success: function (data) {
-                    if (!data["data"]) {
-                        console.log(data);
+            if (email.val() != null && email.val() !== "") {
+                $.get({
+                    url: "check/email?email=" + email.val(),
+                    success: function (response) {
+                        emailMsg.html(response.message);
+                        console.log(response);
+                        if (response.code) {
+                            submit.attr("disabled", false);
+                        } else {
+                            submit.attr("disabled", true);
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                emailMsg.html("不能为空");
+            }
         });
         submit.click(function () {
             if (username.val() !== "" && password.val() !== "" && email.val() !== "") {
@@ -78,37 +88,45 @@
                     buttons: {
                         confirm: {
                             action: function () {
-                                $.post({
-                                    url: "register",
-                                    data: JSON.stringify({
-                                        username: username.val(),
-                                        password: password.val(),
-                                        email: email.val()
-                                    }),
-                                    contentType: "application/json",
-                                    success: function (responseData) {
-                                        console.log(responseData);
-                                        $.alert({
-                                            text: "注册成功",
-                                            buttons: {
-                                                ok: {
-                                                    btnClass: "btn btn-success",
-                                                    action: function () {
-                                                        $(location).attr('href', 'login')
-                                                    }
+                                $.get({
+                                    url: 'check/all?username=' + username.val() + '&email=' + email.val(),
+                                    success: function (response) {
+                                        if (response.code) {
+                                            $.post({
+                                                url: "register",
+                                                data: JSON.stringify({
+                                                    username: username.val(),
+                                                    password: password.val(),
+                                                    email: email.val()
+                                                }),
+                                                contentType: "application/json",
+                                                success: function (response) {
+                                                    $.alert({
+                                                        text: response.message,
+                                                        buttons: {
+                                                            ok: {
+                                                                btnClass: "btn btn-success",
+                                                                action: function () {
+                                                                    $(location).attr('href', 'login')
+                                                                }
 
+                                                            }
+
+                                                        }
+                                                    })
                                                 }
-
-                                            }
-                                        })
+                                            })
+                                        } else {
+                                            $.alert('注册失败' + response.message);
+                                        }
                                     }
-                                })
+                                });
+
                             }
                             ,
                             btnClass: "btn btn-success"
                         },
                         cancel:
-
                             function () {
                                 $.alert('Canceled!');
                             }
@@ -117,11 +135,8 @@
             } else {
                 $.alert("请确保全部填写!!")
             }
-        })
-        ;
+        });
     })
-
-
 </script>
 </body>
 </html>
