@@ -25,6 +25,8 @@ import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
+import cn.wanlinus.emooc.enums.TeacherStatus;
+import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.AdminRepository;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
@@ -71,13 +73,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 return new org.springframework.security.core.userdetails.User(admin.getName(), admin.getPassword(), authorities);
             }
         } else if (EmoocRole.ROLE_USER.getDesc().equals(role)) {
-            User user = userRepository.findByUsername(username);
+            User user = userRepository.findByUsernameAndUserStatus(username, UserStatus.ACTIVATED);
             if (user != null) {
                 authorities.add(new SimpleGrantedAuthority(EmoocRole.ROLE_USER.getDesc()));
                 return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
             }
         } else if (EmoocRole.ROLE_TEACHER.getDesc().equals(role)) {
-            Teacher teacher = teacherRepository.findByUsername(username);
+            Teacher teacher = teacherRepository.findByUsernameAndStatus(username, TeacherStatus.A);
             if (teacher != null) {
                 authorities.add(new SimpleGrantedAuthority(EmoocRole.ROLE_TEACHER.getDesc()));
                 return new org.springframework.security.core.userdetails.User(teacher.getUsername(), teacher.getPassword(), authorities);
