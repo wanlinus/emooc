@@ -41,6 +41,15 @@ public class Captcha implements Serializable {
     @Column(name = "CAPTCHA_TIME")
     private Date time;
 
+    @Column(name = "CAPTCHA_EFFECTIVE_TIME")
+    private Integer effectiveTime;
+
+    /**
+     * true为有效 false为无效
+     */
+    @Column(name = "CAPTCHA_STATUS")
+    private Boolean status;
+
     @ManyToOne
     @JoinColumn(name = "CAPTCHA_USER_ID", referencedColumnName = "USER_ID")
     private User user;
@@ -62,6 +71,22 @@ public class Captcha implements Serializable {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Integer getEffectiveTime() {
+        return effectiveTime;
+    }
+
+    public void setEffectiveTime(Integer effectiveTime) {
+        this.effectiveTime = effectiveTime;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public User getUser() {
