@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.service;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
@@ -45,17 +46,27 @@ public interface UserService {
      * 检查用户名是否存在
      *
      * @param username 需要检查的用户名
-     * @return 存在返回true, 否则返回false
+     * @return resultData
      */
-    Boolean checkName(String username);
+    ResultData<String> checkName(String username);
 
     /**
      * 检查邮箱是否存在
      *
      * @param email 需要检查的邮箱
-     * @return 存在返回true, 否则返回false
+     * @return resultData
      */
-    Boolean checkEmail(String email);
+    ResultData<String> checkEmail(String email);
+
+
+    /**
+     * 同时检查用户名和邮箱是否存在
+     *
+     * @param username 用户名
+     * @param email    邮箱
+     * @return resultData
+     */
+    ResultData<String> checkAll(String username, String email);
 
     /**
      * 用户注册
@@ -131,6 +142,16 @@ public interface UserService {
      * @return 统计人数数组
      */
     List<Long> userRegisterStatistics(Date date, Integer days);
+
+
+    /**
+     * 用户激活
+     *
+     * @param userId  需要激活的用户
+     * @param captcha 激活码
+     * @return 返回对象
+     */
+    ResultData<String> active(String userId, String captcha);
 
 
 }
