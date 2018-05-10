@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.Teacher;
+import cn.wanlinus.emooc.enums.TeacherStatus;
 
 /**
  * @author wanli
@@ -34,4 +35,13 @@ public interface TeacherRepository extends BaseRepository<Teacher, String> {
      * @return 查找到返回相应教师否咋返回空
      */
     Teacher findByUsername(String username);
+
+    /**
+     * 通过教师名和教师状态查找教师对象
+     *
+     * @param username      教师名
+     * @param teacherStatus 教师状态
+     * @return 相应教师
+     */
+    Teacher findByUsernameAndStatus(String username, TeacherStatus teacherStatus);
 }
