@@ -53,6 +53,12 @@ public class CourseController {
     @Autowired
     private CourseClassificationService classificationService;
 
+    /**
+     * 首页
+     *
+     * @param model Spring Model
+     * @return 课程主页面
+     */
     @GetMapping(value = {"", "index"})
     public String index(Model model) {
         model.addAttribute("directions", courseService.getCourseDirections());
@@ -61,6 +67,11 @@ public class CourseController {
         return "course/index";
     }
 
+    /**
+     * 返回rest课程类型数据
+     *
+     * @return CourseType
+     */
     @GetMapping("rest/types")
     @ResponseBody
     public List<CourseType> types() {

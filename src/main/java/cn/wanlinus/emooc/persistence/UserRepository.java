@@ -54,7 +54,7 @@ public interface UserRepository extends BaseRepository<User, String>, UserCustom
     /**
      * 用户性别饼状图
      *
-     * @return
+     * @return pie
      * @date 2018-3-25 02:19:58
      */
     @Query(value = "SELECT user.gender AS gender,COUNT(user.gender) AS number FROM User AS user GROUP BY user.gender")

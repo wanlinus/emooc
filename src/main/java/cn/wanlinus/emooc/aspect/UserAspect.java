@@ -25,6 +25,7 @@ import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -58,6 +59,7 @@ public class UserAspect {
     @Transactional(rollbackFor = Exception.class)
     @Around("user() && @annotation(userAnnotation)")
     public Object around(ProceedingJoinPoint joinPoint, UserAnnotation userAnnotation) throws Throwable {
+        Object obj = joinPoint.proceed();
         EmoocLog log = new EmoocLog();
         log.setId(CommonUtils.userLogId());
         log.setWho(AuthUtils.getUsername());
@@ -66,8 +68,10 @@ public class UserAspect {
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());
+        String json = JSON.toJSONString(obj) + JSON.toJSONString(joinPoint.getArgs());
+        log.setComment(json.substring(0, Math.min(json.length(), 200)));
         logRepository.save(log);
-        return joinPoint.proceed();
+        return obj;
 
     }
 }
