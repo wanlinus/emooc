@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.User;
+import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.custom.UserCustomPersistence;
 import org.springframework.data.jpa.repository.Query;
 
@@ -38,6 +39,9 @@ public interface UserRepository extends BaseRepository<User, String>, UserCustom
      * @return 返回查找到的用户
      */
     User findByUsername(String username);
+
+    //    @Query("select user from User as user where user.username=?1 and user.userStatus=?2")
+    User findByUsernameAndUserStatus(String username, UserStatus userStatus);
 
     /**
      * 通过邮箱查找用户
