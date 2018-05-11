@@ -362,6 +362,12 @@ public class CourseServiceImpl implements CourseService {
         return listDTO;
     }
 
+    @Override
+    public List<Course> recommendCourse() {
+        return courseRepository.randCourse();
+
+    }
+
     private List<CourseClassificationDTO> classification2DTO(String directionId) {
         List<CourseClassificationDTO> list = new ArrayList<>();
         for (CourseClassification c : directionService.getDirection(directionId).getClassifications()) {
