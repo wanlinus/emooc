@@ -100,6 +100,14 @@ public class CourseController {
         return "course/direction/index";
     }
 
+    @GetMapping("learn/{courseId}")
+    public String courseLearn(@PathVariable("courseId") String courseId, Model model) {
+        model.addAttribute("course", courseService.getCourse(courseId));
+        model.addAttribute("recommends", courseService.recommendCourse());
+        return "course/learn";
+    }
+
+
     @GetMapping("rest/direction/{directionId}")
     @ResponseBody
     public CourseDirection getCourseDirection(@PathVariable("directionId") String directionId) {
