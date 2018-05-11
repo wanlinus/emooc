@@ -61,4 +61,13 @@ public interface CourseRepository extends BaseRepository<Course, String>, Course
      */
     @Query(value = "SELECT count(*) FROM TB_COURSE AS c WHERE  date_format(c.COURSE_CREATE_TIME, '%Y-%m-%d') = date_format(?1, '%Y-%m-%d')", nativeQuery = true)
     Long courseNewlyIncreased(Date date);
+
+    /**
+     * 从数据库随机取数据
+     *
+     * @return 课程列表
+     */
+    @Query(value = "SELECT * FROM TB_COURSE ORDER BY rand() LIMIT 0,5", nativeQuery = true)
+    List<Course> randCourse();
+
 }
