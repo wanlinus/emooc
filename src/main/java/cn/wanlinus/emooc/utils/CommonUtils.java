@@ -93,6 +93,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 收藏Id
+     *
+     * @return colid
+     */
+    public static String colid() {
+        return "COL" + System.currentTimeMillis();
+    }
+
+    /**
      * 生成课程章节ID
      *
      * @return csid

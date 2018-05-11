@@ -34,6 +34,8 @@ public enum EmoocLogType {
     TEACHER_ADD_SECTION("教师添加章节"),
     TEACHER_ADD_VIDEO("教师添加视频"),
     USER_ACTIVATED("用户激活"),
+    USER_ADD_COLLECTION("用户添加课程收藏"),
+    USER_CANCEL_COLLECTION("用户取消课程收藏"),
     UNKNOWN("未知");
 
 

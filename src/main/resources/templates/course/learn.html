@@ -7,10 +7,12 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/custom-style.css">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+<div hidden>
+    <input type="hidden" id="courseId" th:value="${course.id}">
+</div>
 <header th:replace="course/layout:: courseHeader"></header>
 <div>
     <div class="container">
@@ -18,7 +20,7 @@
             <div class="col-md-12 column">
                 <ul class="breadcrumb">
                     <li>
-                        <a href="#"><a href="#">课程</a></a>
+                        <a th:href="@{/course/}"><a th:href="@{/course/}">课程</a></a>
                     </li>
                     <li>
                         <a href="#"><span th:text="${course.classification.direction.name}"></span></a>
@@ -35,6 +37,12 @@
                         <div class="page-header">
                             <h1>
                                 <span th:text="${course.name}"></span>
+                                <small>
+                                    <span id="collection_span" hidden class="glyphicon glyphicon-star"
+                                          style="color: red;"></span>
+                                    <span id="collection_cancel_span" hidden class="glyphicon glyphicon-star-empty"
+                                          style="color: #444444;"></span>
+                                </small>
                             </h1>
                             <div class="emooc-teacher-info">
                                 <img th:src="${course.teacher.avatar}" alt="教师头像">
@@ -154,4 +162,51 @@
     </div>
 </div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let star = $("#collection_span");
+        let empty_star = $("#collection_cancel_span");
+        let course_id = $("#courseId").val();
+        $.get({
+            url: '/user/rest/isCollection/' + course_id,
+            success: function (response) {
+                if (response.code) {
+                    star.show();
+                    empty_star.hide()
+                } else {
+                    empty_star.show();
+                    star.hide();
+                }
+            }
+        });
+
+        star.click(function () {
+            $.get({
+                url: '/user/rest/collection/cancel/' + course_id,
+                success: function (response) {
+                    if (response.code) {
+                        empty_star.show();
+                        star.hide();
+                        alert(response.message)
+                    }
+                }
+            })
+        });
+        empty_star.click(function () {
+            $.get({
+                url: '/user/rest/collection/course/' + course_id,
+                success: function (response) {
+                    console.log(response);
+                    if (response.code) {
+                        empty_star.hide();
+                        star.show();
+                        alert(response.message)
+                    }
+                }
+            })
+        });
+    })
+</script>
 </html>

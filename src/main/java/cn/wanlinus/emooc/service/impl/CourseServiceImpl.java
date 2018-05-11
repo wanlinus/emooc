@@ -86,6 +86,12 @@ public class CourseServiceImpl implements CourseService {
     private UserStudyService userStudyService;
 
     /**
+     * 课程收藏服务对象
+     */
+    @Autowired
+    private CollectionService collectionService;
+
+    /**
      * 评论服务对象
      */
     @Autowired

@@ -19,11 +19,15 @@
 
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author wanli
@@ -41,6 +45,24 @@ public class UserController extends BaseController {
     public String index(Model model) {
         model.addAttribute("user", userService.getUser(getUsername()));
         return "user/index";
+    }
+
+    @GetMapping("rest/collection/course/{courseId}")
+    @ResponseBody
+    public ResultData<String> collection(@PathVariable String courseId) {
+        return userService.collectionCourse(courseId);
+    }
+
+    @GetMapping("rest/collection/cancel/{courseId}")
+    @ResponseBody
+    public ResultData<String> collectionCancel(@PathVariable String courseId) {
+        return userService.collectionCourseCancel(courseId);
+    }
+
+    @GetMapping("rest/isCollection/{courseId}")
+    @ResponseBody
+    public ResultData<String> isCollection(@PathVariable String courseId) {
+        return userService.isCollectionCourse(courseId);
     }
 
 

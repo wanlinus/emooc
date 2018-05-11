@@ -94,6 +94,10 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private List<Note> notes;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "course")
+    private List<Collection> collections;
+
     public Course() {
     }
 
@@ -231,6 +235,14 @@ public class Course implements Serializable {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    public List<Collection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(List<Collection> collections) {
+        this.collections = collections;
     }
 
     @Override

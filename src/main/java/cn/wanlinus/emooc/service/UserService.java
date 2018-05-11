@@ -154,4 +154,27 @@ public interface UserService {
     ResultData<String> active(String userId, String captcha);
 
 
+    /**
+     * 收藏课程
+     *
+     * @param courseId 课程ID
+     * @return resultData
+     */
+    ResultData<String> collectionCourse(String courseId);
+
+    /**
+     * 取消收藏
+     *
+     * @param courseId 课程ID
+     * @return 取消收藏课程
+     */
+    ResultData<String> collectionCourseCancel(String courseId);
+
+    /**
+     * 判断当前用户是否收藏该课程
+     *
+     * @param courseId 课程ID
+     * @return 是收藏返回true否则返回false
+     */
+    ResultData<String> isCollectionCourse(String courseId);
 }

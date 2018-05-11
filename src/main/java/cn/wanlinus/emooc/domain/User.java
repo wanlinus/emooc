@@ -107,6 +107,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Question> questions;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Collection> collections;
+
     public User() {
     }
 
@@ -291,6 +295,14 @@ public class User implements Serializable {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public List<Collection> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(List<Collection> collections) {
+        this.collections = collections;
     }
 
     @Override

@@ -59,7 +59,7 @@ public class CourseController {
      * @param model Spring Model
      * @return 课程主页面
      */
-    @GetMapping(value = {"", "index"})
+    @GetMapping(value = {"", "index", "/"})
     public String index(Model model) {
         model.addAttribute("directions", courseService.getCourseDirections());
         model.addAttribute("classifications", courseService.getClassifications());

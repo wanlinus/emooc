@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.annotation.RegisterAnnotation;
 import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Captcha;
+import cn.wanlinus.emooc.domain.Collection;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
@@ -32,6 +33,7 @@ import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.CaptchaRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
+import cn.wanlinus.emooc.service.CollectionService;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
 import static cn.wanlinus.emooc.utils.CommonUtils.*;
 
 /**
@@ -63,6 +66,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CaptchaRepository captchaRepository;
+
+    @Autowired
+    private CollectionService collectionService;
 
     @Autowired
     private SimpleMailMessage mailMessage;
@@ -188,6 +194,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.count();
     }
 
+    private User getCurrentUser() {
+        return userRepository.findByUsername(getUsername());
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User getUser(String username) {
@@ -231,8 +241,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @UserAnnotation(type = EmoocLogType.USER_ACTIVATED)
     @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_ACTIVATED)
     public ResultData<String> active(String userId, String captchaId) {
         ResultData<String> resultData = new ResultData<>();
         String msg;
@@ -258,6 +268,52 @@ public class UserServiceImpl implements UserService {
             msg = "激活码错误";
         }
         resultData.setMessage(msg);
+        return resultData;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_ADD_COLLECTION)
+    public ResultData<String> collectionCourse(String courseId) {
+        ResultData<String> resultData = new ResultData<>();
+        User user = userRepository.findByUsername(getUsername());
+        if (collectionService.addCollection(user.getId(), courseId) != null) {
+            resultData.setCode(true);
+            resultData.setMessage("收藏成功");
+        } else {
+            resultData.setCode(false);
+            resultData.setMessage("收藏失败");
+        }
+        return resultData;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_CANCEL_COLLECTION)
+    public ResultData<String> collectionCourseCancel(String courseId) {
+        ResultData<String> resultData = new ResultData<>();
+        resultData.setCode(false);
+        resultData.setMessage("操作失败,请稍后重试");
+        User user = getCurrentUser();
+        if (collectionService.removeCollection(user.getId(), courseId) != null) {
+            resultData.setCode(true);
+            resultData.setMessage("取消收藏");
+        }
+        return resultData;
+    }
+
+    @Override
+    public ResultData<String> isCollectionCourse(String courseId) {
+        ResultData<String> resultData = new ResultData<>();
+        resultData.setCode(false);
+        User user = getCurrentUser();
+        List<Collection> collections = user.getCollections();
+        for (Collection c : collections) {
+            if (c.getCourse().getId().equals(courseId) && c.getStatus().equals(true)) {
+                resultData.setCode(true);
+                break;
+            }
+        }
         return resultData;
     }
 
