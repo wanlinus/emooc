@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>aaa</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/custom-style.css">
+    <link rel="stylesheet" th:href="@{/css/custom-style.css}">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header th:replace="course/layout:: courseHeader"></header>
+<div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#"><a href="#">课程</a></a>
+                    </li>
+                    <li>
+                        <a href="#"><span th:text="${course.classification.direction.name}"></span></a>
+                    </li>
+                    <li>
+                        <a href="#"><span th:text="${course.classification.name}"></span></a>
+                    </li>
+                    <li class="active">
+                        <span th:text="${course.name}"></span>
+                    </li>
+                </ul>
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <div class="page-header">
+                            <h1>
+                                <span th:text="${course.name}"></span>
+                            </h1>
+                            <div class="emooc-teacher-info">
+                                <img th:src="${course.teacher.avatar}" alt="教师头像">
+                                <span style="font-size: 18px;" th:text="${course.teacher.username}"></span>
+                                <div style="display: inline;padding-left: 30px">
+                                    <span>难度:</span><span th:text="${course.grade.description}"></span>
+                                    <span>学习人数:</span><span>1000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <ul class="nav nav-pills nav-justified">
+                                <li role="presentation" class="active"><a href="#oneTab" data-toggle="tab">课程章节</a></li>
+                                <li role="presentation"><a href="#twoTab" data-toggle="tab">问答评论</a></li>
+                                <li role="presentation"><a href="#" data-toggle="tab">同学笔记</a></li>
+                                <li role="presentation"><a href="#" data-toggle="tab">用户评价</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="oneTab">
+                                    <div class="emooc-course-description emooc-course-wrap"
+                                         th:text="${'简介:'+course.notice}">
+                                    </div>
+                                    <div class="emooc-course-chapters">
+                                        <div class="emooc-chapter emooc-course-wrap emooc-chapter-active"
+                                             th:each="section:${course.sections}">
+                                            <!-- 章节标题 -->
+                                            <h3 th:text="${section.name}"></h3>
+                                            <div class="chapter-description" th:text="${section.detail}">
+                                                本章讲为你介绍这门课具体讲什么，内容如何安排，学习心得等，让你对课程有一个整体的认识。
+                                            </div>
+                                            <!-- 章节标题 end -->
+                                            <!-- 章节小节 -->
+                                            <ul class="video" th:each="video:${section.videos}">
+                                                <li data-media-id="17139">
+                                                    <a th:href="${video.path}" class="J-media-item">
+                                                        <span class="glyphicon glyphicon-play"></span>
+                                                        <span th:text="${video.name}"></span>(<span
+                                                            th:text="${video.duration}"></span>)
+                                                        <button class="r moco-btn moco-btn-red preview-btn">开始学习
+                                                        </button>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!-- 章节小节 end -->
+                                        </div>
+                                        <div class="emooc-course-description emooc-course-wrap">
+                                            <span>没有啦</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="twoTab">
+                                    Two Tab
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 column">
+                        <div class="emooc-course-wrap emooc-course-aside-info js-usercard-box">
+                            <div class="learn-btn">
+                                <a th:if="${course.sections} ne null and !${course.sections.isEmpty()}"
+                                   th:href="${course.sections.get(0).videos.get(0).path}"
+                                   class="emooc-moco-btn emooc-moco-btn-red emooc-moco-btn-lg J-learn-course">开始学习</a>
+                                <button th:if="${course.sections} eq null or ${course.sections.isEmpty()}"
+                                        class="emooc-moco-btn emooc-moco-btn-red emooc-moco-btn-lg J-learn-course">
+                                    老师还没有添加课程
+                                </button>
+                            </div>
+                            <div class="emooc-course-info-tip">
+                                <dl class="first">
+                                    <dt>课程须知</dt>
+                                    <dd class="autowrap" th:text="${course.notice}">
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>老师告诉你能学到什么？</dt>
+                                    <dd class="autowrap" th:text="${course.wtcanlearn}"></dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="js-commend-box">
+                            <div class="mb40 recom-course-list-box"><h4>推荐课程</h4>
+                                <ul class="js-recom-course recom-course-list clearfix">
+                                    <li class="clearfix" th:each="recomend:${recommends}">
+                                        <a th:href="${'/course/learn/'+recomend.id}" class="clearfix" target="_blank">
+                                            <div class="l content-box">
+                                                <div style="display: inline-block;">
+                                                    <img th:src="${recomend.imagePath}"
+                                                         style="width: 56px; height: 56px;" alt="">
+                                                </div>
+                                                <div style="display: inline-block">
+                                                    <p class="smalle-title" th:text="${recomend.name}"
+                                                       style="display: inline-block; margin-bottom: 0; margin-top: 5px">
+                                                        系统学习Docker践行DevOps理念
+                                                    </p>
+                                                    <div class="clearfix learn-detail">
+                                                        实战<span>·</span>
+                                                        <span th:text="${recomend.grade.description}"></span>
+                                                        <span>·</span><i class="glyphicon glyphicon-user"
+                                                                         style="color: #8c989f"></i>
+                                                        <span th:text="${recomend.studies.size()}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

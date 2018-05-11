@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>aaa</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/custom-style.css">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
@@ -148,9 +149,8 @@
     <div class="emooc-course-list">
         <div class="emooc-moco-course-list">
             <div class="clearfix">
-
                 <div class="emooc-course-card-container" th:each="course:${courses}">
-                    <a target="_blank" href="/learn/955" class="emooc-course-card">
+                    <a target="_blank" th:href="${'/course/learn/'+course.id}" class="emooc-course-card">
                         <div class="emooc-course-card-top">
                             <img class="emooc-course-banner lazy"
                                  data-original="//img1.mukewang.com/5a97d4000001d97906000338-240-135.jpg"

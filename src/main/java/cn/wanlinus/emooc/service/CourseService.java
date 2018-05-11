@@ -259,4 +259,11 @@ public interface CourseService {
      * @return 课程分类列表数据传输对象
      */
     CourseClassificationListDTO getClassificationDTOListByDirection(String directionId);
+
+    /**
+     * 推荐课程
+     *
+     * @return 返回5个推荐课程
+     */
+    List<Course> recommendCourse();
 }
