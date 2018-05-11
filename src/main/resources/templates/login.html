@@ -1,27 +1,163 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout::headerFragment">
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>首页</title>
+    <!-- CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <link rel="stylesheet" href="../static/css/login-style.css">
 </head>
 <body>
-<div th:include="layout::navFragment">
+<!-- Top content -->
+<div class="top-content">
+    <div class="inner-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7 text">
+                    <h1><strong>EMOOC</strong></h1>
+                    <h1>
+                        <small style="color: #FFFFFF;">Everyone's Massive Open Online Courses</small>
+                    </h1>
+                    <div class="description">
+                        <p>
+                            让更多热爱互联网的同学来慕课网学习，多年以后，圈子里一批技术牛说：我在
+                            <a href="http://wanlinus.cn"><strong>慕课网</strong></a>学习过，这就够了。
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-5 form-box">
+                    <div class="panel panel-default myForm">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a class="all" href="#login" aria-controls="login" role="tab"
+                                       data-toggle="tab">登录</a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="all" href="#register" aria-controls="register"
+                                       role="tab" data-toggle="tab">注册</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="login">
+                                    <div class="container-fluid">
+                                        <div class="row top">
+                                            <div class="col-lg-12 col-md-12">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                        <input type="text" class="form-control input-lg" autofocus
+                                                               id="login_username" name="username" placeholder="用户名">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                                        <input type="password" class="form-control input-lg"
+                                                               id="login_password" name="password" placeholder="密码">
+                                                    </div>
+                                                    <div class="checkbox clearfix">
+                                                        <label class="pull-left">
+                                                            <input type="checkbox" name="remember-me"> 记住密码
+                                                        </label>
+                                                        <label class="pull-right">
+                                                            <a> 忘记密码？</a>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                                        <select class="form-control">
+                                                            <option value="">请选择身份</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group clearfix">
+                                                        <div class="col-md-7 col-xs-7 to-left">
+                                                            <i class="fa fa-keyboard-o" aria-hidden="true"></i>
+                                                            <input type="text" class="form-control input-lg"
+                                                                   id="exampleInputPassword1" placeholder="验证码">
+                                                        </div>
+                                                        <div class="col-md-5 col-xs-5 no-padding">
+
+                                                        </div>
+
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary btn-lg">登录</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row bottom">
+                                            <div class="col-lg-12 col-md-12 clearfix">
+                                                <span>第三方登录</span>
+
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <span class="icon-qq"></span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <span class="icon-weixin"></span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <span class="icon-weibo"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="register">
+
+                                    <div class="container-fluid">
+                                        <div class="row top">
+                                            <div class="col-lg-12 col-md-12">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                        <input type="text" class="form-control input-lg"
+                                                               id="exampleInputEmail1" placeholder="Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                        <input type="email" class="form-control input-lg"
+                                                               id="exampleInputPassword1" placeholder="Email">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                                        <input type="password" class="form-control input-lg"
+                                                               id="exampleInputEmail1" placeholder="Password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                                        <input type="password" class="form-control input-lg"
+                                                               id="exampleInputPassword1" placeholder="Password">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary btn-lg register">注册
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row bottom">
+                                            <div class="col-lg-12 col-md-12">已经注册，点击<a>登录</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<h3>Login with Username and Password</h3>
-<form name='f' th:action='@{login}' method='POST'>
-    <div>
-        <label for="username">用户名: </label>
-        <input type='text' autofocus name='username' id="username" value=''/>
-    </div>
-    <div>
-        <label for="password">密码:</label>
-        <input type='password' id="password" name='password'/>
-    </div>
-    <input hidden type="text" name="role" id="role" value="USER">
-    <input name="submit" type="submit" value="登陆"/>
-    <input type="reset" th:value="重置">
-    还没有<a th:href="@{/register}">注册</a>?
-</form>
-<div th:replace="layout::footerFragment"></div>
+<!-- Javascript -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="backstretch"
+     style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 100%; width: 100%; z-index: -999999; position: fixed;"></div>
 </body>
+
 </html>
