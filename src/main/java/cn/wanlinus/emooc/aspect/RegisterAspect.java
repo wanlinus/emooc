@@ -71,15 +71,15 @@ public class RegisterAspect {
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setType(registerAnnotation.type());
+        String str = object.toString();
         if (object instanceof User) {
             log.setWho(((User) object).getUsername());
             log.setResult(true);
-            log.setComment(object.toString());
         } else {
             log.setWho(((UserRegisterDTO) joinPoint.getArgs()[0]).getUsername());
             log.setResult(false);
-            log.setComment(Arrays.toString(joinPoint.getArgs()));
         }
+        log.setComment(str.substring(0, Math.min(str.length(), 200)));
         logRepository.save(log);
         return object;
     }

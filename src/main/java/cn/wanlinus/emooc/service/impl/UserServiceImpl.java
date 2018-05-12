@@ -34,15 +34,13 @@ import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.CaptchaRepository;
 import cn.wanlinus.emooc.persistence.UserRepository;
 import cn.wanlinus.emooc.service.CollectionService;
+import cn.wanlinus.emooc.service.CommonService;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,21 +58,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private EmoocLogService logService;
-
     @Autowired
     private CaptchaRepository captchaRepository;
-
     @Autowired
     private CollectionService collectionService;
-
     @Autowired
-    private SimpleMailMessage mailMessage;
-
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private CommonService commonService;
 
     @Value("${emooc.host}")
     private String host;
@@ -166,7 +157,7 @@ public class UserServiceImpl implements UserService {
                 Captcha code = captchaRepository.save(captcha);
                 String msg = "您的注册验证码为: " + code.getId() + "请输入到验证区\n" +
                         "或点击<a href='https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'>验证用户</a>";
-                asyncSendMail(dto.getEmail(), msg);
+                commonService.asyncSendMail(dto.getEmail(), msg);
                 return u;
             }
         } catch (Exception e) {
@@ -317,17 +308,5 @@ public class UserServiceImpl implements UserService {
         return resultData;
     }
 
-    /**
-     * 异步发送邮件
-     *
-     * @param emailAddress 邮箱地址
-     * @param msg          信息
-     */
-    @Async
-    public void asyncSendMail(String emailAddress, String msg) {
-        mailMessage.setSubject("用户注册");
-        mailMessage.setTo(emailAddress);
-        mailMessage.setText(msg);
-        javaMailSender.send(mailMessage);
-    }
+
 }
