@@ -4,138 +4,46 @@
 <head th:include="layout::headerFragment">
 </head>
 <body>
-<div th:include="layout::navFragment">
-</div>
-这是index界面
-点击<a th:href="@{/login}">用户</a>
-<a th:href="@{/alogin}">admin</a>
-<a th:href="@{/tlogin}">teacher</a>
-<a href="mailto:wanlinus@qq.com?subject=申请Emooc讲师">申请</a>讲师
-<div sec:authorize='hasAuthority("ADMIN")'>
-    <p th:text="admin">Admin</p>
-    asdasdasd
-</div>
-<div sec:authorize="hasAuthority('USER')">
-    <span sec:authentication="principal.authorities"></span>
-    <p th:text="USER">User</p>
-</div>
 
-<div sec:authorize="isAuthenticated()">
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to authenticated users.
-</div>
-<div sec:authorize='hasAuthority("ADMIN")'>
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to administrators.
-</div>
-<div sec:authorize="hasAuthority('USER')">
-    <span sec:authentication="principal.authorities"></span>
-    This content is only shown to users.
-</div>
+<div hidden="hidden">
+    <div th:include="layout::navFragment"></div>
+    点击<a th:href="@{/login}">用户</a>
+    <a th:href="@{/alogin}">admin</a>
+    <a th:href="@{/tlogin}">teacher</a>
+    <a href="mailto:wanlinus@qq.com?subject=申请Emooc讲师">申请</a>讲师
+    <div sec:authorize='hasAuthority("ADMIN")'>
+        <p th:text="admin">Admin</p>
+        asdasdasd
+    </div>
+    <div sec:authorize="hasAuthority('USER')">
+        <span sec:authentication="principal.authorities"></span>
+        <p th:text="USER">User</p>
+    </div>
 
-
-<h2>创建模态框（Modal）</h2>
-<!-- 按钮触发模态框 -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
-            </div>
-            <div class="modal-body">在这里添加一些文本</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="principal.authorities"></span>
+        This content is only shown to authenticated users.
+    </div>
+    <div sec:authorize='hasAuthority("ADMIN")'>
+        <span sec:authentication="principal.authorities"></span>
+        This content is only shown to administrators.
+    </div>
+    <div sec:authorize="hasAuthority('USER')">
+        <span sec:authentication="principal.authorities"></span>
+        This content is only shown to users.
+    </div>
 </div>
-
-<!--下拉框-->
-<span class="glyphicon glyphicon-bell"></span>
-<div class="dropdown">
-    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">主题
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">Java</a>
-        </li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
-        </li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
-        </li>
-        <li role="presentation" class="divider"></li>
-        <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
-        </li>
-    </ul>
-</div>
-<button class="btn btn-success" data-toggle="modal" data-target="#addTeacher">添加教师</button>
-
-<div class="modal fade" id="addTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text" id="myModalLabel">添加教师</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-xs-3 text-right">
-                                        <label for="username">姓名:</label>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="username" name="username"
-                                               th:placeholder="教师姓名">
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-xs-3 text-right">
-                                        <label for="password">密码:</label>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="password" name="password"
-                                               disabled placeholder='默认密码: 123456'>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-xs-3 text-right"><label for="gender">性别:</label></div>
-                                    <div class="col-xs-6 ">
-                                        <select name="gender" class="form-control" id="gender">
-                                            <option value="0">男</option>
-                                            <option value="1">女</option>
-                                            <option value="2">未知</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 10px">
-                                    <div class="col-xs-3 text-right"><label for="position">职位:</label></div>
-                                    <div class="col-xs-6">
-                                        <input type="text" class="form-control" name="position" id="position"
-                                               th:placeholder="职位">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<a th:href="@{/login}">
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"></div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button onclick=""></button>
             </div>
         </div>
     </div>
-</div>
+    <div class="backstretch"></div>
+</a>
 </body>
 </html>

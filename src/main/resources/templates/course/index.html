@@ -36,7 +36,7 @@
                         <div class="emooc-bd">
                             <ul class="">
                                 <li class="emooc-course-nav-item on">
-                                    <a href="/course/list?c=fe">全部</a>
+                                    <a href="">全部</a>
                                 </li>
                                 <li class=" emooc-course-nav-item" th:each="classification:${classifications}">
                                     <a th:href="${'/course/direction?classificationId='+classification.id}"
@@ -105,12 +105,8 @@
                 <div class="emooc-course-card-container" th:each="course:${courses}">
                     <a target="_blank" th:href="${'/course/learn/'+course.id}" class="emooc-course-card">
                         <div class="emooc-course-card-top">
-                            <img class="emooc-course-banner lazy"
-                                 data-original="//img1.mukewang.com/5a97d4000001d97906000338-240-135.jpg"
-                                 th:src="${course.imagePath}"
-                                 style="display: inline;">
-                            <div class="emooc-course-label">
-                                <label th:text="${course.classification.name}">JavaScript</label>
+                            <img class="emooc-course-banner lazy" th:src="${course.imagePath}" style="display: inline;">
+                            <div class="emooc-course-label"><label th:text="${course.classification.name}"></label>
                             </div>
                         </div>
                         <div class="emooc-course-card-content">
@@ -120,8 +116,7 @@
                                     <span th:text="${course.grade.description}">初级</span>
                                     <span><i class="icon-set_sns"></i>20556</span>
                                 </div>
-                                <p class="emooc-course-card-desc" th:text="${course.notice}">
-                                    用最通俗、形象的方法描述ES6的强大并教会你正确的学习方法。</p>
+                                <p class="emooc-course-card-desc" th:text="${course.notice}"></p>
                             </div>
                         </div>
                     </a>

@@ -53,9 +53,8 @@ public class HomeController extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("login");
-        registry.addViewController("/register").setViewName("register");
-        registry.addViewController("/try").setViewName("try");
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/index").setViewName("index");
         registry.addViewController("/login").setViewName("login");
         super.addViewControllers(registry);
     }
@@ -65,7 +64,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         if (getAuthentication() != null) {
             new SecurityContextLogoutHandler().logout(request, response, getAuthentication());
         }
-        return "redirect:/login";
+        return "redirect:/index";
     }
 
     @GetMapping("/dispatcher")

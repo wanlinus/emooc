@@ -21,7 +21,6 @@ package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -307,6 +306,30 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", position='" + position + '\'' +
+                ", experience=" + experience +
+                ", address='" + address + '\'' +
+                ", birthday=" + birthday +
+                ", learnTime=" + learnTime +
+                ", integral=" + integral +
+                ", signature='" + signature + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", gender=" + gender +
+                ", balance=" + balance +
+                ", registerTime=" + registerTime +
+                ", userStatus=" + userStatus +
+                ", courseComments=" + courseComments +
+                ", studies=" + studies +
+                ", notes=" + notes +
+                ", questions=" + questions +
+                ", collections=" + collections +
+                '}';
     }
 }
