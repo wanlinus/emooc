@@ -23,8 +23,6 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.service.UserService;
 import cn.wanlinus.emooc.utils.AuthUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -49,20 +47,16 @@ import static cn.wanlinus.emooc.utils.AuthUtils.*;
 @RequestMapping("/")
 public class HomeController extends WebMvcConfigurerAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     private UserService userService;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index").setViewName("index");
+        registry.addViewController("/").setViewName("login");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/try").setViewName("try");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/alogin").setViewName("admin-login");
-        registry.addViewController("/tlogin").setViewName("teacher-login");
         super.addViewControllers(registry);
     }
 
@@ -71,7 +65,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         if (getAuthentication() != null) {
             new SecurityContextLogoutHandler().logout(request, response, getAuthentication());
         }
-        return "index";
+        return "redirect:/login";
     }
 
     @GetMapping("/dispatcher")
@@ -131,15 +125,15 @@ public class HomeController extends WebMvcConfigurerAdapter {
     public ResultData<Boolean> register(@RequestBody @Valid UserRegisterDTO dto, Errors errors) {
         ResultData<Boolean> resultData = new ResultData<>();
         if (errors.hasErrors()) {
+            StringBuilder msg = new StringBuilder();
             for (Object o : errors.getAllErrors()) {
-                System.out.println(o.toString());
+                msg.append(o.toString().substring(o.toString().lastIndexOf("[") + 1, o.toString().lastIndexOf("]")));
             }
             resultData.setCode(false);
-            resultData.setMessage("数据校验错误");
+            resultData.setMessage(msg.toString());
         } else {
             resultData.setCode(userService.register(dto) != null);
         }
-        logger.info(resultData.getCode().toString());
         return resultData;
     }
 

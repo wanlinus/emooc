@@ -48,7 +48,7 @@
                                     <div class="container-fluid">
                                         <div class="row top">
                                             <div class="col-lg-12 col-md-12">
-                                                <form>
+                                                <form th:action='@{/login}' name='f' method='POST'>
                                                     <div class="form-group">
                                                         <i class="fa fa-user-o" aria-hidden="true"></i>
                                                         <input type="text" class="form-control input-lg" autofocus
@@ -69,10 +69,10 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <i class="fa fa-id-card-o" aria-hidden="true"></i>
-                                                        <select class="form-control">
-                                                            <option value="">请选择身份</option>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
+                                                        <select class="form-control" name="role">
+                                                            <option value="USER">学生</option>
+                                                            <option value="TEACHER">教师</option>
+                                                            <option value="ADMIN">超级管理员</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group clearfix">
@@ -82,9 +82,7 @@
                                                                    id="exampleInputPassword1" placeholder="验证码">
                                                         </div>
                                                         <div class="col-md-5 col-xs-5 no-padding">
-
                                                         </div>
-
                                                     </div>
                                                     <button type="submit" class="btn btn-primary btn-lg">登录</button>
                                                 </form>
@@ -93,7 +91,6 @@
                                         <div class="row bottom">
                                             <div class="col-lg-12 col-md-12 clearfix">
                                                 <span>第三方登录</span>
-
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-4">
                                                 <span class="icon-qq"></span>
@@ -105,39 +102,38 @@
                                                 <span class="icon-weibo"></span>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="register">
-
                                     <div class="container-fluid">
                                         <div class="row top">
                                             <div class="col-lg-12 col-md-12">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <i class="fa fa-user-o" aria-hidden="true"></i>
-                                                        <input type="text" class="form-control input-lg"
-                                                               id="exampleInputEmail1" placeholder="Name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                                        <input type="email" class="form-control input-lg"
-                                                               id="exampleInputPassword1" placeholder="Email">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <i class="fa fa-lock" aria-hidden="true"></i>
-                                                        <input type="password" class="form-control input-lg"
-                                                               id="exampleInputEmail1" placeholder="Password">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <i class="fa fa-lock" aria-hidden="true"></i>
-                                                        <input type="password" class="form-control input-lg"
-                                                               id="exampleInputPassword1" placeholder="Password">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary btn-lg register">注册
-                                                    </button>
-                                                </form>
+                                                <div class="form-group">
+                                                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                    <input type="text" class="form-control input-lg"
+                                                           id="reg_username" name="username" placeholder="登陆名">
+                                                    <span id="reg_user_msg"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                    <input type="email" class="form-control input-lg"
+                                                           name="email" id="reg_email" placeholder="电子邮箱">
+                                                    <span id="reg_email_msg"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                                    <input type="password" class="form-control input-lg"
+                                                           id="reg_password" name="password" placeholder="密码">
+                                                </div>
+                                                <div class="form-group">
+                                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                                    <input type="password" class="form-control input-lg"
+                                                           id="reg_password2" placeholder="重复密码">
+                                                </div>
+                                                <button type="submit" id="reg_submit" disabled data-toggle="modal"
+                                                        data-target="#register-modal"
+                                                        class="btn btn-primary btn-lg register">注册
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="row bottom">
@@ -153,11 +149,100 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="register-modal" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="reg_modal_title">信息确认</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">用户名: <span id="post_username"></span></div>
+                    <div class="row">邮箱: <span id="post_email"></span></div>
+                    <div class="row">密码: <span id="post_password"></span></div>
+                </div>
+                <button id="reg_post" class="btn btn=primary">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="backstretch"></div>
 <!-- Javascript -->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div class="backstretch"
-     style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 100%; width: 100%; z-index: -999999; position: fixed;"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 </body>
-
+<script>
+    $(document).ready(function () {
+        let reg_post = $("#reg_post");
+        let reg_submit = $("#reg_submit")
+        let reg_username = $("#reg_username");
+        let reg_password = $("#reg_password");
+        let reg_email = $("#reg_email");
+        let reg_user_msg = $("#reg_user_msg");
+        let reg_email_msg = $("#reg_email_msg");
+        reg_username.blur(function () {
+            if (reg_username.val() != null && reg_username.val() !== "") {
+                $.get({
+                    url: "check/name?username=" + reg_username.val(),
+                    success: function (response) {
+                        reg_user_msg.html(response.message);
+                        if (response.code) {
+                            reg_submit.attr("disabled", false);
+                        } else {
+                            reg_submit.attr("disabled", true);
+                        }
+                    }
+                })
+            } else {
+                reg_user_msg.html("不能为空");
+            }
+        });
+        reg_email.blur(function () {
+            if (reg_email.val() != null && reg_email.val() !== "") {
+                $.get({
+                    url: "check/email?email=" + reg_email.val(),
+                    success: function (response) {
+                        reg_email_msg.html(response.message);
+                        console.log(response);
+                        if (response.code) {
+                            reg_submit.attr("disabled", false);
+                        } else {
+                            reg_submit.attr("disabled", true);
+                        }
+                    }
+                })
+            } else {
+                reg_email_msg.html("不能为空");
+            }
+        });
+        reg_submit.click(function () {
+            $("#post_username").html(reg_username.val());
+            $("#post_email").html(reg_email.val());
+            $("#post_password").html(reg_password.val());
+        });
+        reg_post.click(function () {
+            $.post({
+                url: "register",
+                data: JSON.stringify({
+                    username: reg_username.val(),
+                    password: reg_password.val(),
+                    email: reg_email.val()
+                }),
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.code) {
+                        alert("注册成功, 请登录邮箱激活账号");
+                        $(location).attr('href', 'login');
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        });
+    })
+</script>
 </html>

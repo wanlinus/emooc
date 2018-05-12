@@ -40,7 +40,7 @@ public class UserRegisterDTO implements Serializable {
     private String password;
 
     @NotNull
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "邮件校验错误")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "邮件格式错误")
     private String email;
 
     public String getUsername() {

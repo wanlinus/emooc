@@ -443,6 +443,15 @@ li.nav-list {
 
 .backstretch {
     background-image: url(../images/login-background.jpg);
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -999999;
+    position: fixed;
 }
 
 /***** Media queries *****/
