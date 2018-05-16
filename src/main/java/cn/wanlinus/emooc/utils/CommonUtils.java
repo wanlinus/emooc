@@ -120,6 +120,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 问题ID
+     *
+     * @return qid
+     */
+    public static String qid() {
+        return "Q" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id

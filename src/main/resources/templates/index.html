@@ -33,7 +33,7 @@
         This content is only shown to users.
     </div>
 </div>
-<a th:href="@{/login}">
+<a th:href="@{/login}" hidden>
     <div class="top-content">
         <div class="inner-bg">
             <div class="container">
@@ -46,4 +46,9 @@
     <div class="backstretch"></div>
 </a>
 </body>
+<script>
+    $(document).ready(function () {
+        $(location).attr('href', 'login');
+    })
+</script>
 </html>

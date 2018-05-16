@@ -29,6 +29,7 @@ import java.io.Serializable;
  */
 public class ThAddCourseDTO implements Serializable {
     private String name;
+    private String intro;
     private Integer direction;
     private Integer classification;
     private Integer type;
@@ -47,6 +48,14 @@ public class ThAddCourseDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public Integer getDirection() {
@@ -80,7 +89,6 @@ public class ThAddCourseDTO implements Serializable {
     public void setTariff(Double tariff) {
         this.tariff = tariff;
     }
-
 
     public Integer getGrade() {
         return grade;
@@ -118,6 +126,7 @@ public class ThAddCourseDTO implements Serializable {
     public String toString() {
         return "ThAddCourseDTO{" +
                 "name='" + name + '\'' +
+                ", intro='" + intro + '\'' +
                 ", direction=" + direction +
                 ", classification=" + classification +
                 ", type=" + type +

@@ -405,6 +405,46 @@ a:active, a:hover {
     height: 44px;
 }
 
+.bg-author, .bg-other, .bg-teacher {
+    background: url(../images/temp1.png) center top no-repeat #000;
+    background-size: cover;
+}
+
+.user-head-info .user-info {
+    position: relative;
+    width: 1152px;
+    margin: 0 auto;
+}
+
+.user-head-info .user-info .user-pic {
+    float: left;
+    width: 148px;
+    height: 148px;
+}
+
+.user-head-info .user-info .user-info-right {
+    float: right;
+    width: 980px;
+}
+
+.user-head-info .user-info .user-sign {
+    font-size: 14px;
+    color: #FFF;
+    line-height: 24px;
+    width: 440px;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.user-head-info .study-info {
+    position: absolute;
+    top: 48px;
+    right: 10px;
+    min-width: 200px;
+    text-align: right;
+}
+
 .clearfix:after {
     content: '\0020';
     display: block;

@@ -19,29 +19,20 @@
 
 package cn.wanlinus.emooc.service;
 
-import javax.mail.MessagingException;
+import cn.wanlinus.emooc.domain.Course;
+import cn.wanlinus.emooc.domain.Question;
 
 /**
  * @author wanli
- * @date 2018-05-12 18:29
+ * @date 2018-05-16 22:09
  */
-public interface CommonService {
+public interface QuestionService {
     /**
-     * 异步发送邮件
+     * 添加问题
      *
-     * @param emailAddress 邮箱地址
-     * @param msg          发送信息
-     * @param subject      主题
+     * @param msg    问题对象
+     * @param course 提问的课程
+     * @return 问题本身
      */
-    void simpleSendMail(String subject, String emailAddress, String msg);
-
-    /**
-     * 异步发送ssl邮件
-     *
-     * @param subject 发送主题
-     * @param sendMsg 发送信息
-     * @param sendTos 收件地址
-     * @throws MessagingException 恶心的抛异常
-     */
-    void sslSendMail(String subject, String sendMsg, String sendTos) throws MessagingException;
+    Question addQuestion(String msg, Course course);
 }

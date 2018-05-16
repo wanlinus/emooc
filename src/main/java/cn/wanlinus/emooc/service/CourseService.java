@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.service;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.*;
 import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Pageable;
@@ -266,4 +267,13 @@ public interface CourseService {
      * @return 返回5个推荐课程
      */
     List<Course> recommendCourse();
+
+    /**
+     * 添加问题
+     *
+     * @param courseId 课程ID
+     * @param question 添加问题
+     * @return resultData
+     */
+    ResultData<String> addQuestion(String courseId, String question);
 }

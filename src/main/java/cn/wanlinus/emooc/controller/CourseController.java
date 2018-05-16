@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.CourseClassification;
 import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.domain.CourseType;
@@ -67,22 +68,12 @@ public class CourseController {
         return "course/index";
     }
 
-    /**
-     * 返回rest课程类型数据
-     *
-     * @return CourseType
-     */
-    @GetMapping("rest/types")
-    @ResponseBody
-    public List<CourseType> types() {
-        return typeService.getTypes();
+
+    @PostMapping("/rest/question")
+    public ResultData<String> addQuestion(String courseId, String question) {
+        return courseService.addQuestion(courseId, question);
     }
 
-    @GetMapping("rest/direction")
-    @ResponseBody
-    public List<CourseDirection> directions() {
-        return directionService.getDirections();
-    }
 
     @GetMapping("direction")
     public String direction(String directionId, String classificationId,
@@ -105,6 +96,24 @@ public class CourseController {
         model.addAttribute("course", courseService.getCourse(courseId));
         model.addAttribute("recommends", courseService.recommendCourse());
         return "course/learn";
+    }
+
+
+    /**
+     * 返回rest课程类型数据
+     *
+     * @return CourseType
+     */
+    @GetMapping("rest/types")
+    @ResponseBody
+    public List<CourseType> types() {
+        return typeService.getTypes();
+    }
+
+    @GetMapping("rest/direction")
+    @ResponseBody
+    public List<CourseDirection> directions() {
+        return directionService.getDirections();
     }
 
 

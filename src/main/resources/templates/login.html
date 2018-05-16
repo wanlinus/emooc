@@ -234,7 +234,7 @@
                 success: function (response) {
                     if (response.code) {
                         alert("注册成功, 请登录邮箱激活账号");
-                        $(location).attr('href', 'index');
+                        $(location).attr('href', 'login');
                     } else {
                         alert(response.message);
                     }

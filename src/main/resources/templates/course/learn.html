@@ -5,13 +5,13 @@
     <title>aaa</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/css/custom-style.css">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
-
 </head>
 <body>
 <div hidden>
     <input type="hidden" id="courseId" th:value="${course.id}">
+    <!--<input type="hidden" id="csrf_name" th:value="${_csrf.parameterName}">
+    <input type="hidden" id="csrf_token" th:value="${_csrf.token}">-->
 </div>
 <header th:replace="course/layout:: courseHeader"></header>
 <div>
@@ -56,15 +56,16 @@
 
                         <div class="row">
                             <ul class="nav nav-pills nav-justified">
-                                <li role="presentation" class="active"><a href="#oneTab" data-toggle="tab">课程章节</a></li>
-                                <li role="presentation"><a href="#twoTab" data-toggle="tab">问答评论</a></li>
-                                <li role="presentation"><a href="#" data-toggle="tab">同学笔记</a></li>
-                                <li role="presentation"><a href="#" data-toggle="tab">用户评价</a></li>
+                                <li role="presentation" class="active"><a href="#tabSection" data-toggle="tab">课程章节</a>
+                                </li>
+                                <li role="presentation"><a href="#tabQuestion" data-toggle="tab">问答</a></li>
+                                <li role="presentation"><a href="#tabNotes" data-toggle="tab">笔记</a></li>
+                                <li role="presentation"><a href="#tabComment" data-toggle="tab">评价</a></li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane fade in active" id="oneTab">
+                                <div class="tab-pane fade in active" id="tabSection">
                                     <div class="emooc-course-description emooc-course-wrap"
-                                         th:text="${'简介:'+course.notice}">
+                                         th:text="${'简介:'+course.intro}">
                                     </div>
                                     <div class="emooc-course-chapters">
                                         <div class="emooc-chapter emooc-course-wrap emooc-chapter-active"
@@ -94,9 +95,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="tabQuestion">
+                                    <div id="questionEditor"></div>
+                                    <button id="btn_question">提交</button>
+                                    <ul>
+                                        <li th:each="question:${course.questions}">
+                                            <div class="emooc-course-wrap"><span th:text="${question.detail}" Z></span>
+                                            </div>
+                                        </li>
+                                    </ul>
 
-                                <div class="tab-pane fade" id="twoTab">
-                                    Two Tab
+                                </div>
+                                <div class="tab-pane fade" id="tabNotes">
+                                    tab Notes
+                                </div>
+                                <div class="tab-pane fade" id="tabComment">
+                                    tab Comment
                                 </div>
                             </div>
                         </div>
@@ -164,11 +178,19 @@
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
 <script>
     $(document).ready(function () {
+        let E = window.wangEditor;
+        let questionEditor = new E('#questionEditor');
+        questionEditor.create();
+
         let star = $("#collection_span");
         let empty_star = $("#collection_cancel_span");
-        let course_id = $("#courseId").val();
+        let course_id = $("#courseId");
+        let csrf_token = $("#csrf_token");
+        let btnQuestion = $("#btn_question");
+
         $.get({
             url: '/user/rest/isCollection/' + course_id,
             success: function (response) {
@@ -181,7 +203,6 @@
                 }
             }
         });
-
         star.click(function () {
             $.get({
                 url: '/user/rest/collection/cancel/' + course_id,
@@ -207,6 +228,29 @@
                 }
             })
         });
+        btnQuestion.click(function () {
+            $.ajax({
+                url: '/course/learn/rest/question',
+                type: 'post',
+                data: {
+                    "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
+                    courseId: course_id.val(),
+                    question: questionEditor.txt.html(),
+                },
+                dataType: "json",
+                /*contentType: "application/json",*/
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+
+        })
     })
+    /*JSON.stringify({
+                    courseId: course_id.val(),
+                    question: questionEditor.txt.html(),
+                    "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]"
+                }),*/
+
 </script>
 </html>

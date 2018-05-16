@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
                 Captcha code = captchaRepository.save(captcha);
                 String msg = "您的注册验证码为: " + code.getId() + "请输入到验证区\n" +
                         "或点击<a href='https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'>验证用户</a>";
-                commonService.asyncSendMail(dto.getEmail(), msg);
+                commonService.simpleSendMail("用户注册", dto.getEmail(), msg);
                 return u;
             }
         } catch (Exception e) {
@@ -185,7 +185,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.count();
     }
 
-    private User getCurrentUser() {
+    @Override
+    public User getCurrentUser() {
         return userRepository.findByUsername(getUsername());
     }
 

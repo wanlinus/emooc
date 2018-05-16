@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.*;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocCourseGrade;
@@ -79,6 +80,12 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseTypeService typeService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private QuestionService questionService;
+
     /**
      * 用户学习服务对象
      */
@@ -135,6 +142,7 @@ public class CourseServiceImpl implements CourseService {
         course.setGrade(EmoocCourseGrade.values()[dto.getGrade()]);
         course.setDuration(0);
         course.setScore(0.0);
+        course.setIntro(dto.getIntro());
         course.setNotice(dto.getNotice());
         course.setWtcanlearn(dto.getWtcanlearn());
         course.setImagePath(dto.getPath());
@@ -372,6 +380,21 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> recommendCourse() {
         return courseRepository.randCourse();
 
+    }
+
+    @Override
+    public ResultData<String> addQuestion(String courseId, String msg) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            questionService.addQuestion(msg, courseRepository.getOne(courseId));
+            resultData.setCode(true);
+            resultData.setMessage("保存成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultData.setCode(false);
+            resultData.setMessage("保存失败");
+        }
+        return resultData;
     }
 
     private List<CourseClassificationDTO> classification2DTO(String directionId) {

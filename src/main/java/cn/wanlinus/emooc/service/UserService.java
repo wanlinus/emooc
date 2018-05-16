@@ -101,6 +101,13 @@ public interface UserService {
     Long countUsers();
 
     /**
+     * 获取当前用户
+     *
+     * @return 当前用户
+     */
+    User getCurrentUser();
+
+    /**
      * 获取用户对象
      *
      * @param username 用户名

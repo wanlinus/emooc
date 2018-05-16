@@ -27,6 +27,18 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.security.auth.message.MessageInfo;
+import java.io.IOException;
+import java.security.Security;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+
 /**
  * @author wanli
  * @date 2018-05-12 19:53
@@ -40,20 +52,27 @@ public class CommonsServiceImpl implements CommonService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private Message message;
 
-
-    /**
-     * 异步发送邮件
-     *
-     * @param emailAddress 邮箱地址
-     * @param msg          信息
-     */
     @Async
     @Override
-    public void asyncSendMail(String emailAddress, String msg) {
-        mailMessage.setSubject("用户注册");
+    public void simpleSendMail(String subject, String emailAddress, String msg) {
+        mailMessage.setSubject(subject);
         mailMessage.setTo(emailAddress);
         mailMessage.setText(msg);
         javaMailSender.send(mailMessage);
+    }
+
+    @Async
+    @Override
+    public void sslSendMail(String subject, String sendMsg, String sendTos) throws MessagingException {
+        //标题
+        message.setSubject(subject);
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendTos));
+        //内容
+        message.setText(sendMsg);
+        message.setSentDate(new Date());
+        Transport.send(message);
     }
 }
