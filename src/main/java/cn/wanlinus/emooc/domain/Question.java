@@ -19,7 +19,6 @@
 
 package cn.wanlinus.emooc.domain;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -51,8 +50,8 @@ public class Question implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "QUESTION_TEACHER_ID", referencedColumnName = "TEACHER_ID")
-    private Teacher teacher;
+    @JoinColumn(name = "QUESTION_COURSE_ID", referencedColumnName = "COURSE_ID")
+    private Course course;
 
     @JsonIgnore
     @OneToMany(mappedBy = "question")
@@ -90,12 +89,12 @@ public class Question implements Serializable {
         this.user = user;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public List<Answer> getAnswers() {
@@ -108,6 +107,13 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "Question{" +
+                "id='" + id + '\'' +
+                ", time=" + time +
+                ", detail='" + detail + '\'' +
+                ", user=" + user +
+                ", course=" + course +
+                ", answers=" + answers +
+                '}';
     }
 }

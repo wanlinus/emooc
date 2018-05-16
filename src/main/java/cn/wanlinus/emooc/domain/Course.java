@@ -20,7 +20,6 @@
 package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.EmoocCourseGrade;
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -41,6 +40,9 @@ public class Course implements Serializable {
 
     @Column(name = "COURSE_NAME")
     private String name;
+
+    @Column(name = "COURSE_INTRO")
+    private String intro;
 
     @Column(name = "COURSE_TARIFF")
     private Double tariff;
@@ -65,6 +67,9 @@ public class Course implements Serializable {
 
     @Column(name = "COURSE_CREATE_TIME")
     private Date createTime;
+
+    @Column(name = "COURSE_STATUS")
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "COURSE_TEACH_ID", referencedColumnName = "TEACHER_ID")
@@ -98,6 +103,9 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private List<Collection> collections;
 
+    @OneToMany(mappedBy = "course")
+    private List<Question> questions;
+
     public Course() {
     }
 
@@ -115,6 +123,14 @@ public class Course implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public Double getTariff() {
@@ -181,6 +197,14 @@ public class Course implements Serializable {
         this.createTime = createTime;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public Teacher getTeacher() {
         return teacher;
     }
@@ -245,9 +269,39 @@ public class Course implements Serializable {
         this.collections = collections;
     }
 
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "Course{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", intro='" + intro + '\'' +
+                ", tariff=" + tariff +
+                ", grade=" + grade +
+                ", duration=" + duration +
+                ", score=" + score +
+                ", notice='" + notice + '\'' +
+                ", wtcanlearn='" + wtcanlearn + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", createTime=" + createTime +
+                ", status=" + status +
+                ", teacher=" + teacher +
+                ", classification=" + classification +
+                ", type=" + type +
+                ", sections=" + sections +
+                ", courseComments=" + courseComments +
+                ", studies=" + studies +
+                ", notes=" + notes +
+                ", collections=" + collections +
+                ", questions=" + questions +
+                '}';
     }
 }
 

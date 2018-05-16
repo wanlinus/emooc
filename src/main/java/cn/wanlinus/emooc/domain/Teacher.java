@@ -21,7 +21,6 @@ package cn.wanlinus.emooc.domain;
 
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.TeacherStatus;
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -65,10 +64,6 @@ public class Teacher implements Serializable {
 
     @Column(name = "TEACHER_STATUS")
     private TeacherStatus status;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
-    private List<Question> questions;
 
     @JsonIgnore
     @OneToMany(mappedBy = "teacher")
@@ -157,14 +152,6 @@ public class Teacher implements Serializable {
         this.status = status;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
     public List<Course> getCourses() {
         return courses;
     }
@@ -175,6 +162,18 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "Teacher{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", email='" + email + '\'' +
+                ", position='" + position + '\'' +
+                ", detail='" + detail + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", signature='" + signature + '\'' +
+                ", status=" + status +
+                ", courses=" + courses +
+                '}';
     }
 }
