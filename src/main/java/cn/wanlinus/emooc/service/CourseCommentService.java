@@ -19,6 +19,9 @@
 
 package cn.wanlinus.emooc.service;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author wanli
  * @date 2018-05-03 19:25
@@ -32,4 +35,21 @@ public interface CourseCommentService {
      * @return 统计量
      */
     Integer count(String courseId);
+
+    /**
+     * 统计传入日期评论统计量
+     *
+     * @param date 相应日期
+     * @param days 前多少天
+     * @return 统计量
+     */
+    List<Long> commentStatistics(Date date, int days);
+
+    /**
+     * 对指定日期评论进行计数
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countComments(Date date);
 }

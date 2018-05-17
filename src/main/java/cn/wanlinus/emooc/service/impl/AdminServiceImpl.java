@@ -19,18 +19,17 @@
 
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.dto.CourseDirectionPieDTO;
+import cn.wanlinus.emooc.dto.QuesNoteDTO;
 import cn.wanlinus.emooc.dto.StatisticsDTO;
-import cn.wanlinus.emooc.enums.EmoocLogType;
-import cn.wanlinus.emooc.enums.EmoocRole;
-import cn.wanlinus.emooc.persistence.AdminRepository;
-import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.service.*;
-import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+
+import static cn.wanlinus.emooc.utils.CommonUtils.dateFormatSimple;
 
 /**
  * @author wanli
@@ -43,6 +42,12 @@ public class AdminServiceImpl implements AdminService {
      * 获取30天的数据
      */
     private static final int MONTH = 30;
+
+    /**
+     * 定义一周7天
+     */
+    private static final int WEEKDAY = 7;
+
     @Autowired
     private EmoocLogService logService;
 
@@ -54,6 +59,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private QuestionService questionService;
+
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private CourseCommentService commentService;
+
+    @Autowired
+    private NoteService noteService;
+
+    @Autowired
+    private CourseScoreService scoreService;
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -76,13 +96,42 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<CourseDirectionPieDTO> courseDirectionPie() {
+        List<CourseDirectionPieDTO> dtos = new ArrayList<>();
+        List<Map<String, Object>> list = courseService.courseDirectionPie();
+        for (Map<String, Object> map : list) {
+            dtos.add(new CourseDirectionPieDTO(String.valueOf(map.get("dname")), Integer.parseInt(String.valueOf(map.get("counts")))));
+        }
+        return dtos;
+    }
+
+    @Override
+    public QuesNoteDTO quesNote() {
+        QuesNoteDTO dto = new QuesNoteDTO();
+        List<String> list = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = 0; i < WEEKDAY; i++) {
+            list.add(dateFormatSimple(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_WEEK, -1);
+        }
+        Collections.reverse(list);
+        dto.setDate(list);
+        dto.setQuestions(questionService.questionStatistics(new Date(), WEEKDAY));
+        dto.setAnswers(answerService.answerStatistics(new Date(), WEEKDAY));
+        dto.setComments(commentService.commentStatistics(new Date(), WEEKDAY));
+        dto.setNotes(noteService.noteStatistics(new Date(), WEEKDAY));
+        dto.setScores(scoreService.scoreStatistics(new Date(), WEEKDAY));
+        return dto;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public StatisticsDTO statistics() {
         StatisticsDTO dto = new StatisticsDTO();
         List<String> list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         for (int i = 0; i < MONTH; i++) {
-            list.add(CommonUtils.dateFormatSimple(calendar.getTime()));
+            list.add(dateFormatSimple(calendar.getTime()));
             calendar.add(Calendar.DAY_OF_WEEK, -1);
         }
         Collections.reverse(list);

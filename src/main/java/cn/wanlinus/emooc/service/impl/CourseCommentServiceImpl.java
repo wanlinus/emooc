@@ -21,8 +21,11 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.persistence.CourseCommentRepository;
 import cn.wanlinus.emooc.service.CourseCommentService;
+import cn.wanlinus.emooc.service.EmoocLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * @author wanli
@@ -34,8 +37,29 @@ public class CourseCommentServiceImpl implements CourseCommentService {
     @Autowired
     private CourseCommentRepository commentRepository;
 
+    @Autowired
+    private EmoocLogService logService;
+
     @Override
     public Integer count(String courseId) {
         return commentRepository.commentsNum(courseId);
+    }
+
+    @Override
+    public List<Long> commentStatistics(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countComments(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
+    @Override
+    public Long countComments(Date date) {
+        return logService.countComments(date);
     }
 }

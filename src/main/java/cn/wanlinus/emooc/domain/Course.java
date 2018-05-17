@@ -106,6 +106,9 @@ public class Course implements Serializable {
     @OneToMany(mappedBy = "course")
     private List<Question> questions;
 
+    @OneToMany(mappedBy = "course")
+    private List<CourseScore> scores;
+
     public Course() {
     }
 
@@ -275,6 +278,14 @@ public class Course implements Serializable {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public List<CourseScore> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<CourseScore> scores) {
+        this.scores = scores;
     }
 
     @Override

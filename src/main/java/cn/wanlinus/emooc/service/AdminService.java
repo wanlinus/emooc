@@ -19,10 +19,13 @@
 
 package cn.wanlinus.emooc.service;
 
+import cn.wanlinus.emooc.dto.CourseDirectionPieDTO;
+import cn.wanlinus.emooc.dto.QuesNoteDTO;
 import cn.wanlinus.emooc.dto.StatisticsDTO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wanli
@@ -53,4 +56,19 @@ public interface AdminService {
      * @return 统计量
      */
     List<Long> adminLoginStatistics(Date date, Integer days);
+
+
+    /**
+     * 课程方向元饼图
+     *
+     * @return CourseDirectionPieDTO
+     */
+    List<CourseDirectionPieDTO> courseDirectionPie();
+
+    /**
+     * 课程操作柱状图 返回近7天数据
+     *
+     * @return quesNoteDTO
+     */
+    QuesNoteDTO quesNote();
 }

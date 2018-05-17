@@ -22,10 +22,14 @@ package cn.wanlinus.emooc.persistence.impl;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.persistence.custom.CourseCustomPersistence;
 import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wanli
@@ -51,7 +55,20 @@ public class CourseRepositoryImpl extends BaseCustomPersistenceImpl implements C
         Query query = this.getEntityManager().createNativeQuery(sql);
         query.unwrap(SQLQuery.class).addEntity(Course.class);
         List<Course> list = query.getResultList();
-        return CollectionUtils.isEmpty(list) ? null : list;
+        return CollectionUtils.isEmpty(list) ? Collections.EMPTY_LIST : list;
 
+    }
+
+    @Override
+    public List<Map<String, Object>> courseDirectionPie() {
+        String sql = "SELECT d.DIRECTION_NAME AS dname,count(c.CLASSIFICATION_NAME) AS counts FROM TB_COURSE_CLASSIFICATION c " +
+                "INNER JOIN TB_COURSE course ON c.CLASSIFICATION_ID = course.COURSE_CLASSIFICATION_ID " +
+                "INNER JOIN TB_COURSE_DIRECTION d ON c.CLASSIFICATION_DIRECTION_ID = d.DIRECTION_ID " +
+                "GROUP BY c.CLASSIFICATION_DIRECTION_ID";
+
+        Query query = this.getEntityManager().createNativeQuery(sql);
+        query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List<Map<String, Object>> queryList = query.getResultList();
+        return CollectionUtils.isEmpty(queryList) ? Collections.EMPTY_LIST : queryList;
     }
 }

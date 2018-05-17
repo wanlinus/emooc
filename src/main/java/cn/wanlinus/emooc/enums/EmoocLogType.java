@@ -36,8 +36,12 @@ public enum EmoocLogType {
     USER_ACTIVATED("用户激活"),
     USER_ADD_COLLECTION("用户添加课程收藏"),
     USER_CANCEL_COLLECTION("用户取消课程收藏"),
+    USER_ADD_QUESTION("用户提出问题"),
+    USER_ADD_NOTE("用户添加笔记"),
+    USER_ADD_COMMENT("用户添加评论"),
+    USER_ADD_SCORE("用户对课程进行评分"),
+    TEACHER_ADD_ANSWER("教师解答问题"),
     UNKNOWN("未知");
-
 
     private String description;
 

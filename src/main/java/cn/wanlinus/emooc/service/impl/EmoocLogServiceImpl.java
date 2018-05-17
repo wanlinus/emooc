@@ -121,4 +121,29 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     public Long countAdminLogin(Date date) {
         return logRepository.countRoleType(EmoocRole.ROLE_ADMIN.ordinal(), EmoocLogType.LOGIN.ordinal(), date);
     }
+
+    @Override
+    public Long countQuestions(Date date) {
+        return logRepository.countLogType(EmoocLogType.USER_ADD_QUESTION.ordinal(), date);
+    }
+
+    @Override
+    public Long countAnswers(Date date) {
+        return logRepository.countLogType(EmoocLogType.TEACHER_ADD_ANSWER.ordinal(), date);
+    }
+
+    @Override
+    public Long countComments(Date date) {
+        return logRepository.countLogType(EmoocLogType.USER_ADD_COMMENT.ordinal(), date);
+    }
+
+    @Override
+    public Long countNotes(Date date) {
+        return logRepository.countLogType(EmoocLogType.USER_ADD_NOTE.ordinal(), date);
+    }
+
+    @Override
+    public Long countScores(Date date) {
+        return logRepository.countLogType(EmoocLogType.USER_ADD_SCORE.ordinal(), date);
+    }
 }

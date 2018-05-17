@@ -23,6 +23,9 @@ import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Note;
 import cn.wanlinus.emooc.domain.Question;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author wanli
  * @date 2018-05-16 22:09
@@ -37,5 +40,20 @@ public interface QuestionService {
      */
     Question addQuestion(String msg, Course course);
 
+    /**
+     * 统计传入日期用户提问
+     *
+     * @param date 相应日期
+     * @param days 前多少天
+     * @return 统计量
+     */
+    List<Long> questionStatistics(Date date, int days);
 
+    /**
+     * 对传入日期当天提问计数
+     *
+     * @param date 指定天数
+     * @return 统计量
+     */
+    Long countQuestions(Date date);
 }

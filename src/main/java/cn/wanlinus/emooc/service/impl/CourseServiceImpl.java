@@ -425,6 +425,11 @@ public class CourseServiceImpl implements CourseService {
         return resultData;
     }
 
+    @Override
+    public List<Map<String, Object>> courseDirectionPie() {
+        return courseRepository.courseDirectionPie();
+    }
+
     private List<CourseClassificationDTO> classification2DTO(String directionId) {
         List<CourseClassificationDTO> list = new ArrayList<>();
         for (CourseClassification c : directionService.getDirection(directionId).getClassifications()) {

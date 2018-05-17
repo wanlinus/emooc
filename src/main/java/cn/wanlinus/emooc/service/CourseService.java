@@ -26,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程服务接口
@@ -284,4 +285,11 @@ public interface CourseService {
      * @return resultData
      */
     ResultData<QuesNoteReturnDTO> addNote(NoteDTO dto);
+
+    /**
+     * 课程方向元饼图
+     *
+     * @return 由于课程方向不确定，所以用List Map
+     */
+    List<Map<String, Object>> courseDirectionPie();
 }

@@ -17,33 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence.custom;
+package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.Course;
-
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wanli
- * @date 2018-05-05 15:02
+ * @date 2018-05-17 20:26
  */
-public interface CourseCustomPersistence extends BaseCustomPersistence {
-    /**
-     * 对课程进行筛选分页
-     *
-     * @param pageSize         每页条数
-     * @param page             第几页
-     * @param directionId      方向Id
-     * @param classificationId 分类Id
-     * @return 课程集合
-     */
-    List<Course> pageCourses(Integer pageSize, Integer page, String directionId, String classificationId);
+public interface AnswerService {
 
     /**
-     * 课程的方向统计
+     * 统计传入日期教师回答量
      *
-     * @return 课程方向名称 课程方向个数
+     * @param date 相应日期
+     * @param days 前多少天
+     * @return 统计量
      */
-    List<Map<String, Object>> courseDirectionPie();
+    List<Long> answerStatistics(Date date, int days);
+
+    /**
+     * 对传入当日回答尽心统计
+     *
+     * @param date 传入日期
+     * @return 统计量
+     */
+    Long countAnswers(Date date);
 }

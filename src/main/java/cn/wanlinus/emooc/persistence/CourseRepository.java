@@ -25,6 +25,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wanli
@@ -69,5 +70,6 @@ public interface CourseRepository extends BaseRepository<Course, String>, Course
      */
     @Query(value = "SELECT * FROM TB_COURSE ORDER BY rand() LIMIT 0,5", nativeQuery = true)
     List<Course> randCourse();
+
 
 }

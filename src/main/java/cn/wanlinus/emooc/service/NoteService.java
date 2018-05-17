@@ -22,6 +22,9 @@ package cn.wanlinus.emooc.service;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Note;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author wanli
  * @date 2018-05-17 14:40
@@ -36,4 +39,21 @@ public interface NoteService {
      * @return 笔记对象本身
      */
     Note addNote(String note, Course course);
+
+    /**
+     * 统计传入日期笔记统计
+     *
+     * @param date 相应日期
+     * @param days 前多少天
+     * @return 统计量
+     */
+    List<Long> noteStatistics(Date date, int days);
+
+    /**
+     * 对指定日期笔记进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countNotes(Date date);
 }

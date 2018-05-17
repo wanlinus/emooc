@@ -68,10 +68,10 @@ public class UserAspect {
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());
+        log.setResult(true);
         String json = JSON.toJSONString(obj) + JSON.toJSONString(joinPoint.getArgs());
         log.setComment(json.substring(0, Math.min(json.length(), 200)));
         logRepository.save(log);
         return obj;
-
     }
 }

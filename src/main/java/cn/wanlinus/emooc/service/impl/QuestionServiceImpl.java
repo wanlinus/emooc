@@ -19,17 +19,20 @@
 
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Note;
 import cn.wanlinus.emooc.domain.Question;
+import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.persistence.QuestionRepository;
+import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.NoteService;
 import cn.wanlinus.emooc.service.QuestionService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.*;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.nid;
 import static cn.wanlinus.emooc.utils.CommonUtils.qid;
@@ -49,7 +52,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmoocLogService logService;
+
     @Override
+    @UserAnnotation(type = EmoocLogType.USER_ADD_QUESTION)
     public Question addQuestion(String msg, Course course) {
         Question question = new Question();
         question.setId(qid());
@@ -58,6 +65,26 @@ public class QuestionServiceImpl implements QuestionService {
         question.setTime(new Date());
         question.setCourse(course);
         return questionRepository.save(question);
+    }
+
+
+    @Override
+    public List<Long> questionStatistics(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        List<Long> list = new ArrayList<>();
+        for (int i = 0; i < days; i++) {
+            list.add(countQuestions(calendar.getTime()));
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
+        Collections.reverse(list);
+        return list;
+
+    }
+
+    @Override
+    public Long countQuestions(Date date) {
+        return logService.countQuestions(date);
     }
 
 }

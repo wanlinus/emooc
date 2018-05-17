@@ -2,8 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="admin/layout::adminHead">
-    <link rel="stylesheet" href="/static/layui/css/layui.css">
-    <link rel="stylesheet" href="../../static/css/custom-style.css">
 </head>
 
 <body class="layui-layout-body">
@@ -68,7 +66,12 @@
                 </div>
                 <div class="layui-col-md5">
                     <div class="layui-row layui-col-space5">
-                        <div class="layui-col-md4" id="gender" style="height: 260px; width: 300px"></div>
+                        <div class="layui-col-md7" id="courseDirection" style="height: 260px;width: 310px;"></div>
+                        <div class="layui-col-md5" id="gender" style="height: 260px; width: 300px"></div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md12" id="quesNote"
+                             style="height: 260px; width:100%; max-width:610px;"></div>
                     </div>
 
                 </div>
@@ -131,7 +134,6 @@
 
 </body>
 <script th:src="@{/layui/layui.all.js}"></script>
-<script src="/static/layui/layui.all.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
 <script>
@@ -165,9 +167,110 @@
                     shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
             }
-        }
+        }]
+    };
+</script>
+<script>
+    const domCourseDirection = document.getElementById("courseDirection");
+    const courseDirectionCharts = echarts.init(domCourseDirection);
+    courseDirectionOption = {
+        title: {
+            text: 'EMooc课程方向统计',
+            subtext: '装逼神器',
+            x: 'center'
+        }, tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}门 ({d}%)"
+        }, legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: []
+        }, series: [{
+            name: '课程方向比例',
+            type: 'pie',
+            radius: '55px',
+            center: ['50%', '60%'],
+            data: [],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+</script>
+<script>
+    const quesNoteDom = document.getElementById("quesNote");
+    const quesNoteCharts = echarts.init(quesNoteDom);
+    quesNoteOption = {
+        title: {
+            text: '课程操作统计',
+            subtext: '近7日数据'
+        }, tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'line', //line cross shadow
+                crossStyle: {
+                    color: '#999'
+                },
+            }
+        }, toolbox: {
+            feature: {
+                dataView: {show: false, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        }, legend: {
+            data: ['提问', '回答', '笔记', '评论', '评分']
+        }, xAxis: [
+            {
+                type: 'category',
+                data: [],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ], yAxis: [
+            {
+                type: 'value',
+                name: '次数',
+                min: 0,
+                max: 30,
+                interval: 5,
+                axisLabel: {
+                    formatter: '{value} 次'
+                }
+            }
+        ], series: [
+            {
+                name: '提问',
+                type: 'bar',
+                data: []
+            }, {
+                name: '回答',
+                type: 'bar',
+                data: []
+            }, {
+                name: '笔记',
+                type: 'bar',
+                data: []
+            }, {
+                name: '评论',
+                type: 'bar',
+                data: []
+            }, {
+                name: '评分',
+                type: 'bar',
+                data: []
+            }
         ]
     };
+    if (quesNoteOption && typeof quesNoteOption === "object") {
+        quesNoteCharts.setOption(quesNoteOption, true);
+    }
 </script>
 <script>
     const statisticsDom = document.getElementById("statistics");
@@ -287,6 +390,32 @@
             success: function (responseData) {
                 genderOption.series[0].data = responseData;
                 genderCharts.setOption(genderOption);
+            }
+        });
+        $.get({
+            url: '/admin/courseDirectionPie',
+            success: function (responseData) {
+                courseDirectionOption.series[0].data = responseData;
+                let aa = [];
+                for (let i = 0; i < responseData, length; i++) {
+                    aa[i] = responseData[i].name;
+                }
+                console.log(aa);
+                courseDirectionOption.legend.data = aa;
+                courseDirectionCharts.setOption(courseDirectionOption);
+            }
+        });
+        $.get({
+            url: '/admin/courseQuesNote',
+            success: function (responseData) {
+                console.log(responseData);
+                quesNoteOption.xAxis[0].data = responseData.date;
+                quesNoteOption.series[0].data = responseData.questions;
+                quesNoteOption.series[1].data = responseData.answers;
+                quesNoteOption.series[2].data = responseData.notes;
+                quesNoteOption.series[3].data = responseData.comments;
+                quesNoteOption.series[4].data = responseData.scores;
+                quesNoteCharts.setOption(quesNoteOption);
             }
         });
         $.get({

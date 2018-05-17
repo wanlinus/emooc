@@ -110,6 +110,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Collection> collections;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<CourseScore> scores;
+
     public User() {
     }
 
@@ -304,6 +308,14 @@ public class User implements Serializable {
         this.collections = collections;
     }
 
+    public List<CourseScore> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<CourseScore> scores) {
+        this.scores = scores;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -325,11 +337,6 @@ public class User implements Serializable {
                 ", balance=" + balance +
                 ", registerTime=" + registerTime +
                 ", userStatus=" + userStatus +
-                ", courseComments=" + courseComments +
-                ", studies=" + studies +
-                ", notes=" + notes +
-                ", questions=" + questions +
-                ", collections=" + collections +
                 '}';
     }
 }

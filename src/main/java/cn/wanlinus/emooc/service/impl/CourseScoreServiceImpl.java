@@ -19,56 +19,30 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.UserAnnotation;
-import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.Note;
-import cn.wanlinus.emooc.enums.EmoocLogType;
-import cn.wanlinus.emooc.persistence.NoteRepository;
+import cn.wanlinus.emooc.service.CourseScoreService;
 import cn.wanlinus.emooc.service.EmoocLogService;
-import cn.wanlinus.emooc.service.NoteService;
-import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.nid;
-
 /**
  * @author wanli
- * @date 2018-05-17 14:40
+ * @date 2018-05-17 21:05
  */
 @Service
-public class NoteServiceImpl implements NoteService {
-
-    @Autowired
-    private NoteRepository noteRepository;
-
-    @Autowired
-    private UserService userService;
+public class CourseScoreServiceImpl implements CourseScoreService {
 
     @Autowired
     private EmoocLogService logService;
 
     @Override
-    @UserAnnotation(type = EmoocLogType.USER_ADD_NOTE)
-    public Note addNote(String msg, Course course) {
-        Note note = new Note();
-        note.setId(nid());
-        note.setDetail(msg);
-        note.setTime(new Date());
-        note.setCourse(course);
-        note.setUser(userService.getCurrentUser());
-        return noteRepository.save(note);
-    }
-
-    @Override
-    public List<Long> noteStatistics(Date date, int days) {
+    public List<Long> scoreStatistics(Date date, int days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         List<Long> list = new ArrayList<>();
         for (int i = 0; i < days; i++) {
-            list.add(countNotes(calendar.getTime()));
+            list.add(countScores(calendar.getTime()));
             calendar.add(Calendar.DAY_OF_YEAR, -1);
         }
         Collections.reverse(list);
@@ -76,9 +50,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Long countNotes(Date date) {
-        return logService.countNotes(date);
+    public Long countScores(Date date) {
+        return logService.countScores(date);
     }
-
-
 }

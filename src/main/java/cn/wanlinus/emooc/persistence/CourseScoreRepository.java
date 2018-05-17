@@ -17,33 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence.custom;
+package cn.wanlinus.emooc.persistence;
 
-import cn.wanlinus.emooc.domain.Course;
-
-import java.util.List;
-import java.util.Map;
+import cn.wanlinus.emooc.domain.CourseScore;
 
 /**
  * @author wanli
- * @date 2018-05-05 15:02
+ * @date 2018-05-17 21:03
  */
-public interface CourseCustomPersistence extends BaseCustomPersistence {
-    /**
-     * 对课程进行筛选分页
-     *
-     * @param pageSize         每页条数
-     * @param page             第几页
-     * @param directionId      方向Id
-     * @param classificationId 分类Id
-     * @return 课程集合
-     */
-    List<Course> pageCourses(Integer pageSize, Integer page, String directionId, String classificationId);
-
-    /**
-     * 课程的方向统计
-     *
-     * @return 课程方向名称 课程方向个数
-     */
-    List<Map<String, Object>> courseDirectionPie();
+public interface CourseScoreRepository extends BaseRepository<CourseScore, String> {
 }

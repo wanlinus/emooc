@@ -112,6 +112,28 @@ public class AdminController {
     }
 
     /**
+     * 课程方向统计
+     *
+     * @return CourseDirectionPieDTO
+     */
+    @GetMapping(value = "courseDirectionPie")
+    @ResponseBody
+    public List<CourseDirectionPieDTO> courseDirectionPie() {
+        return adminService.courseDirectionPie();
+    }
+
+    /**
+     * 课程操作统计
+     *
+     * @return QuesNoteDTO
+     */
+    @GetMapping(value = "courseQuesNote")
+    @ResponseBody
+    public QuesNoteDTO quesNote() {
+        return adminService.quesNote();
+    }
+
+    /**
      * 讲师管理系统
      */
     @GetMapping("tms")
@@ -140,8 +162,8 @@ public class AdminController {
      * 添加教师
      *
      * @param dto                教师信息
-     * @param redirectAttributes
-     * @return
+     * @param redirectAttributes redirectAttributes
+     * @return view name
      */
     @PostMapping("tms/teacher")
     public String addTeacher(TeacherDetailsDTO dto, RedirectAttributes redirectAttributes) {

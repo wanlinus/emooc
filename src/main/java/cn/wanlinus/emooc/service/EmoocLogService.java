@@ -116,4 +116,44 @@ public interface EmoocLogService {
      * @return 统计量
      */
     Long countAdminLogin(Date date);
+
+    /**
+     * 指定日期对问题进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countQuestions(Date date);
+
+    /**
+     * 指定日期对问题的回答进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countAnswers(Date date);
+
+    /**
+     * 指定日期对课程评论计数
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countComments(Date date);
+
+    /**
+     * 指定日期对课程的笔记进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countNotes(Date date);
+
+    /**
+     * 指定日期对课程评分进行统计
+     *
+     * @param date 指定日期
+     * @return 统计量
+     */
+    Long countScores(Date date);
 }
