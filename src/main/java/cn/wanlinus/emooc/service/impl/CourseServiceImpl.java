@@ -383,12 +383,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResultData<String> addQuestion(String courseId, String msg) {
-        ResultData<String> resultData = new ResultData<>();
+    public ResultData<QuestionReturnDTO> addQuestion(String courseId, String msg) {
+        ResultData<QuestionReturnDTO> resultData = new ResultData<>();
         try {
-            questionService.addQuestion(msg, courseRepository.getOne(courseId));
+            Question q = questionService.addQuestion(msg, courseRepository.getOne(courseId));
+            QuestionReturnDTO dto = new QuestionReturnDTO();
+            dto.setUsername(q.getUser().getUsername());
+            dto.setAvatar(q.getUser().getAvatar());
+            dto.setTime(dateFormatComplex(new Date()));
             resultData.setCode(true);
             resultData.setMessage("保存成功");
+            resultData.setData(dto);
         } catch (Exception e) {
             e.printStackTrace();
             resultData.setCode(false);

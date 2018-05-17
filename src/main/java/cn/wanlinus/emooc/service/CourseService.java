@@ -275,5 +275,5 @@ public interface CourseService {
      * @param question 添加问题
      * @return resultData
      */
-    ResultData<String> addQuestion(String courseId, String question);
+    ResultData<QuestionReturnDTO> addQuestion(String courseId, String question);
 }

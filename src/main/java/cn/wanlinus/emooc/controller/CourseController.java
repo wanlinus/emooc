@@ -23,6 +23,8 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.CourseClassification;
 import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.domain.CourseType;
+import cn.wanlinus.emooc.dto.QuestionDTO;
+import cn.wanlinus.emooc.dto.QuestionReturnDTO;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseService;
@@ -69,9 +71,10 @@ public class CourseController {
     }
 
 
-    @PostMapping("/rest/question")
-    public ResultData<String> addQuestion(String courseId, String question) {
-        return courseService.addQuestion(courseId, question);
+    @PostMapping("rest/question")
+    @ResponseBody
+    public ResultData<QuestionReturnDTO> addQuestion(@RequestBody QuestionDTO dto) {
+        return courseService.addQuestion(dto.getCourseId(), dto.getQuestion());
     }
 
 

@@ -445,6 +445,63 @@ a:active, a:hover {
     text-align: right;
 }
 
+.issques form, .mod-qa-list, .pub-btm {
+    position: relative;
+}
+
+.mod-qa-list div {
+    display: block;
+}
+
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+
+.mod-qa-list {
+    margin-bottom: 8px;
+    padding: 32px;
+    background: #FFF;
+    box-shadow: 0 4px 8px 0 rgba(7, 17, 27, .1);
+    border-radius: 12px;
+}
+
+.mod-qa-list .qa-medias {
+    width: 96px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.mod-qa-list .qa-medias img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    border-radius: 50%;
+    vertical-align: top;
+}
+
+.mod-qa-list .qa-content {
+    padding-right: 20px;
+    min-height: 85px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mod-qa-list .qa-content, .mod-qa-list .qa-header .name, .mod-qa-list .qa-header .qa-tit, .replydes {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.mod-qa-list .qa-footer {
+    margin-top: 12px;
+    color: #93999f;
+    font-size: 12px !important;
+}
+
 .clearfix:after {
     content: '\0020';
     display: block;

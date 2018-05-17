@@ -4,6 +4,8 @@
     <meta charset="UTF-8"/>
     <title>aaa</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
 </head>
@@ -96,11 +98,57 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tabQuestion">
-                                    <div id="questionEditor"></div>
+                                    <div id="questionEditor" style="margin-top: 20px;"></div>
                                     <button id="btn_question">提交</button>
-                                    <ul>
+                                    <ul id="question_ul">
                                         <li th:each="question:${course.questions}">
-                                            <div class="emooc-course-wrap"><span th:text="${question.detail}" Z></span>
+                                            <div class="wenda-listcon mod-qa-list clearfix" data-id="568090">
+                                                <div class="headslider qa-medias l">
+                                                    <img th:src="${question.user.avatar}" width="40" height="40">
+                                                </div>
+                                                <div class="wendaslider qa-content">
+                                                    <div class="tit">
+                                                        <a href="#" target="_blank"
+                                                           th:text="${question.user.username}"></a>
+                                                    </div>
+                                                    <div class="cnt" th:utext="${question.detail}"></div>
+                                                    <div class="replymegfooter qa-footer clearfix">
+                                                        <div class="l-box l">
+                                                            <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
+                                                        </div>
+
+                                                        <span class="r timeago"
+                                                              th:text="${'时间:'+ #dates.format(question.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${question.answers} neq null and !${question.answers.isEmpty()}"
+                                                 class="wenda-listcon mod-qa-list clearfix">
+                                                <ul>
+                                                    <li th:each="answer:${question.answers}">
+                                                        <div class="wenda-listcon mod-qa-list clearfix">
+                                                            <div class="headslider qa-medias l">
+                                                                <img th:src="${question.user.avatar}" width="40"
+                                                                     height="40">
+                                                            </div>
+                                                            <div class="wendaslider qa-content">
+                                                                <div class="tit">
+                                                                    <a href="#"
+                                                                       th:text="${question.course.teacher.username}"></a>
+                                                                </div>
+                                                                <div class="cnt" th:utext="${answer.detail}"></div>
+                                                                <div class="replymegfooter qa-footer clearfix">
+                                                                    <div class="l-box l">
+                                                                        <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
+                                                                    </div>
+
+                                                                    <span class="r timeago"
+                                                                          th:text="${'时间:'+ #dates.format(question.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </li>
                                     </ul>
@@ -181,15 +229,56 @@
 <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
 <script>
     $(document).ready(function () {
+        let emoji = [];
+        $.get({
+            url: '/js/emoji.json',
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    emoji[i] = {};
+                    emoji[i].alt = response[i].phrase;
+                    emoji[i].src = response[i].url;
+                }
+            }
+        });
         let E = window.wangEditor;
-        let questionEditor = new E('#questionEditor');
+        let questionEditor = new E("#questionEditor");
+        questionEditor.customConfig.menus = [
+            'head',  // 标题
+            'bold',  // 粗体
+            'fontSize',  // 字号
+            'fontName',  // 字体
+            'italic',  // 斜体
+            'underline',  // 下划线
+            'strikeThrough',  // 删除线
+            'foreColor',  // 文字颜色
+            'backColor',  // 背景颜色
+            'link',  // 插入链接
+            'list',  // 列表
+            'justify',  // 对齐方式
+            'quote',  // 引用
+            'emoticon',  // 表情
+            'image',  // 插入图片
+            'table',  // 表格
+            'code',  // 插入代码
+            'undo',  // 撤销
+            'redo'  // 重复
+        ];
+        questionEditor.customConfig.emotions = [{
+            title: '微博表情',  // 组名称
+            type: 'image',
+            content: emoji
+        }];
         questionEditor.create();
-
         let star = $("#collection_span");
         let empty_star = $("#collection_cancel_span");
         let course_id = $("#courseId");
-        let csrf_token = $("#csrf_token");
         let btnQuestion = $("#btn_question");
+        //_csrf
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
 
         $.get({
             url: '/user/rest/isCollection/' + course_id,
@@ -229,28 +318,40 @@
             })
         });
         btnQuestion.click(function () {
-            $.ajax({
-                url: '/course/learn/rest/question',
-                type: 'post',
-                data: {
-                    "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]",
+            $.post({
+                url: '/course/rest/question',
+                data: JSON.stringify({
                     courseId: course_id.val(),
-                    question: questionEditor.txt.html(),
-                },
-                dataType: "json",
-                /*contentType: "application/json",*/
+                    question: questionEditor.txt.html()
+                }),
+                contentType: "application/json",
                 success: function (response) {
-                    console.log(response);
+                    if (response.code === true) {
+                        alert(response.message);
+                        $("#question_ul").prepend(`
+                        <div class="wenda-listcon mod-qa-list clearfix">
+                            <div class="headslider qa-medias l">
+                                <img src='` + response.data.avatar + `' width="40" height="40">
+                            </div>
+                            <div class="wendaslider qa-content">
+                                <div class="tit">
+                                    <a href="#" target="_blank">` + response.data.username + `</a>
+                                </div>
+                                <div class="cnt" >` + questionEditor.txt.html() + `</div>
+                                <div class="replymegfooter qa-footer clearfix">
+                                    <div class="l-box l">
+                                    </div>
+                                    <span class="r timeago">时间:` + response.data.time + `</span>
+                                </div>
+                            </div>
+                        </div>
+                        `);
+                        questionEditor.txt.html("")
+                    }
                 }
             })
 
         })
     })
-    /*JSON.stringify({
-                    courseId: course_id.val(),
-                    question: questionEditor.txt.html(),
-                    "[[${_csrf.parameterName}]]": "[[${_csrf.token}]]"
-                }),*/
-
 </script>
 </html>
