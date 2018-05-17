@@ -22,46 +22,36 @@ package cn.wanlinus.emooc.dto;
 import java.io.Serializable;
 
 /**
- * 添加问题后返回值
+ * 笔记数据传输对象
  *
  * @author wanli
- * @date 2018-05-17 8:51
+ * @date 2018-05-17 14:13
  */
-public class QuestionReturnDTO implements Serializable {
-    private String username;
-    private String avatar;
-    private String time;
+public class NoteDTO implements Serializable {
+    private String courseId;
+    private String note;
 
-    public String getUsername() {
-        return username;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getNote() {
+        return note;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override
     public String toString() {
-        return "QuestionReturnDTO{" +
-                "username='" + username + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", time='" + time + '\'' +
+        return "NoteDTO{" +
+                "courseId='" + courseId + '\'' +
+                ", note='" + note + '\'' +
                 '}';
     }
 }

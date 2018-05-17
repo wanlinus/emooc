@@ -86,6 +86,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private NoteService noteService;
+
     /**
      * 用户学习服务对象
      */
@@ -383,21 +386,41 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResultData<QuestionReturnDTO> addQuestion(String courseId, String msg) {
-        ResultData<QuestionReturnDTO> resultData = new ResultData<>();
+    public ResultData<QuesNoteReturnDTO> addQuestion(String courseId, String msg) {
+        ResultData<QuesNoteReturnDTO> resultData = new ResultData<>();
         try {
             Question q = questionService.addQuestion(msg, courseRepository.getOne(courseId));
-            QuestionReturnDTO dto = new QuestionReturnDTO();
+            QuesNoteReturnDTO dto = new QuesNoteReturnDTO();
             dto.setUsername(q.getUser().getUsername());
             dto.setAvatar(q.getUser().getAvatar());
             dto.setTime(dateFormatComplex(new Date()));
             resultData.setCode(true);
-            resultData.setMessage("保存成功");
+            resultData.setMessage("提问成功");
             resultData.setData(dto);
         } catch (Exception e) {
             e.printStackTrace();
             resultData.setCode(false);
-            resultData.setMessage("保存失败");
+            resultData.setMessage("提问失败");
+        }
+        return resultData;
+    }
+
+    @Override
+    public ResultData<QuesNoteReturnDTO> addNote(NoteDTO dto) {
+        ResultData<QuesNoteReturnDTO> resultData = new ResultData<>();
+        try {
+            Note note = noteService.addNote(dto.getNote(), courseRepository.getOne(dto.getCourseId()));
+            QuesNoteReturnDTO re = new QuesNoteReturnDTO();
+            re.setUsername(note.getUser().getUsername());
+            re.setAvatar(note.getUser().getAvatar());
+            re.setTime(dateFormatComplex(new Date()));
+            resultData.setCode(true);
+            resultData.setMessage("添加成功");
+            resultData.setData(re);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultData.setCode(false);
+            resultData.setMessage("添加失败");
         }
         return resultData;
     }

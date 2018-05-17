@@ -98,9 +98,11 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tabQuestion">
-                                    <div id="questionEditor" style="margin-top: 20px;"></div>
-                                    <button id="btn_question">提交</button>
-                                    <ul id="question_ul">
+                                    <div style="position: relative;">
+                                        <div id="questionEditor" style="margin-top: 20px;"></div>
+                                        <button class="btn btn-primary" id="btn_question">提交</button>
+                                    </div>
+                                    <ul id="question_ul" style="padding-left: 0;">
                                         <li th:each="question:${course.questions}">
                                             <div class="wenda-listcon mod-qa-list clearfix" data-id="568090">
                                                 <div class="headslider qa-medias l">
@@ -116,7 +118,6 @@
                                                         <div class="l-box l">
                                                             <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
                                                         </div>
-
                                                         <span class="r timeago"
                                                               th:text="${'时间:'+ #dates.format(question.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                                     </div>
@@ -155,7 +156,33 @@
 
                                 </div>
                                 <div class="tab-pane fade" id="tabNotes">
-                                    tab Notes
+                                    <div id="noteEditor" style="margin-top: 20px;"></div>
+                                    <button class="btn btn-primary" id="btn_note">添加</button>
+                                    <!---------------------------->
+                                    <ul id="note_ul" style="padding-left: 0;">
+                                        <li th:each="note:${course.notes}">
+                                            <div class="wenda-listcon mod-qa-list clearfix" data-id="568090">
+                                                <div class="headslider qa-medias l">
+                                                    <img th:src="${note.user.avatar}" width="40" height="40">
+                                                </div>
+                                                <div class="wendaslider qa-content">
+                                                    <div class="tit">
+                                                        <a href="#" target="_blank"
+                                                           th:text="${note.user.username}"></a>
+                                                    </div>
+                                                    <div class="cnt" th:utext="${note.detail}"></div>
+                                                    <div class="replymegfooter qa-footer clearfix">
+                                                        <div class="l-box l">
+                                                            <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
+                                                        </div>
+                                                        <span class="r timeago"
+                                                              th:text="${'时间:'+ #dates.format(note.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <!----------------------------------------------------------->
                                 </div>
                                 <div class="tab-pane fade" id="tabComment">
                                     tab Comment
@@ -242,7 +269,29 @@
         });
         let E = window.wangEditor;
         let questionEditor = new E("#questionEditor");
+        let noteEditor = new E("#noteEditor");
         questionEditor.customConfig.menus = [
+            'head',  // 标题
+            'bold',  // 粗体
+            'fontSize',  // 字号
+            'fontName',  // 字体
+            'italic',  // 斜体
+            'underline',  // 下划线
+            'strikeThrough',  // 删除线
+            'foreColor',  // 文字颜色
+            'backColor',  // 背景颜色
+            'link',  // 插入链接
+            'list',  // 列表
+            'justify',  // 对齐方式
+            'quote',  // 引用
+            'emoticon',  // 表情
+            'image',  // 插入图片
+            'table',  // 表格
+            'code',  // 插入代码
+            'undo',  // 撤销
+            'redo'  // 重复
+        ];
+        noteEditor.customConfig.menus = [
             'head',  // 标题
             'bold',  // 粗体
             'fontSize',  // 字号
@@ -268,11 +317,18 @@
             type: 'image',
             content: emoji
         }];
+        noteEditor.customConfig.emotions = [{
+            title: '微博表情',  // 组名称
+            type: 'image',
+            content: emoji
+        }];
         questionEditor.create();
+        noteEditor.create();
         let star = $("#collection_span");
         let empty_star = $("#collection_cancel_span");
         let course_id = $("#courseId");
         let btnQuestion = $("#btn_question");
+        let btnNote = $("#btn_note")
         //_csrf
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
@@ -299,6 +355,7 @@
                     if (response.code) {
                         empty_star.show();
                         star.hide();
+                    } else {
                         alert(response.message)
                     }
                 }
@@ -306,13 +363,15 @@
         });
         empty_star.click(function () {
             $.get({
-                url: '/user/rest/collection/course/' + course_id,
+                url: '/user/rest/collection/course/' + course_id.val(),
                 success: function (response) {
                     console.log(response);
                     if (response.code) {
                         empty_star.hide();
                         star.show();
+                    } else {
                         alert(response.message)
+
                     }
                 }
             })
@@ -327,7 +386,6 @@
                 contentType: "application/json",
                 success: function (response) {
                     if (response.code === true) {
-                        alert(response.message);
                         $("#question_ul").prepend(`
                         <div class="wenda-listcon mod-qa-list clearfix">
                             <div class="headslider qa-medias l">
@@ -351,6 +409,42 @@
                 }
             })
 
+        });
+        btnNote.click(function () {
+            $.post({
+                url: '/course/rest/note',
+                data: JSON.stringify({
+                    courseId: course_id.val(),
+                    note: noteEditor.txt.html()
+                }),
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.code === true) {
+                        $("#note_ul").prepend(`
+                        <li>
+                            <div class="wenda-listcon mod-qa-list clearfix">
+                                <div class="headslider qa-medias l">
+                                    <img src="` + response.data.avatar + `" width="40" height="40">
+                                </div>
+                                <div class="wendaslider qa-content">
+                                    <div class="tit">
+                                        <a href="#" target="_blank">` + response.data.username + `</a>
+                                    </div>
+                                    <div class="cnt">` + noteEditor.txt.html() + `</div>
+                                    <div class="replymegfooter qa-footer clearfix">
+                                        <div class="l-box l">
+                                            <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
+                                        </div>
+                                         <span class="r timeago">时间:` + response.data.time + `</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        `)
+                        noteEditor.txt.html("")
+                    }
+                }
+            })
         })
     })
 </script>

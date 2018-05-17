@@ -129,6 +129,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 笔记ID
+     *
+     * @return nid
+     */
+    public static String nid() {
+        return "NOTE" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id

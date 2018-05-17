@@ -21,10 +21,8 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Note;
-import cn.wanlinus.emooc.domain.Question;
-import cn.wanlinus.emooc.persistence.QuestionRepository;
+import cn.wanlinus.emooc.persistence.NoteRepository;
 import cn.wanlinus.emooc.service.NoteService;
-import cn.wanlinus.emooc.service.QuestionService;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,32 +30,28 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 import static cn.wanlinus.emooc.utils.CommonUtils.nid;
-import static cn.wanlinus.emooc.utils.CommonUtils.qid;
 
 /**
  * @author wanli
- * @date 2018-05-16 22:09
+ * @date 2018-05-17 14:40
  */
 @Service
-public class QuestionServiceImpl implements QuestionService {
-    @Autowired
-    private QuestionRepository questionRepository;
+public class NoteServiceImpl implements NoteService {
 
     @Autowired
-    private NoteService noteService;
+    private NoteRepository noteRepository;
 
     @Autowired
     private UserService userService;
 
     @Override
-    public Question addQuestion(String msg, Course course) {
-        Question question = new Question();
-        question.setId(qid());
-        question.setUser(userService.getCurrentUser());
-        question.setDetail(msg);
-        question.setTime(new Date());
-        question.setCourse(course);
-        return questionRepository.save(question);
+    public Note addNote(String msg, Course course) {
+        Note note = new Note();
+        note.setId(nid());
+        note.setDetail(msg);
+        note.setTime(new Date());
+        note.setCourse(course);
+        note.setUser(userService.getCurrentUser());
+        return noteRepository.save(note);
     }
-
 }

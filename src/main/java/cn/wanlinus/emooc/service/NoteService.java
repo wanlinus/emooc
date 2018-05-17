@@ -21,21 +21,19 @@ package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.Note;
-import cn.wanlinus.emooc.domain.Question;
 
 /**
  * @author wanli
- * @date 2018-05-16 22:09
+ * @date 2018-05-17 14:40
  */
-public interface QuestionService {
+public interface NoteService {
+
     /**
-     * 添加问题
+     * 添加笔记
      *
-     * @param msg    问题对象
-     * @param course 提问的课程
-     * @return 问题本身
+     * @param note   笔记内容
+     * @param course 记笔记的课程对象
+     * @return 笔记对象本身
      */
-    Question addQuestion(String msg, Course course);
-
-
+    Note addNote(String note, Course course);
 }

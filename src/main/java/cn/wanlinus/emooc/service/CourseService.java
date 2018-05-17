@@ -275,5 +275,13 @@ public interface CourseService {
      * @param question 添加问题
      * @return resultData
      */
-    ResultData<QuestionReturnDTO> addQuestion(String courseId, String question);
+    ResultData<QuesNoteReturnDTO> addQuestion(String courseId, String question);
+
+    /**
+     * 添加笔记
+     *
+     * @param dto 笔记数据传输对象
+     * @return resultData
+     */
+    ResultData<QuesNoteReturnDTO> addNote(NoteDTO dto);
 }
