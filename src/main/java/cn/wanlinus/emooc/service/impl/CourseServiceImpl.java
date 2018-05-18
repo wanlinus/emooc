@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
+import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.*;
 import cn.wanlinus.emooc.dto.*;
@@ -88,6 +89,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private CourseScoreService scoreService;
 
     /**
      * 用户学习服务对象
@@ -237,11 +241,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long countCourseSectionVideos() {
         return videoService.countVideos();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
         CourseVideo video = new CourseVideo();
         video.setId(csvid());
@@ -257,6 +263,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Long> courseVideosStatistics(Date date, int days) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -270,21 +277,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Long currentDayVideoNewlyIncreased() {
         return videoService.countVideos(new Date());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public CourseVideo getCourseVideo(String videoId) {
         return videoService.findVideo(videoId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassification> getClassifications() {
         return classificationService.getClassifications();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassificationDTO> getClassifications(String classificationId) {
         List<CourseClassificationDTO> list = new ArrayList<>();
         for (CourseClassification c : classificationService.get(classificationId).getDirection().getClassifications()) {
@@ -302,11 +313,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Course> pageCourse(String directionId) {
         CourseDirection direction = directionService.getDirection(directionId);
         List<Course> courses = new ArrayList<>();
@@ -317,22 +330,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Course> getAllCoursesDescDate() {
         Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         return courseRepository.findAll(sort);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public CourseDirection getCourseDirection(String directionId) {
         return directionService.getDirection(directionId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Course> getTopCourses(String teacherId, Integer number) {
         return courseRepository.findTopByTeacherId(teacherId, number);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseDirectionDTO> getDirectionByClassification(String classificationId) {
         CourseDirection direction = classificationService.get(classificationId).getDirection();
         List<CourseDirectionDTO> list = new ArrayList<>();
@@ -351,16 +368,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassificationDTO> getClassificationDTOs(String classificationId) {
         return classification2DTO(classificationService.get(classificationId).getDirection().getClassifications(), classificationId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseClassificationDTO> getDirectionDTOsByClassification(String directionId) {
         return classification2DTO(directionId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public CourseClassificationListDTO getClassificationDTOList(String classificationId) {
         CourseClassificationListDTO listDTO = new CourseClassificationListDTO();
         List<CourseClassificationDTO> list = null;
@@ -372,6 +392,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public CourseClassificationListDTO getClassificationDTOListByDirection(String directionId) {
         CourseClassificationListDTO listDTO = new CourseClassificationListDTO();
         listDTO.setList(classification2DTO(directionId));
@@ -380,17 +401,20 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Course> recommendCourse() {
         return courseRepository.randCourse();
 
     }
 
     @Override
-    public ResultData<QuesNoteReturnDTO> addQuestion(String courseId, String msg) {
-        ResultData<QuesNoteReturnDTO> resultData = new ResultData<>();
+    @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_ADD_QUESTION)
+    public ResultData<QuesNoteScoreReturnDTO> addQuestion(String courseId, String msg) {
+        ResultData<QuesNoteScoreReturnDTO> resultData = new ResultData<>();
         try {
             Question q = questionService.addQuestion(msg, courseRepository.getOne(courseId));
-            QuesNoteReturnDTO dto = new QuesNoteReturnDTO();
+            QuesNoteScoreReturnDTO dto = new QuesNoteScoreReturnDTO();
             dto.setUsername(q.getUser().getUsername());
             dto.setAvatar(q.getUser().getAvatar());
             dto.setTime(dateFormatComplex(new Date()));
@@ -406,11 +430,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResultData<QuesNoteReturnDTO> addNote(NoteDTO dto) {
-        ResultData<QuesNoteReturnDTO> resultData = new ResultData<>();
+    @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_ADD_NOTE)
+    public ResultData<QuesNoteScoreReturnDTO> addNote(NoteDTO dto) {
+        ResultData<QuesNoteScoreReturnDTO> resultData = new ResultData<>();
         try {
             Note note = noteService.addNote(dto.getNote(), courseRepository.getOne(dto.getCourseId()));
-            QuesNoteReturnDTO re = new QuesNoteReturnDTO();
+            QuesNoteScoreReturnDTO re = new QuesNoteScoreReturnDTO();
             re.setUsername(note.getUser().getUsername());
             re.setAvatar(note.getUser().getAvatar());
             re.setTime(dateFormatComplex(new Date()));
@@ -426,8 +452,40 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Map<String, Object>> courseDirectionPie() {
         return courseRepository.courseDirectionPie();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @UserAnnotation(type = EmoocLogType.USER_ADD_SCORE)
+    public ResultData<QuesNoteScoreReturnDTO> addScore(CourseScoreDTO dto) {
+        ResultData<QuesNoteScoreReturnDTO> resultData = new ResultData<>();
+
+        try {
+            CourseScore score = new CourseScore();
+            score.setId(sid());
+            score.setCourse(getCourse(dto.getCourseId()));
+            score.setGrade(dto.getScore());
+            score.setTime(new Date());
+            score.setUser(userService.getCurrentUser());
+            score.setWishes(dto.getWishes());
+            CourseScore courseScore = scoreService.saveScore(score);
+
+            resultData.setCode(true);
+            resultData.setMessage("评论成功");
+            QuesNoteScoreReturnDTO returnDto = new QuesNoteScoreReturnDTO();
+            returnDto.setTime(dateFormatComplex(new Date()));
+            returnDto.setAvatar(courseScore.getUser().getAvatar());
+            returnDto.setUsername(courseScore.getUser().getUsername());
+            resultData.setData(returnDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultData.setCode(false);
+            resultData.setMessage("评分出现错误");
+        }
+        return resultData;
     }
 
     private List<CourseClassificationDTO> classification2DTO(String directionId) {

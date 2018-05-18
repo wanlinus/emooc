@@ -17,51 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.service;
+package cn.wanlinus.emooc.persistence.custom;
 
-import cn.wanlinus.emooc.domain.CourseScore;
-
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author wanli
- * @date 2018-05-17 21:04
+ * @date 2018-05-18 12:59
  */
-public interface CourseScoreService {
-
+public interface CourseScoreCustomPersistence {
     /**
-     * 保存课程评分
+     * 获得所有课程的平均评分
      *
-     * @param score 课程评分对象
-     * @return 保存的评分对象
+     * @return list容器 课程名 评分
      */
-    CourseScore saveScore(CourseScore score);
-
-    /**
-     * 统计传入日期评分统计量
-     *
-     * @param date 相应日期
-     * @param days 前多少天
-     * @return 统计量
-     */
-    List<Long> scoreStatistics(Date date, int days);
-
-    /**
-     * 统计指定日期评分量
-     *
-     * @param date 指定日期
-     * @return 统计量
-     */
-    Long countScores(Date date);
-
-    /**
-     * 所有课程的平均分容器
-     *
-     * @return list容器
-     */
-    List<Map<String, Object>> courseScores();
-
-
+    List<Map<String, Object>> avgCourseScores();
 }

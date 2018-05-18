@@ -31,7 +31,7 @@ import java.io.Serializable;
 public class UserRegisterDTO implements Serializable {
 
     @NotNull
-    @Size(min = 5, max = 16)
+    @Size(min = 5, max = 16, message = "用户名长度为5-16个字符")
     private String username;
 
     @NotNull

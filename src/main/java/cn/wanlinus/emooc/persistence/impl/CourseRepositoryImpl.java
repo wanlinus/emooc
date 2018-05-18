@@ -61,7 +61,7 @@ public class CourseRepositoryImpl extends BaseCustomPersistenceImpl implements C
 
     @Override
     public List<Map<String, Object>> courseDirectionPie() {
-        String sql = "SELECT d.DIRECTION_NAME AS dname,count(c.CLASSIFICATION_NAME) AS counts FROM TB_COURSE_CLASSIFICATION c " +
+        final String sql = "SELECT d.DIRECTION_NAME AS dname,count(c.CLASSIFICATION_NAME) AS counts FROM TB_COURSE_CLASSIFICATION c " +
                 "INNER JOIN TB_COURSE course ON c.CLASSIFICATION_ID = course.COURSE_CLASSIFICATION_ID " +
                 "INNER JOIN TB_COURSE_DIRECTION d ON c.CLASSIFICATION_DIRECTION_ID = d.DIRECTION_ID " +
                 "GROUP BY c.CLASSIFICATION_DIRECTION_ID";

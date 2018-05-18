@@ -276,7 +276,7 @@ public interface CourseService {
      * @param question 添加问题
      * @return resultData
      */
-    ResultData<QuesNoteReturnDTO> addQuestion(String courseId, String question);
+    ResultData<QuesNoteScoreReturnDTO> addQuestion(String courseId, String question);
 
     /**
      * 添加笔记
@@ -284,7 +284,7 @@ public interface CourseService {
      * @param dto 笔记数据传输对象
      * @return resultData
      */
-    ResultData<QuesNoteReturnDTO> addNote(NoteDTO dto);
+    ResultData<QuesNoteScoreReturnDTO> addNote(NoteDTO dto);
 
     /**
      * 课程方向元饼图
@@ -292,4 +292,12 @@ public interface CourseService {
      * @return 由于课程方向不确定，所以用List Map
      */
     List<Map<String, Object>> courseDirectionPie();
+
+    /**
+     * 添加课程评分
+     *
+     * @param dto 课程评论数据传输对象
+     * @return resultData
+     */
+    ResultData<QuesNoteScoreReturnDTO> addScore(CourseScoreDTO dto);
 }

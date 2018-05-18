@@ -138,6 +138,15 @@ public final class CommonUtils {
     }
 
     /**
+     * 课程评分ID
+     *
+     * @return sid
+     */
+    public static String sid() {
+        return "Score" + System.currentTimeMillis();
+    }
+
+    /**
      * 用户操作生成主键
      *
      * @return user operation log id
@@ -176,6 +185,15 @@ public final class CommonUtils {
 
 
     /**
+     * 调度任务ID
+     *
+     * @return task id
+     */
+    public static String taskid() {
+        return "Task" + System.currentTimeMillis();
+    }
+
+    /**
      * 获取文件名
      *
      * @return 文件名
@@ -192,8 +210,7 @@ public final class CommonUtils {
      * @return 设备简称
      */
     public static String getEquipment(HttpServletRequest request) {
-        String eq = request.getHeader("User-Agent");
-        return eq.substring(eq.indexOf("(") + 1, eq.indexOf(")"));
+        return request.getHeader("User-Agent");
     }
 
     /**

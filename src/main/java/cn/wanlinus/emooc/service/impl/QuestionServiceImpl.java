@@ -56,7 +56,6 @@ public class QuestionServiceImpl implements QuestionService {
     private EmoocLogService logService;
 
     @Override
-    @UserAnnotation(type = EmoocLogType.USER_ADD_QUESTION)
     public Question addQuestion(String msg, Course course) {
         Question question = new Question();
         question.setId(qid());

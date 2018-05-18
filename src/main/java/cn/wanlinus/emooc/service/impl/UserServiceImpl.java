@@ -145,6 +145,7 @@ public class UserServiceImpl implements UserService {
             user.setUserStatus(UserStatus.INACTIVE);
             user.setRegisterTime(new Date());
             user.setGender(Gender.UNDEFINED);
+            user.setAvatar("/data/teacher/img/emooc-29f0ca1c-c139-46e6-987d-2f489b3549af.jpg");
             User u = userRepository.save(user);
             if (u != null) {
                 Captcha captcha = new Captcha();
@@ -155,8 +156,7 @@ public class UserServiceImpl implements UserService {
                 captcha.setEffectiveTime(30 * 60 * 1000);
                 captcha.setStatus(true);
                 Captcha code = captchaRepository.save(captcha);
-                String msg = "您的注册验证码为: " + code.getId() + "请输入到验证区\n" +
-                        "或点击<a href='https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'>验证用户</a>";
+                String msg = "点击https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'激活用户, 30分钟有效";
                 commonService.simpleSendMail("用户注册", dto.getEmail(), msg);
                 return u;
             }

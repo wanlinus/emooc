@@ -20,10 +20,11 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.CourseScore;
+import cn.wanlinus.emooc.persistence.custom.CourseScoreCustomPersistence;
 
 /**
  * @author wanli
  * @date 2018-05-17 21:03
  */
-public interface CourseScoreRepository extends BaseRepository<CourseScore, String> {
+public interface CourseScoreRepository extends BaseRepository<CourseScore, String>, CourseScoreCustomPersistence {
 }

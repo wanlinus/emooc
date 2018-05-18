@@ -36,7 +36,10 @@ public class CourseScore implements Serializable {
     private String id;
 
     @Column(name = "SCORE_GRADE")
-    private Integer grade;
+    private Double grade;
+
+    @Column(name = "SCORE_WISHES")
+    private String wishes;
 
     @Column(name = "SCORE_TIME")
     private Date time;
@@ -60,12 +63,20 @@ public class CourseScore implements Serializable {
         this.id = id;
     }
 
-    public Integer getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
+    }
+
+    public String getWishes() {
+        return wishes;
+    }
+
+    public void setWishes(String wishes) {
+        this.wishes = wishes;
     }
 
     public Date getTime() {
@@ -97,6 +108,7 @@ public class CourseScore implements Serializable {
         return "CourseScore{" +
                 "id='" + id + '\'' +
                 ", grade=" + grade +
+                ", wishes='" + wishes + '\'' +
                 ", time=" + time +
                 ", user=" + user +
                 ", course=" + course +

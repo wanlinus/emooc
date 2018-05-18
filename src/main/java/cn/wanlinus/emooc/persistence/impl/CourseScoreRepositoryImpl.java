@@ -17,32 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cn.wanlinus.emooc.persistence.custom;
+package cn.wanlinus.emooc.persistence.impl;
+
+import cn.wanlinus.emooc.persistence.custom.CourseScoreCustomPersistence;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 课程评分自定义查询事实现
+ *
  * @author wanli
- * @date 2018-03-25 01:04
+ * @date 2018-05-18 15:24
  */
-public interface BaseCustomPersistence {
-    /**
-     * 执行SQL语句返回List Map对象
-     *
-     * @param nativeSql 原生SQL语句
-     * @return list Map
-     */
-    List<Map<String, Object>> nativeQuery(String nativeSql);
+public class CourseScoreRepositoryImpl extends BaseCustomPersistenceImpl implements CourseScoreCustomPersistence {
 
-    /**
-     * 泛型查询 返回泛型对象
-     *
-     * @param nativeSql 原生SQL语句
-     * @param <T>       对象类型
-     * @return 返回对象
-     */
-    <T> T genericsQuery(String nativeSql);
-
-
+    @Override
+    public List<Map<String, Object>> avgCourseScores() {
+        final String sql = "SELECT s.SCORE_COURSE_ID AS courseId, CONVERT(AVG(s.SCORE_GRADE),DECIMAL(8, 2)) AS avgScore " +
+                "FROM TB_COURSE_SCORE s GROUP BY s.SCORE_COURSE_ID;";
+        return nativeQuery(sql);
+    }
 }

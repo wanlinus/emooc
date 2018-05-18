@@ -19,6 +19,8 @@
 
 package cn.wanlinus.emooc.service.impl;
 
+import cn.wanlinus.emooc.domain.CourseScore;
+import cn.wanlinus.emooc.persistence.CourseScoreRepository;
 import cn.wanlinus.emooc.service.CourseScoreService;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,15 @@ import java.util.*;
 public class CourseScoreServiceImpl implements CourseScoreService {
 
     @Autowired
+    private CourseScoreRepository scoreRepository;
+
+    @Autowired
     private EmoocLogService logService;
+
+    @Override
+    public CourseScore saveScore(CourseScore score) {
+        return scoreRepository.save(score);
+    }
 
     @Override
     public List<Long> scoreStatistics(Date date, int days) {
@@ -52,5 +62,10 @@ public class CourseScoreServiceImpl implements CourseScoreService {
     @Override
     public Long countScores(Date date) {
         return logService.countScores(date);
+    }
+
+    @Override
+    public List<Map<String, Object>> courseScores() {
+        return scoreRepository.avgCourseScores();
     }
 }

@@ -20,10 +20,17 @@
 package cn.wanlinus.emooc.persistence.impl;
 
 import cn.wanlinus.emooc.persistence.custom.BaseCustomPersistence;
+import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用于提供EntityManager
@@ -39,6 +46,19 @@ public class BaseCustomPersistenceImpl implements BaseCustomPersistence {
 
     EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    public List<Map<String, Object>> nativeQuery(String nativeSql) {
+        Query query = this.getEntityManager().createNativeQuery(nativeSql);
+        query.unwrap(SQLQuery.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List<Map<String, Object>> queryList = query.getResultList();
+        return CollectionUtils.isEmpty(queryList) ? Collections.EMPTY_LIST : queryList;
+    }
+
+    @Override
+    public <T> T genericsQuery(String nativeSql) {
+        return null;
     }
 
 }

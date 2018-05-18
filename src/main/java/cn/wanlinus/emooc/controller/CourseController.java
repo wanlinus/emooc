@@ -23,9 +23,10 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.CourseClassification;
 import cn.wanlinus.emooc.domain.CourseDirection;
 import cn.wanlinus.emooc.domain.CourseType;
+import cn.wanlinus.emooc.dto.CourseScoreDTO;
 import cn.wanlinus.emooc.dto.NoteDTO;
+import cn.wanlinus.emooc.dto.QuesNoteScoreReturnDTO;
 import cn.wanlinus.emooc.dto.QuestionDTO;
-import cn.wanlinus.emooc.dto.QuesNoteReturnDTO;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseService;
@@ -71,20 +72,16 @@ public class CourseController {
         return "course/index";
     }
 
-
-    @PostMapping("rest/question")
-    @ResponseBody
-    public ResultData<QuesNoteReturnDTO> addQuestion(@RequestBody QuestionDTO dto) {
-        return courseService.addQuestion(dto.getCourseId(), dto.getQuestion());
-    }
-
-    @PostMapping("rest/note")
-    @ResponseBody
-    public ResultData<QuesNoteReturnDTO> addNote(@RequestBody NoteDTO dto) {
-        return courseService.addNote(dto);
-    }
-
-
+    /**
+     * 跳转到课程方向页面
+     *
+     * @param directionId      课程方向ID
+     * @param classificationId 课程类型
+     * @param pageSize         没页页数
+     * @param page             第几页
+     * @param model            model
+     * @return 指定页面
+     */
     @GetMapping("direction")
     public String direction(String directionId, String classificationId,
                             @RequestParam(name = "pageSize", defaultValue = "15") Integer pageSize,
@@ -101,13 +98,19 @@ public class CourseController {
         return "course/direction/index";
     }
 
+    /**
+     * 跳转到指定课程详情页面
+     *
+     * @param courseId 课程ID
+     * @param model    model
+     * @return 页面名称
+     */
     @GetMapping("learn/{courseId}")
     public String courseLearn(@PathVariable("courseId") String courseId, Model model) {
         model.addAttribute("course", courseService.getCourse(courseId));
         model.addAttribute("recommends", courseService.recommendCourse());
         return "course/learn";
     }
-
 
     /**
      * 返回rest课程类型数据
@@ -120,22 +123,74 @@ public class CourseController {
         return typeService.getTypes();
     }
 
+    /**
+     * 获取所有课程方向
+     *
+     * @return 课程方向列表
+     */
     @GetMapping("rest/direction")
     @ResponseBody
     public List<CourseDirection> directions() {
         return directionService.getDirections();
     }
 
-
+    /**
+     * 获取指定课程方向
+     *
+     * @param directionId 课程方向ID
+     * @return 指定课程方向对象
+     */
     @GetMapping("rest/direction/{directionId}")
     @ResponseBody
     public CourseDirection getCourseDirection(@PathVariable("directionId") String directionId) {
         return directionService.getDirection(directionId);
     }
 
+    /**
+     * 获取所有课程类型
+     *
+     * @return 课程类型列表
+     */
     @GetMapping("rest/classifications")
     @ResponseBody
     public List<CourseClassification> classifications() {
         return classificationService.getClassifications();
     }
+
+    /**
+     * 课程提问
+     *
+     * @param dto 提问数据传输对象
+     * @return resultData
+     */
+    @PostMapping("rest/question")
+    @ResponseBody
+    public ResultData<QuesNoteScoreReturnDTO> addQuestion(@RequestBody QuestionDTO dto) {
+        return courseService.addQuestion(dto.getCourseId(), dto.getQuestion());
+    }
+
+    /**
+     * 为课程添加笔记
+     *
+     * @param dto 笔记数据传输对象
+     * @return resultData
+     */
+    @PostMapping("rest/note")
+    @ResponseBody
+    public ResultData<QuesNoteScoreReturnDTO> addNote(@RequestBody NoteDTO dto) {
+        return courseService.addNote(dto);
+    }
+
+    /**
+     * 为课程添加评分
+     *
+     * @param dto 评分数据传输对象
+     * @return resultData
+     */
+    @PostMapping("rest/score")
+    @ResponseBody
+    public ResultData<QuesNoteScoreReturnDTO> addScore(@RequestBody CourseScoreDTO dto) {
+        return courseService.addScore(dto);
+    }
+
 }

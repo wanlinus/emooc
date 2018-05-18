@@ -8,6 +8,7 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
+    <link rel="stylesheet" href="../../static/css/custom-style.css">
 </head>
 <body>
 <div hidden>
@@ -22,10 +23,11 @@
             <div class="col-md-12 column">
                 <ul class="breadcrumb">
                     <li>
-                        <a th:href="@{/course/}"><a th:href="@{/course/}">课程</a></a>
+                        <a th:href="@{/course}"><span>课程</span></a>
                     </li>
                     <li>
-                        <a href="#"><span th:text="${course.classification.direction.name}"></span></a>
+                        <a th:href="${'/course/direction?directionId='+course.classification.direction.id}"><span
+                                th:text="${course.classification.direction.name}"></span></a>
                     </li>
                     <li>
                         <a href="#"><span th:text="${course.classification.name}"></span></a>
@@ -52,6 +54,14 @@
                                 <div style="display: inline;padding-left: 30px">
                                     <span>难度:</span><span th:text="${course.grade.description}"></span>
                                     <span>学习人数:</span><span>1000</span>
+                                    <ul class="show_number clearfix">
+                                        <li>
+                                            <div class="atar_Show">
+                                                <p th:data="${course.score}"></p>
+                                            </div>
+                                            <span></span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -185,11 +195,51 @@
                                     <!----------------------------------------------------------->
                                 </div>
                                 <div class="tab-pane fade" id="tabComment">
-                                    tab Comment
+                                    <div class="startone block clearfix" style="padding-top: 20px">
+                                        <div class="star_score"></div>
+                                        <span id="star_fenshu" class="fenshu"></span>
+                                        <div class="attitude"></div>
+                                        <button class="btn btn-primary" id="btn_score">添加</button>
+                                    </div>
+                                    <div id="scoreEditor" style="margin-top: 20px;"></div>
+                                    <!---------------------------->
+                                    <ul id="score_ul" style="padding-left: 0;">
+                                        <li th:each="score:${course.scores}">
+                                            <div class="wenda-listcon mod-qa-list clearfix">
+                                                <div class="headslider qa-medias l">
+                                                    <img th:src="${score.user.avatar}" width="40" height="40">
+                                                </div>
+                                                <div class="wendaslider qa-content">
+                                                    <div class="tit">
+                                                        <a href="#" target="_blank"
+                                                           th:text="${score.user.username}"></a>
+                                                    </div>
+                                                    <div class="r">
+                                                        <ul class="show_number clearfix">
+                                                            <li>
+                                                                <div class="atar_Show">
+                                                                    <p th:data="${score.grade}"></p>
+                                                                </div>
+                                                                <span></span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="cnt" th:utext="${score.wishes}"></div>
+                                                    <div class="replymegfooter qa-footer clearfix">
+                                                        <div class="l-box l">
+                                                            <!--   <a href="/video/17148" class="from">2-8 Storm集群环境搭建</a>-->
+                                                        </div>
+                                                        <span class="r timeago"
+                                                              th:text="${'时间:'+ #dates.format(score.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <!----------------------------------------------------------->
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-md-4 column">
                         <div class="emooc-course-wrap emooc-course-aside-info js-usercard-box">
@@ -254,6 +304,7 @@
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+<script th:src="@{/js/global.js}"></script>
 <script>
     $(document).ready(function () {
         let emoji = [];
@@ -270,7 +321,8 @@
         let E = window.wangEditor;
         let questionEditor = new E("#questionEditor");
         let noteEditor = new E("#noteEditor");
-        questionEditor.customConfig.menus = [
+        let scoreEditor = new E("#scoreEditor");
+        let wangMenu = [
             'head',  // 标题
             'bold',  // 粗体
             'fontSize',  // 字号
@@ -291,27 +343,9 @@
             'undo',  // 撤销
             'redo'  // 重复
         ];
-        noteEditor.customConfig.menus = [
-            'head',  // 标题
-            'bold',  // 粗体
-            'fontSize',  // 字号
-            'fontName',  // 字体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'foreColor',  // 文字颜色
-            'backColor',  // 背景颜色
-            'link',  // 插入链接
-            'list',  // 列表
-            'justify',  // 对齐方式
-            'quote',  // 引用
-            'emoticon',  // 表情
-            'image',  // 插入图片
-            'table',  // 表格
-            'code',  // 插入代码
-            'undo',  // 撤销
-            'redo'  // 重复
-        ];
+        questionEditor.customConfig.menus = wangMenu;
+        noteEditor.customConfig.menus = wangMenu;
+        scoreEditor.customConfig.menus = wangMenu;
         questionEditor.customConfig.emotions = [{
             title: '微博表情',  // 组名称
             type: 'image',
@@ -322,13 +356,20 @@
             type: 'image',
             content: emoji
         }];
+        scoreEditor.customConfig.emotions = [{
+            title: '微博表情',  // 组名称
+            type: 'image',
+            content: emoji
+        }];
         questionEditor.create();
         noteEditor.create();
+        scoreEditor.create();
         let star = $("#collection_span");
         let empty_star = $("#collection_cancel_span");
         let course_id = $("#courseId");
         let btnQuestion = $("#btn_question");
-        let btnNote = $("#btn_note")
+        let btnNote = $("#btn_note");
+        let btnScore = $("#btn_score");
         //_csrf
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
@@ -408,7 +449,6 @@
                     }
                 }
             })
-
         });
         btnNote.click(function () {
             $.post({
@@ -440,12 +480,81 @@
                                 </div>
                             </div>
                         </li>
-                        `)
+                        `);
                         noteEditor.txt.html("")
                     }
                 }
             })
-        })
+        });
+        btnScore.click(function () {
+            let cusScore = $("#star_fenshu").text();
+
+            if (cusScore == null || cusScore === '') {
+                let conScore = confirm("评分为0?")
+                if (conScore === true) {
+                    cusScore = 0;
+                } else {
+                    alert("取消评论!");
+
+                }
+            }
+            $.post({
+                url: '/course/rest/score',
+                data: JSON.stringify({
+                    courseId: course_id.val(),
+                    score: cusScore == null ? 0 : cusScore,
+                    wishes: scoreEditor.txt.html()
+                }),
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.code === true) {
+                        $("#score_ul").prepend(`
+                        <li>
+                            <div class="wenda-listcon mod-qa-list clearfix">
+                                <div class="headslider qa-medias l">
+                                    <img src="` + response.data.avatar + `" width="40" height="40">
+                                </div>
+                                <div class="wendaslider qa-content">
+                                    <div class="tit">
+                                        <a href="#" target="_blank">` + response.data.username + `</a>
+                                    </div>
+                                    <div class="r">
+                                        <ul class="show_number clearfix">
+                                            <li>
+                                                <div class="atar_Show">
+                                                    <p>` + cusScore + `</p>
+                                                </div>
+                                                <span></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="cnt">` + scoreEditor.txt.html() + `</div>
+                                    <div class="replymegfooter qa-footer clearfix">
+                                        <div class="l-box l">
+                                        </div>
+                                        <span class="r timeago">时间:` + response.data.time + `</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        `);
+                        scoreEditor.txt.html("")
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        });
+
+        scoreFun($(".startone"));
+
+        //显示分数
+        $(".show_number li p").each(function (index, element) {
+            let num = $(this).attr("data");
+            let www = num * 2 * 16;//
+            $(this).css("width", www);
+            $(this).parent(".atar_Show").siblings("span").text(num + "分");
+        });
     })
 </script>
 </html>

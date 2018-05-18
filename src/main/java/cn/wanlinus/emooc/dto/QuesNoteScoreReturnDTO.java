@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @author wanli
  * @date 2018-05-17 8:51
  */
-public class QuesNoteReturnDTO implements Serializable {
+public class QuesNoteScoreReturnDTO implements Serializable {
     private String username;
     private String avatar;
     private String time;
@@ -58,7 +58,7 @@ public class QuesNoteReturnDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "QuesNoteReturnDTO{" +
+        return "QuesNoteScoreReturnDTO{" +
                 "username='" + username + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", time='" + time + '\'' +
