@@ -59,6 +59,22 @@ public class HomeController extends WebMvcConfigurerAdapter {
         super.addViewControllers(registry);
     }
 
+    @GetMapping({"/", "index"})
+    public String index() {
+        String page = null;
+        String role = AuthUtils.getRole();
+        if (ROLE_USER.equals(role)) {
+            page = "redirect:/course";
+        } else if (ROLE_TEACHER.equals(role)) {
+            page = "redirect:/teacher/index";
+        } else if (ROLE_ADMIN.equals(role)) {
+            page = "redirect:/admin/index";
+        } else if (role != null) {
+            page = "redirect:/login";
+        }
+        return page;
+    }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         if (getAuthentication() != null) {
@@ -121,8 +137,8 @@ public class HomeController extends WebMvcConfigurerAdapter {
 
     @PostMapping("register")
     @ResponseBody
-    public ResultData<Boolean> register(@RequestBody @Valid UserRegisterDTO dto, Errors errors) {
-        ResultData<Boolean> resultData = new ResultData<>();
+    public ResultData<String> register(@RequestBody @Valid UserRegisterDTO dto, Errors errors) {
+        ResultData<String> resultData = new ResultData<>();
         if (errors.hasErrors()) {
             StringBuilder msg = new StringBuilder();
             for (Object o : errors.getAllErrors()) {
@@ -130,10 +146,11 @@ public class HomeController extends WebMvcConfigurerAdapter {
             }
             resultData.setCode(false);
             resultData.setMessage(msg.toString());
+            return resultData;
         } else {
-            resultData.setCode(userService.register(dto) != null);
+            return userService.register(dto);
         }
-        return resultData;
+
     }
 
     /**

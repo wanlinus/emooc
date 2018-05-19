@@ -72,9 +72,9 @@ public interface UserService {
      * 用户注册
      *
      * @param dto 用户注册数据传输对象
-     * @return 注册成功返回true否则返回false
+     * @return resultData
      */
-    User register(UserRegisterDTO dto);
+    ResultData<String> register(UserRegisterDTO dto);
 
 
     /**

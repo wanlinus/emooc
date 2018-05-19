@@ -19,6 +19,8 @@
 
 package cn.wanlinus.emooc.commons;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 
 /**
@@ -69,6 +71,11 @@ public class ResultData<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }
 

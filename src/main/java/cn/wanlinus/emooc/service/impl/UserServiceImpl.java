@@ -139,7 +139,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     @RegisterAnnotation(type = EmoocLogType.USER_REGISTER)
-    public User register(UserRegisterDTO dto) {
+    public ResultData<String> register(UserRegisterDTO dto) {
+        ResultData<String> resultData = new ResultData<>();
         try {
             User user = new User(uid(), dto.getUsername(), md5Encrypt(dto.getPassword()), dto.getEmail());
             user.setUserStatus(UserStatus.INACTIVE);
@@ -156,14 +157,20 @@ public class UserServiceImpl implements UserService {
                 captcha.setEffectiveTime(30 * 60 * 1000);
                 captcha.setStatus(true);
                 Captcha code = captchaRepository.save(captcha);
-                String msg = "点击https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + "'激活用户, 30分钟有效";
+                String msg = "点击https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + ",激活用户, 30分钟有效";
                 commonService.simpleSendMail("用户注册", dto.getEmail(), msg);
-                return u;
+                resultData.setCode(true);
+                resultData.setMessage("注册成功");
+            } else {
+                resultData.setCode(false);
+                resultData.setMessage("注册出现错误");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            resultData.setCode(false);
+            resultData.setMessage("注册出现错误");
         }
-        return null;
+        return resultData;
     }
 
     @Override
