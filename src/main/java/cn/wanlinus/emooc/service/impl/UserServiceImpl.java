@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
                 captcha.setEffectiveTime(30 * 60 * 1000);
                 captcha.setStatus(true);
                 Captcha code = captchaRepository.save(captcha);
-                String msg = "点击https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + ",激活用户, 30分钟有效";
+                String msg = "点击https://" + host + ":" + port + "/active/user/" + code.getUser().getId() + "/" + code.getId() + " 激活用户, 30分钟有效";
                 commonService.simpleSendMail("用户注册", dto.getEmail(), msg);
                 resultData.setCode(true);
                 resultData.setMessage("注册成功");

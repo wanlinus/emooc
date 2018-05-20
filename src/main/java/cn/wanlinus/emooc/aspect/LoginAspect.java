@@ -27,6 +27,7 @@ import cn.wanlinus.emooc.persistence.EmoocErrorRepository;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.utils.AuthUtils;
 import cn.wanlinus.emooc.utils.CommonUtils;
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -72,6 +73,7 @@ public class LoginAspect {
         log.setIp(request.getRemoteAddr());
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setType(loginAnnotation.type());
+        log.setComment(JSON.toJSONString(object) + JSON.toJSONString(joinPoint.getArgs()));
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
         if (EmoocRole.ROLE_USER.getDesc().equals(role)) {
             log.setId(CommonUtils.userLogId());
