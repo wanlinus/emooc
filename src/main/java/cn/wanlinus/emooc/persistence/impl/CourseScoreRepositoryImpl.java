@@ -38,4 +38,11 @@ public class CourseScoreRepositoryImpl extends BaseCustomPersistenceImpl impleme
                 "FROM TB_COURSE_SCORE s GROUP BY s.SCORE_COURSE_ID;";
         return nativeQuery(sql);
     }
+
+    @Override
+    public List<Map<String, Object>> avgCourseScores(int offset, Integer pageSize) {
+        String sql = "SELECT s.SCORE_COURSE_ID AS courseId, CONVERT(AVG(s.SCORE_GRADE),DECIMAL(8, 2)) AS avgScore " +
+                "FROM TB_COURSE_SCORE s GROUP BY s.SCORE_COURSE_ID ORDER BY s.SCORE_COURSE_ID LIMIT " + offset + ", " + pageSize;
+        return nativeQuery(sql);
+    }
 }

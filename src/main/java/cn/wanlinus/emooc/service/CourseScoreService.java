@@ -63,5 +63,21 @@ public interface CourseScoreService {
      */
     List<Map<String, Object>> courseScores();
 
+    /**
+     * 所又课程平局分分页计算平均分
+     *
+     * @param offset   偏移量
+     * @param pageSize 每页数据量
+     * @return
+     */
+    List<Map<String, Object>> courseScores(int offset, Integer pageSize);
+
+    /**
+     * 对所有评分课程进行计数
+     *
+     * @return 统计量
+     */
+    Long totalCourseScore();
+
 
 }

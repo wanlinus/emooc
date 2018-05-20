@@ -21,13 +21,9 @@ package cn.wanlinus.emooc.task;
 
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.EmoocTask;
-import cn.wanlinus.emooc.persistence.CourseRepository;
-import cn.wanlinus.emooc.persistence.CourseScoreRepository;
-import cn.wanlinus.emooc.persistence.CourseSectionRepository;
 import cn.wanlinus.emooc.persistence.EmoocTaskRepository;
 import cn.wanlinus.emooc.service.CourseScoreService;
 import cn.wanlinus.emooc.service.CourseService;
-import cn.wanlinus.emooc.utils.CommonUtils;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -49,6 +45,8 @@ import static cn.wanlinus.emooc.utils.CommonUtils.taskid;
 @Component
 public class EmoocTimerTask {
 
+    private final static Integer PAGE_SIZE = 10;
+
     @Autowired
     private CourseService courseService;
 
@@ -59,20 +57,25 @@ public class EmoocTimerTask {
     private EmoocTaskRepository taskRepository;
 
     /**
-     * 每小时更新TB_COURSE表中课程评分字段
+     * 更新TB_COURSE表中课程评分字段(每10分钟中执行一次)
      */
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
     @Transactional(rollbackFor = Exception.class)
     public void courseScore() {
-        List<Map<String, Object>> scores = scoreService.courseScores();
-        for (Map<String, Object> map : scores) {
-            Course course = courseService.getCourse(String.valueOf(map.get("courseId")));
-            course.setScore(Double.parseDouble(String.valueOf(map.get("avgScore"))));
+        Long total = scoreService.totalCourseScore();
+        Long num = (total - 1) / PAGE_SIZE + 1;
+
+        for (int i = 0; i < num; i++) {
+            List<Map<String, Object>> maps = scoreService.courseScores(i * PAGE_SIZE, PAGE_SIZE);
+            for (Map<String, Object> map : maps) {
+                Course course = courseService.getCourse(String.valueOf(map.get("courseId")));
+                course.setScore(Double.parseDouble(String.valueOf(map.get("avgScore"))));
+            }
+            EmoocTask task = new EmoocTask();
+            task.setId(taskid());
+            task.setDate(new Date());
+            task.setDetail(JSON.toJSONString(maps));
+            taskRepository.save(task);
         }
-        EmoocTask task = new EmoocTask();
-        task.setId(taskid());
-        task.setDate(new Date());
-        task.setDetail(JSON.toJSONString(scores));
-        taskRepository.save(task);
     }
 }

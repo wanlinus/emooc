@@ -68,4 +68,14 @@ public class CourseScoreServiceImpl implements CourseScoreService {
     public List<Map<String, Object>> courseScores() {
         return scoreRepository.avgCourseScores();
     }
+
+    @Override
+    public List<Map<String, Object>> courseScores(int offset, Integer pageSize) {
+        return scoreRepository.avgCourseScores(offset, pageSize);
+    }
+
+    @Override
+    public Long totalCourseScore() {
+        return scoreRepository.totalCourseScore();
+    }
 }

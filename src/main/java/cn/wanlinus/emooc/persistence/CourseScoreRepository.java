@@ -21,10 +21,19 @@ package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.CourseScore;
 import cn.wanlinus.emooc.persistence.custom.CourseScoreCustomPersistence;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author wanli
  * @date 2018-05-17 21:03
  */
 public interface CourseScoreRepository extends BaseRepository<CourseScore, String>, CourseScoreCustomPersistence {
+
+    /**
+     * 对所有课程评分进行计数
+     *
+     * @return 统计量
+     */
+    @Query(value = "SELECT COUNT(*) AS total FROM(SELECT sc.SCORE_COURSE_ID FROM TB_COURSE_SCORE sc GROUP BY sc.SCORE_COURSE_ID ) AS tb_mid", nativeQuery = true)
+    Long totalCourseScore();
 }

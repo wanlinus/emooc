@@ -33,4 +33,13 @@ public interface CourseScoreCustomPersistence {
      * @return list容器 课程名 评分
      */
     List<Map<String, Object>> avgCourseScores();
+
+    /**
+     * 获得分页课程的平均评分
+     *
+     * @param offset   数据偏移量
+     * @param pageSize 数据量
+     * @return list容器 课程名 评分
+     */
+    List<Map<String, Object>> avgCourseScores(int offset, Integer pageSize);
 }
