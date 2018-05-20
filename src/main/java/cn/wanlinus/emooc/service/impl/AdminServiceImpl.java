@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 定义一周7天
      */
-    private static final int WEEKDAY = 7;
+    private static final int WEEKDAY = 15;
 
     @Autowired
     private EmoocLogService logService;

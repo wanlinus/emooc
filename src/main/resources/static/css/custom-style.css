@@ -257,7 +257,7 @@ a:active, a:hover {
 }
 
 .admin-num-container {
-    height: 150px;
+    height: 130px;
     background-color: #f2f2f2;
     position: relative;
     margin: 5px;
@@ -267,7 +267,7 @@ a:active, a:hover {
 
 .admin-num {
     font-size: 70px;
-    line-height: 110px;
+    line-height: 90px;
     text-align: center;
     color: #adbe69;
 
@@ -279,7 +279,7 @@ a:active, a:hover {
     margin: 0 auto;
     padding: 0 15px;
     box-sizing: border-box;
-    width: 90%;
+    width: 95%;
 }
 
 .emooc-course-tool-bar {
