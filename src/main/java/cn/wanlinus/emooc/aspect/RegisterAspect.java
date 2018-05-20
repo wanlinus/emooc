@@ -20,9 +20,8 @@
 package cn.wanlinus.emooc.aspect;
 
 import cn.wanlinus.emooc.annotation.RegisterAnnotation;
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.EmoocLog;
-import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocErrorRepository;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
@@ -72,6 +71,15 @@ public class RegisterAspect {
         log.setEquipment(CommonUtils.getEquipment(request));
         log.setType(registerAnnotation.type());
         log.setComment(object.toString() + Arrays.toString(joinPoint.getArgs()));
+        if (object instanceof ResultData) {
+            if (((ResultData) object).getCode()) {
+                log.setResult(true);
+            } else {
+                log.setResult(false);
+            }
+        } else {
+            log.setResult(false);
+        }
         logRepository.save(log);
         return object;
     }
