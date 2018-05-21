@@ -384,6 +384,8 @@
 </script>
 <script>
     $(document).ready(function () {
+
+
         $.get({
             url: '/admin/gender-pie',
             success: function (responseData) {
@@ -431,6 +433,16 @@
                 statisticsCharts.setOption(statisticsOption)
             }
         })
+        $(window).resize(function () {
+            genderCharts.resize();
+            quesNoteCharts.resize();
+            courseDirectionCharts.resize();
+            statisticsCharts.resize();
+        });
+
+
+        //
+        // genderOption.chart.setOption(genderOption.option, true);
     });
 </script>
 </html>
