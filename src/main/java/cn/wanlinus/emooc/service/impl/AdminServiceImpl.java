@@ -44,9 +44,9 @@ public class AdminServiceImpl implements AdminService {
     private static final int MONTH = 30;
 
     /**
-     * 定义一周7天
+     * 定义15天数据
      */
-    private static final int WEEKDAY = 15;
+    private static final int SOMEDAY = 15;
 
     @Autowired
     private EmoocLogService logService;
@@ -110,17 +110,17 @@ public class AdminServiceImpl implements AdminService {
         QuesNoteDTO dto = new QuesNoteDTO();
         List<String> list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        for (int i = 0; i < WEEKDAY; i++) {
+        for (int i = 0; i < SOMEDAY; i++) {
             list.add(dateFormatSimple(calendar.getTime()));
             calendar.add(Calendar.DAY_OF_WEEK, -1);
         }
         Collections.reverse(list);
         dto.setDate(list);
-        dto.setQuestions(questionService.questionStatistics(new Date(), WEEKDAY));
-        dto.setAnswers(answerService.answerStatistics(new Date(), WEEKDAY));
-        dto.setComments(commentService.commentStatistics(new Date(), WEEKDAY));
-        dto.setNotes(noteService.noteStatistics(new Date(), WEEKDAY));
-        dto.setScores(scoreService.scoreStatistics(new Date(), WEEKDAY));
+        dto.setQuestions(questionService.questionStatistics(new Date(), SOMEDAY));
+        dto.setAnswers(answerService.answerStatistics(new Date(), SOMEDAY));
+        dto.setComments(commentService.commentStatistics(new Date(), SOMEDAY));
+        dto.setNotes(noteService.noteStatistics(new Date(), SOMEDAY));
+        dto.setScores(scoreService.scoreStatistics(new Date(), SOMEDAY));
         return dto;
     }
 
