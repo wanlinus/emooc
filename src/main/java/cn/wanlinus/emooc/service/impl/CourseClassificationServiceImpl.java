@@ -48,10 +48,4 @@ public class CourseClassificationServiceImpl implements CourseClassificationServ
     public CourseClassification get(String classificationId) {
         return classificationRepository.findOne(classificationId);
     }
-
-    @Override
-    public CourseDirection getDirection(String classificationId) {
-        return get(classificationId).getDirection();
-    }
-
 }

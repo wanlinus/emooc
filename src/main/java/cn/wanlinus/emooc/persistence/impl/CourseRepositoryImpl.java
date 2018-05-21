@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.persistence.custom.CourseCustomPersistence;
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Query;

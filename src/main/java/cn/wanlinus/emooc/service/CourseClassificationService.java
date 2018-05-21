@@ -44,11 +44,4 @@ public interface CourseClassificationService {
      */
     CourseClassification get(String classificationId);
 
-    /**
-     * 根据类型Id查找方向信息
-     *
-     * @param classificationId 类型Id
-     * @return 方向对象
-     */
-    CourseDirection getDirection(String classificationId);
 }

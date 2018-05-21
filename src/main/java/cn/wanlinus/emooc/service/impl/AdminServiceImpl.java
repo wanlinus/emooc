@@ -24,6 +24,7 @@ import cn.wanlinus.emooc.dto.QuesNoteDTO;
 import cn.wanlinus.emooc.dto.StatisticsDTO;
 import cn.wanlinus.emooc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,31 +48,22 @@ public class AdminServiceImpl implements AdminService {
      * 定义一周7天
      */
     private static final int WEEKDAY = 15;
-
     @Autowired
     private EmoocLogService logService;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private TeacherService teacherService;
-
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private QuestionService questionService;
-
     @Autowired
     private AnswerService answerService;
-
     @Autowired
     private CourseCommentService commentService;
-
     @Autowired
     private NoteService noteService;
-
     @Autowired
     private CourseScoreService scoreService;
 
@@ -96,6 +88,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Cacheable("admin:direction")
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<CourseDirectionPieDTO> courseDirectionPie() {
         List<CourseDirectionPieDTO> dtos = new ArrayList<>();
         List<Map<String, Object>> list = courseService.courseDirectionPie();
@@ -106,6 +100,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Cacheable("admin:quesNote")
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public QuesNoteDTO quesNote() {
         QuesNoteDTO dto = new QuesNoteDTO();
         List<String> list = new ArrayList<>();
@@ -125,6 +121,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Cacheable(value = "admin:statistics")
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public StatisticsDTO statistics() {
         StatisticsDTO dto = new StatisticsDTO();
