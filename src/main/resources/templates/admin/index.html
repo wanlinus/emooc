@@ -175,7 +175,7 @@
     courseDirectionOption = {
         title: {
             text: 'EMooc课程方向统计',
-            subtext: '装逼神器',
+            subtext: '',
             x: 'center'
         }, tooltip: {
             trigger: 'item',
@@ -364,8 +364,8 @@
             },
             {
                 name: '课程添加',
-                // type: 'line',
-                type: 'bar',
+                type: 'line',
+                // type: 'bar',
                 yAxisIndex: 1,
                 data: []
             },
@@ -384,8 +384,6 @@
 </script>
 <script>
     $(document).ready(function () {
-
-
         $.get({
             url: '/admin/gender-pie',
             success: function (responseData) {
@@ -432,17 +430,13 @@
                 statisticsOption.series[6].data = responseData.video;
                 statisticsCharts.setOption(statisticsOption)
             }
-        })
+        });
         $(window).resize(function () {
             genderCharts.resize();
             quesNoteCharts.resize();
-            courseDirectionCharts.resize();
             statisticsCharts.resize();
+            courseDirectionCharts.resize();
         });
-
-
-        //
-        // genderOption.chart.setOption(genderOption.option, true);
     });
 </script>
 </html>
