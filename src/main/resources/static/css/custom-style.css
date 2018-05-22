@@ -148,7 +148,6 @@
     width: 200px;
     white-space: nowrap;
     -o-text-overflow: ellipsis;
-    display: inline-block;
 }
 
 .recom-course-list-box .recom-course-list li .content-box .learn-detail {
