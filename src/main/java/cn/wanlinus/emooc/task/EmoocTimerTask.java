@@ -59,7 +59,7 @@ public class EmoocTimerTask {
     /**
      * 更新TB_COURSE表中课程评分字段(每10分钟中执行一次)
      */
-    @Scheduled(cron = "0 */10 * * * ?")
+    @Scheduled(cron = "0 */30 * * * ?")
     @Transactional(rollbackFor = Exception.class)
     public void courseScore() {
         Long total = scoreService.totalCourseScore();

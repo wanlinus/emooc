@@ -28,10 +28,12 @@ import com.alibaba.fastjson.JSON;
 public class Main {
     public static void main(String[] args) {
 //        String str = "Mozilla/5.0 (Linux; Android 8.0.0; LON-AL00 Build/HUAWEILON-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.109 Mobile Safari/537.36";
-//        System.out.println(str.substring(str.indexOf("(") + 1, str.indexOf(")")));
-
-        A a = new A("asd");
-        A.num = 20;
-        System.out.println(JSON.toJSONString(a));
+////        System.out.println(str.substring(str.indexOf("(") + 1, str.indexOf(")")));
+//
+//        A a = new A("asd");
+//        A.num = 20;
+//        System.out.println(JSON.toJSONString(a));
+        for (int i = 0; i < 100; i++)
+            System.out.println((int) (Math.random() * 5));
     }
 }

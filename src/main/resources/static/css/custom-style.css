@@ -144,6 +144,11 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
+    width: 200px;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    display: inline-block;
 }
 
 .recom-course-list-box .recom-course-list li .content-box .learn-detail {
