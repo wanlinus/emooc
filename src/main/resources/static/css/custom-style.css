@@ -453,6 +453,15 @@ a:active, a:hover {
     text-align: center;
 }
 
+.emooc-settings-cont .emooc-setting-left .emooc-des-mode p {
+    line-height: 44px;
+    width: 160px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .emooc-settings-cont .emooc-setting-left .emooc-list-wapper {
     overflow: hidden;
 }

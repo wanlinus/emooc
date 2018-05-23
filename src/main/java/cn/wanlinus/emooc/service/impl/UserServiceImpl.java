@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
         List<GenderPieDTO> pies = new ArrayList<>();
         pies.add(new GenderPieDTO("男", mm.get("0")));
         pies.add(new GenderPieDTO("女", mm.get("1")));
-        pies.add(new GenderPieDTO("未知", mm.get("2")));
+        pies.add(new GenderPieDTO("保密", mm.get("2")));
         return pies;
     }
 

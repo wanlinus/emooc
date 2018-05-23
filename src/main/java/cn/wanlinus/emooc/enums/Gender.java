@@ -31,7 +31,7 @@ public enum Gender {
      */
     MALE("男"),
     FEMALE("女"),
-    UNDEFINED("未知");
+    UNDEFINED("保密");
     private String name;
 
     Gender(String name) {
