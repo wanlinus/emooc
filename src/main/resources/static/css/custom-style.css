@@ -409,6 +409,164 @@ a:active, a:hover {
     height: 44px;
 }
 
+.emooc-settings-cont {
+    width: 75%;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+.emooc-settings-cont .emooc-setting-left {
+    width: 216px;
+    background-color: #f8fafc;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-avator-wapper {
+    padding: 32px 0 24px;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-avator-mode {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    border: 4px solid #d9dde1;
+    border-radius: 50px;
+    margin: 0 auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-avator-mode .emooc-update-avator {
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -30px;
+    transition: bottom .3s;
+    -moz-transition: bottom .3s;
+    -webkit-transition: bottom .3s;
+    -o-transition: bottom .3s;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-des-mode {
+    font-size: 16px;
+    text-align: center;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper {
+    overflow: hidden;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper h2 {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 12px 24px;
+    font-weight: 700;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-line {
+    height: 1px;
+    background-color: #d9dde1;
+    margin: 0 24px;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-menu {
+    padding: 10px 0 25px;
+}
+
+.emooc-setting-left li {
+    border: none !important;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-menu a {
+    display: block;
+    position: relative;
+    padding: 0 0 0 54px;
+    height: 48px;
+    line-height: 48px;
+    transition: background-color .3s ease;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-menu a.on {
+    color: #fff;
+    background-color: #f01414;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-menu a.on .arr {
+    color: #fff;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-list-wapper .emooc-menu a .arr {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #b5b9bc;
+}
+
+.emooc-settings-cont .emooc-setting-right {
+    float: left;
+    margin-left: 48px;
+    width: 936px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.emooc-settings-cont .emooc-setting-right-wrap {
+    min-height: 550px;
+}
+
+.emooc-setting-right-wrap {
+    padding: 0 !important;
+}
+
+.emooc-common-title {
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.emooc-common-title a {
+    color: #93999f;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.emooc-line {
+    height: 1px;
+    background-color: #d0d6d9;
+    margin-top: 12px;
+}
+
+.emooc-setting-profile .emooc-info-wapper {
+    margin: 24px auto 24px 40px;
+}
+
+.emooc-setting-profile .emooc-info-box {
+    margin-bottom: 12px;
+}
+
+.emooc-setting-profile .emooc-info-box label {
+    width: 120px;
+    line-height: 20px;
+    padding: 20px 0;
+    text-align: center;
+    background-color: #f3f5f7;
+    color: #07111b;
+    font-weight: 700;
+}
+
+.emooc-setting-profile .emooc-info-box div {
+    width: 708px;
+    margin-left: 8px;
+    line-height: 20px;
+    padding: 20px 0 20px 22px;
+    border-bottom: 1px solid #d9dde1;
+}
+
+.pull-right {
+    float: right;
+}
+
 .bg-author, .bg-other, .bg-teacher {
     background: url(../images/temp1.png) center top no-repeat #000;
     background-size: cover;

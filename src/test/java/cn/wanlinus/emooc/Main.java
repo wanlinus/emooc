@@ -19,8 +19,6 @@
 
 package cn.wanlinus.emooc;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * @author wanli
  * @date 2018-04-01 01:19
@@ -33,7 +31,6 @@ public class Main {
 //        A a = new A("asd");
 //        A.num = 20;
 //        System.out.println(JSON.toJSONString(a));
-        for (int i = 0; i < 100; i++)
-            System.out.println((int) (Math.random() * 5));
+        System.out.println((int) (Math.random() * 5));
     }
 }

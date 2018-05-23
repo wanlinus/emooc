@@ -22,12 +22,18 @@ package cn.wanlinus.emooc.controller;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static cn.wanlinus.emooc.utils.CommonUtils.preFilename;
 
 /**
  * @author wanli
@@ -36,6 +42,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("user")
 public class UserController extends BaseController {
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
+
+    @Value("${web.avatar-path}")
+    private String avatarPath;
 
     @Autowired
     private UserService userService;
@@ -63,6 +75,32 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResultData<String> isCollection(@PathVariable String courseId) {
         return userService.isCollectionCourse(courseId);
+    }
+
+    @GetMapping("information")
+    public String userInformation(Model model) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "user/information";
+    }
+
+    @PutMapping("rest/avatar")
+    @ResponseBody
+    public ResultData<String> changeUserAvatar(@RequestParam("avatar") MultipartFile userAvatar) throws IOException {
+        String filename = preFilename() + userAvatar.getOriginalFilename().substring(userAvatar.getOriginalFilename().lastIndexOf("."));
+        File file = new File(uploadPath + avatarPath + filename);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        FileInputStream fs = (FileInputStream) userAvatar.getInputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fs.read(buffer)) != -1) {
+            fos.write(buffer, 0, len);
+        }
+        fos.close();
+        fs.close();
+        return new ResultData<>(true, "asd");
     }
 
 
