@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
+import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -184,4 +185,12 @@ public interface UserService {
      * @return 是收藏返回true否则返回false
      */
     ResultData<String> isCollectionCourse(String courseId);
+
+    /**
+     * 修改用户信息
+     *
+     * @param dto 用户信息传输对象
+     * @return resultData
+     */
+    ResultData<String> changeInformation(UserInformationDTO dto);
 }

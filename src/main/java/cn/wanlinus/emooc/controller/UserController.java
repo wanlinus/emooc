@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,6 +82,12 @@ public class UserController extends BaseController {
     public String userInformation(Model model) {
         model.addAttribute("user", userService.getCurrentUser());
         return "user/information";
+    }
+
+    @PutMapping("rest/information")
+    @ResponseBody
+    public ResultData<String> changeInformation(@RequestBody UserInformationDTO dto) {
+        return userService.changeInformation(dto);
     }
 
     @PutMapping("rest/avatar")

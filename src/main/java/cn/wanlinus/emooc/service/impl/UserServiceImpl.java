@@ -27,6 +27,7 @@ import cn.wanlinus.emooc.domain.Collection;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.GenderPieDTO;
 import cn.wanlinus.emooc.dto.UserDetailsDTO;
+import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.Gender;
@@ -316,5 +317,23 @@ public class UserServiceImpl implements UserService {
         return resultData;
     }
 
-
+    @Override
+    public ResultData<String> changeInformation(UserInformationDTO dto) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            User user = getCurrentUser();
+            user.setUsername(dto.getUsername());
+            user.setPosition(dto.getPosition());
+            user.setAddress(dto.getAddress());
+            user.setGender(Gender.valueOf(dto.getGender()));
+            user.setSignature(dto.getSignature());
+            resultData.setCode(true);
+            resultData.setMessage("修改成功");
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("系统出现错误啦, 请稍后再试");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
 }
