@@ -318,12 +318,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @UserAnnotation(type = EmoocLogType.USER_CHANGE_INFORMATION)
+    @Transactional(rollbackFor = Exception.class)
     public ResultData<String> changeInformation(UserInformationDTO dto) {
         ResultData<String> resultData = new ResultData<>();
         try {
             User user = getCurrentUser();
             user.setUsername(dto.getUsername());
+            user.setRealname(dto.getRealname());
+            user.setTelephone(dto.getTelephone());
             user.setPosition(dto.getPosition());
+            user.setBirthday(dto.getBirthday());
             user.setAddress(dto.getAddress());
             user.setGender(Gender.valueOf(dto.getGender()));
             user.setSignature(dto.getSignature());

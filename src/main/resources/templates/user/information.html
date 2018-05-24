@@ -12,6 +12,102 @@
 </head>
 <body>
 <header th:replace="course/layout:: courseHeader"></header>
+<!-- userInforModal -->
+<div class="modal fade" id="userInfor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chUsername">用户名:</label>
+                        <input type="text" class="form-control" th:value="${user.username}" id="chUsername"
+                               name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="chRealname">真实姓名:</label>
+                        <input type="text" class="form-control" th:value="${user.realname}" id="chRealname"
+                               name="realname">
+                    </div>
+                    <div class="form-group">
+                        <label for="chTelephone">电话号码:</label>
+                        <input type="text" class="form-control" th:value="${user.telephone}" id="chTelephone"
+                               name="telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="chBirthday">生日:</label>
+                        <input type="date" class="form-control" th:value="${#dates.format(user.birthday,'yyyy-MM-dd')}"
+                               id="chBirthday" name="birthday">
+                    </div>
+                    <div class="form-group">
+                        <label for="chGender">性别:</label>
+                        <select name="gender" id="chGender" class="form-control">
+                            <option value="0" th:selected="${user.gender.ordinal()} eq 0? true:false">男</option>
+                            <option value="1" th:selected="${user.gender.ordinal()} eq 1? true:false">女</option>
+                            <option value="2" th:selected="${user.gender.ordinal()} eq 2? true:false">保密</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chPosition">职位:</label>
+                        <select class="form-control" name="position" id="chPosition"
+                                data-validate="require-select">
+                            <option value="学生" th:selected="${user.position} eq '学生'? true:false">学生</option>
+                            <option value="Python工程师" th:selected="${user.position} eq 'Python工程师'? true:false">
+                                Python工程师
+                            </option>
+                            <option value="页面重构设计" th:selected="${user.position} eq '页面重构设计'? true:false">页面重构设计
+                            </option>
+                            <option value="Web前端工程师" th:selected="${user.position} eq 'Web前端工程师'? true:false">Web前端工程师
+                            </option>
+                            <option value="JS工程师" th:selected="${user.position} eq 'JS工程师'? true:false">JS工程师</option>
+                            <option value="PHP开发工程师" th:selected="${user.position} eq 'PHP开发工程师'? true:false">PHP开发工程师
+                            </option>
+                            <option value="JAVA开发工程师" th:selected="${user.position} eq 'JAVA开发工程师'? true:false">
+                                JAVA开发工程师
+                            </option>
+                            <option value="移动开发工程师" th:selected="${user.position} eq '移动开发工程师'? true:false">移动开发工程师
+                            </option>
+                            <option value="软件测试工程师" th:selected="${user.position} eq '软件测试工程师'? true:false">软件测试工程师
+                            </option>
+                            <option value="Linux系统工程师" th:selected="${user.position} eq 'Linux系统工程师'? true:false">
+                                Linux系统工程师
+                            </option>
+                            <option value="交互设计师" th:selected="${user.position} eq '交互设计师'? true:false">交互设计师</option>
+                            <option value="产品经理" th:selected="${user.position} eq '产品经理'? true:false">产品经理</option>
+                            <option value="数据库工程师" th:selected="${user.position} eq '数据库工程师'? true:false">数据库工程师
+                            </option>
+                            <option value="软件工程师" th:selected="${user.position} eq '软件工程师'? true:false">软件工程师</option>
+                            <option value="UI设计师" th:selected="${user.position} eq 'UI设计师'? true:false">UI设计师</option>
+                            <option value="CG影视动画师" th:selected="${user.position} eq 'CG影视动画师'? true:false">CG影视动画师
+                            </option>
+                            <option value="全栈工程师" th:selected="${user.position} eq '全栈工程师'? true:false">全栈工程师</option>
+                            <option value="算法工程师" th:selected="${user.position} eq '算法工程师'? true:false">算法工程师</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="chAddress">住址:</label>
+                        <input type="text" id="chAddress" th:value="${user.address}" name="address"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="chSignature">个性签名:</label>
+                        <textarea name="signature" id="chSignature" rows="6"
+                                  class="form-control" th:field="${user.signature}"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="userInforUpdate" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="emooc-settings-cont clearfix">
     <div class="emooc-setting-left l">
         <div class="emooc-avator-wapper">
@@ -36,7 +132,8 @@
                 </li>
                 <li><a href="/user/oplog">操作记录<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
                 </li>
-                <li><a href="/user/authenticate">实名认证<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                <li><a href="/user/authenticate">实名认证<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
                 </li>
                 <li><a href="/user/certificate">学籍认证<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
                 </li>
@@ -49,165 +146,34 @@
         <div class="emooc-setting-right-wrap emooc-wrap-boxes emooc-settings">
             <div class="emooc-formBox">
                 <div id="setting-profile" class="emooc-setting-wrap emooc-setting-profile">
-                    <div class="emooc-edit-info" style="display: none;">
-                        <form class="emooc-js-wapper-form">
-                            <div class="emooc-moco-form-group">
-                                <label for="" class="emooc-moco-control-label">昵称：</label>
-                                <div class="emooc-moco-control-input">
-                                    <input type="text" name="nickname" id="nick" autocomplete="off"
-                                           data-validate="require-nick" class="moco-form-control" value="LinusTaylor"
-                                           placeholder="请输入昵称">
-                                    <div class="rlf-tip-wrap errorHint color-red"></div>
-                                </div>
-                            </div>
-                            <div class="moco-form-group">
-                                <label for="" class="moco-control-label">职位：</label>
-                                <div class="moco-control-input">
-                                    <select class="moco-form-control rlf-select" name="job" hidefocus="true" id="job"
-                                            data-validate="require-select">
-                                        <option value="">请选择职位</option>
-                                        <option value="13" selected="selected">学生</option>
-                                        <option value="18">Python工程师</option>
-                                        <option value="1">页面重构设计</option>
-                                        <option value="6">Web前端工程师</option>
-                                        <option value="5">JS工程师</option>
-                                        <option value="8">PHP开发工程师</option>
-                                        <option value="11">JAVA开发工程师</option>
-                                        <option value="7">移动开发工程师</option>
-                                        <option value="9">软件测试工程师</option>
-                                        <option value="10">Linux系统工程师</option>
-                                        <option value="2">交互设计师</option>
-                                        <option value="3">产品经理</option>
-                                        <option value="15">数据库工程师</option>
-                                        <option value="21">软件工程师</option>
-                                        <option value="4">UI设计师</option>
-                                        <option value="17">CG影视动画师</option>
-                                        <option value="16">全栈工程师</option>
-                                        <option value="20">算法工程师</option>
-                                    </select>
-                                    <div class="rlf-tip-wrap errorHint color-red"></div>
-                                </div>
-                            </div>
-                            <div class="moco-form-group wlfg-wrap">
-                                <label for="" class="moco-control-label">所在地区：</label>
-                                <div class="moco-control-input profile-address">
-                                    <select id="province-select" class="moco-form-control" hidefocus="true">
-                                        <option value="0">省</option>
-                                        <option value="1">北京</option>
-                                        <option value="2">天津</option>
-                                        <option value="3">河北</option>
-                                        <option value="4">山西</option>
-                                        <option value="5">内蒙古</option>
-                                        <option value="6">辽宁</option>
-                                        <option value="7">吉林</option>
-                                        <option value="8">黑龙江</option>
-                                        <option value="9">上海</option>
-                                        <option value="10">江苏</option>
-                                        <option value="11">浙江</option>
-                                        <option value="12">安徽</option>
-                                        <option value="13">福建</option>
-                                        <option value="14">江西</option>
-                                        <option value="15">山东</option>
-                                        <option value="16">河南</option>
-                                        <option value="17">湖北</option>
-                                        <option value="18">湖南</option>
-                                        <option value="19">广东</option>
-                                        <option value="20">海南</option>
-                                        <option value="21">广西</option>
-                                        <option value="22">甘肃</option>
-                                        <option value="23">陕西</option>
-                                        <option value="24">新疆</option>
-                                        <option value="25">青海</option>
-                                        <option value="26">宁夏</option>
-                                        <option value="27">重庆</option>
-                                        <option value="28" selected="selected">四川</option>
-                                        <option value="29">贵州</option>
-                                        <option value="30">云南</option>
-                                        <option value="31">西藏</option>
-                                        <option value="32">台湾</option>
-                                        <option value="33">澳门</option>
-                                        <option value="34">香港</option>
-                                        <option value="100">其他</option>
-                                    </select>
-                                    <select class="moco-form-control" id="city-select" hidefocus="true">
-                                        <option value="0">市</option>
-                                        <option value="225" selected="selected">成都市</option>
-                                        <option value="226">攀枝花市</option>
-                                        <option value="227">自贡市</option>
-                                        <option value="228">绵阳市</option>
-                                        <option value="229">南充市</option>
-                                        <option value="230">达州市</option>
-                                        <option value="231">遂宁市</option>
-                                        <option value="232">广安市</option>
-                                        <option value="233">巴中市</option>
-                                        <option value="234">泸州市</option>
-                                        <option value="235">宜宾市</option>
-                                        <option value="236">资阳市</option>
-                                        <option value="237">内江市</option>
-                                        <option value="238">乐山市</option>
-                                        <option value="239">眉山市</option>
-                                        <option value="240">凉山彝族自治州</option>
-                                        <option value="241">雅安市</option>
-                                        <option value="242">甘孜藏族自治州</option>
-                                        <option value="243">阿坝藏族羌族自治州</option>
-                                        <option value="244">德阳市</option>
-                                        <option value="245">广元市</option>
-                                    </select>
-                                    <select class="moco-form-control mr0" id="area-select" hidefocus="true">
-                                        <option value="0">区县</option>
-                                        <option value="1875">锦江区</option>
-                                        <option value="1876">青羊区</option>
-                                        <option value="1877">金牛区</option>
-                                        <option value="1878">武侯区</option>
-                                        <option value="1879">成华区</option>
-                                        <option value="1880">龙泉驿区</option>
-                                        <option value="1881">青白江区</option>
-                                        <option value="1882">新都区</option>
-                                        <option value="1883">温江区</option>
-                                        <option value="1884">金堂县</option>
-                                        <option value="1885">双流县</option>
-                                        <option value="1886" selected="selected">郫县</option>
-                                        <option value="1887">大邑县</option>
-                                        <option value="1888">蒲江县</option>
-                                        <option value="1889">新津县</option>
-                                        <option value="1890">都江堰市</option>
-                                        <option value="1891">彭州市</option>
-                                        <option value="1892">邛崃市</option>
-                                        <option value="1893">崇州市</option>
-                                    </select>
-                                    <div class="rlf-tip-wrap errorHint color-red"></div>
-                                </div>
-                            </div>
-                            <div class="moco-form-group wlfg-wrap">
-                                <label for="" class="moco-control-label h16 lh16">性别：</label>
-                                <div class="moco-control-input rlf-group rlf-radio-group">
-                                    <label><input type="radio" hidefocus="true" value="0" name="sex">保密</label>
-                                    <label><input type="radio" hidefocus="true" value="1" checked="checked" name="sex">男</label>
-                                    <label><input type="radio" hidefocus="true" value="2" name="sex">女</label>
-                                    <div class="rlf-tip-wrap errorHint color-red"></div>
-                                </div>
-                            </div>
-                            <div class="moco-form-group wlfg-wrap">
-                                <label for="" class="moco-control-label">个性签名：</label>
-                                <div class="moco-control-input">
-                                    <div class="pr">
-                                        <textarea name="aboutme" id="aboutme" rows="5"
-                                                  class="noresize js-sign moco-form-control"></textarea>
-                                        <p class="numCanInput js-numCanInput ">还可以输入128个字符</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="emooc-common-title">
                         个人信息
-                        <a href="javascript: void(0);" class="pull-right js-edit-info"><i class="icon-note"></i>编辑</a>
+                        <a href="javascript: void(0);" class="pull-right js-edit-info" data-toggle="modal"
+                           data-target="#userInfor"><i class="icon-note"></i>编辑</a>
                     </div>
                     <div class="emooc-line"></div>
                     <div class="emooc-info-wapper">
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">昵称</label>
                             <div class="pull-left" th:text="${user.username}">LinusTaylor</div>
+                        </div>
+                        <div class="emooc-info-box clearfix">
+                            <label class="pull-left">真实姓名</label>
+                            <div class="pull-left" th:text="${user.realname}"></div>
+                        </div>
+                        <div class="emooc-info-box clearfix">
+                            <label class="pull-left">电话号码</label>
+                            <div class="pull-left" th:text="${user.telephone}"></div>
+                        </div>
+                        <div class="emooc-info-box clearfix">
+                            <label class="pull-left">生日</label>
+                            <div class="pull-left" th:text="${#dates.format(user.birthday, 'yyyy-MM-dd')}"></div>
+                        </div>
+                        <div class="emooc-info-box clearfix">
+                            <label class="pull-left">性别</label>
+                            <div class="pull-left" th:text="${user.gender.name}">
+                                男
+                            </div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">职位</label>
@@ -220,12 +186,7 @@
                             <div class="pull-left" th:text="${user.address} eq null ? ${'没有设置'} : ${user.address}">四川
                             </div>
                         </div>
-                        <div class="emooc-info-box clearfix">
-                            <label class="pull-left">性别</label>
-                            <div class="pull-left" th:text="${user.gender.name}">
-                                男
-                            </div>
-                        </div>
+
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">个性签名</label>
                             <div class="pull-left" th:text="${user.signature}">未设置</div>
@@ -254,6 +215,32 @@
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
+        $("#userInforUpdate").click(function () {
+            let birthday = new Date($("#chBirthday").val()).getTime();
+            $.ajax({
+                url: '/user/rest/information',
+                type: 'PUT',
+                data: JSON.stringify({
+                    username: $('#chUsername').val(),
+                    realname: $('#chRealname').val(),
+                    telephone: $('#chTelephone').val(),
+                    birthday: birthday,
+                    gender: $('#chGender').val(),
+                    position: $('#chPosition').val(),
+                    address: $('#chAddress').val(),
+                    signature: $('#chSignature').val()
+                }),
+                processData: false,
+                contentType: 'application/json',
+                success: function (response) {
+                    alert("success:" + response.message);
+
+                },
+                error: function (response) {
+                    alert("error:" + response.message);
+                }
+            })
+        });
 
         $("#upload").click(function () {
             let formData = new FormData();
@@ -264,12 +251,14 @@
                 cache: false,
                 data: formData,
                 processData: false,
-                contentType: false
-            }).done(function (res) {
-                console.log(true)
-            }).fail(function (res) {
-                console.log(fasle)
-            });
+                contentType: false,
+                success: function (response) {
+                    alert("success:" + response.message)
+                },
+                error: function (response) {
+                    alert("error:" + response.message);
+                }
+            })
         })
     })
 </script>

@@ -19,7 +19,10 @@
 
 package cn.wanlinus.emooc.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户信息传输对象，用于修改用户信息的数据传输对象
@@ -29,6 +32,9 @@ import java.io.Serializable;
  */
 public class UserInformationDTO implements Serializable {
     private String username;
+    private String realname;
+    private String telephone;
+    private Date birthday;
     private String position;
     private String address;
     private Integer gender;
@@ -43,6 +49,30 @@ public class UserInformationDTO implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getPosition() {
@@ -81,6 +111,9 @@ public class UserInformationDTO implements Serializable {
     public String toString() {
         return "UserInformationDTO{" +
                 "username='" + username + '\'' +
+                ", realname='" + realname + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", birthday=" + birthday +
                 ", position='" + position + '\'' +
                 ", address='" + address + '\'' +
                 ", gender=" + gender +

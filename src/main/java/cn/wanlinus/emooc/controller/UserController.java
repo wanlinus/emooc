@@ -60,6 +60,13 @@ public class UserController extends BaseController {
         return "user/index";
     }
 
+    @GetMapping("information")
+    public String userInformation(Model model) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "user/information";
+    }
+
+
     @GetMapping("rest/collection/course/{courseId}")
     @ResponseBody
     public ResultData<String> collection(@PathVariable String courseId) {
@@ -78,11 +85,6 @@ public class UserController extends BaseController {
         return userService.isCollectionCourse(courseId);
     }
 
-    @GetMapping("information")
-    public String userInformation(Model model) {
-        model.addAttribute("user", userService.getCurrentUser());
-        return "user/information";
-    }
 
     @PutMapping("rest/information")
     @ResponseBody
@@ -109,6 +111,4 @@ public class UserController extends BaseController {
         fs.close();
         return new ResultData<>(true, "asd");
     }
-
-
 }
