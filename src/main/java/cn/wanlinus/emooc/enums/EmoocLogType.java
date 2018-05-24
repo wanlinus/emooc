@@ -41,6 +41,9 @@ public enum EmoocLogType {
     USER_ADD_COMMENT("用户添加评论"),
     USER_ADD_SCORE("用户对课程进行评分"),
     TEACHER_ADD_ANSWER("教师解答问题"),
+    USER_CHANGE_INFORMATION("用户修改信息"),
+    USER_CHANGE_AVATAR("用户修改头像"),
+    USER_CHANGE_PASSWORD("用户修改密码"),
     UNKNOWN("未知");
 
     private String description;
