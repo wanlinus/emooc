@@ -19,8 +19,6 @@
 
 package cn.wanlinus.emooc.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,7 +29,6 @@ import java.util.Date;
  * @date 2018-05-24 11:58
  */
 public class UserInformationDTO implements Serializable {
-    private String username;
     private String realname;
     private String telephone;
     private Date birthday;
@@ -41,14 +38,6 @@ public class UserInformationDTO implements Serializable {
     private String signature;
 
     public UserInformationDTO() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getRealname() {
@@ -110,8 +99,7 @@ public class UserInformationDTO implements Serializable {
     @Override
     public String toString() {
         return "UserInformationDTO{" +
-                "username='" + username + '\'' +
-                ", realname='" + realname + '\'' +
+                "realname='" + realname + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", birthday=" + birthday +
                 ", position='" + position + '\'' +

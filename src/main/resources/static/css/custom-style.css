@@ -436,6 +436,28 @@ a:active, a:hover {
     overflow: hidden;
 }
 
+.emooc-update-avator {
+    height: 25px;
+    line-height: 25px;
+    background: #00F7DE;
+}
+
+.emooc-settings-cont .emooc-setting-left .emooc-avator-mode:hover .emooc-update-avator {
+    animation: move 0.5s;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+
+}
+
+@keyframes move {
+    from {
+        bottom: -30px;
+    }
+    to {
+        bottom: 0px;
+    }
+}
+
 .emooc-settings-cont .emooc-setting-left .emooc-avator-mode .emooc-update-avator {
     font-size: 12px;
     position: absolute;

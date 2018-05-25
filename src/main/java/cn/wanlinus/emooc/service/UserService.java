@@ -27,6 +27,7 @@ import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -193,4 +194,12 @@ public interface UserService {
      * @return resultData
      */
     ResultData<String> changeInformation(UserInformationDTO dto);
+
+    /**
+     * 更新用户头像
+     *
+     * @param userAvatar 用户头像
+     * @return resultData
+     */
+    ResultData<String> updateAvatar(MultipartFile userAvatar);
 }

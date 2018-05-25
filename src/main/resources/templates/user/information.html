@@ -7,26 +7,27 @@
     <title>aaa</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/custom-style.css">
     <link rel="stylesheet" th:href="@{/css/custom-style.css}">
 </head>
 <body>
 <header th:replace="course/layout:: courseHeader"></header>
 <!-- userInforModal -->
-<div class="modal fade" id="userInfor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="userInforModal" tabindex="-1" role="dialog" aria-labelledby="userInforLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+                <h4 class="modal-title" id="userInforLabel">用户信息</h4>
             </div>
             <div class="modal-body">
                 <div class="emooc-container">
                     <div class="form-group">
                         <label for="chUsername">用户名:</label>
-                        <input type="text" class="form-control" th:value="${user.username}" id="chUsername"
+                        <input type="text" disabled class="form-control" th:value="${user.username}" id="chUsername"
                                name="username">
                     </div>
                     <div class="form-group">
@@ -108,13 +109,39 @@
         </div>
     </div>
 </div>
+<!-- userAvatar -->
+<div class="modal fade" id="userAvatarModal" tabindex="-1" role="dialog" aria-labelledby="userAvatarLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userAvatarLabel">用户头像</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chUserAvatar">选择用户头像</label>
+                        <input type="file" class="file" data-language='zh' id="chUserAvatar">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="userAvatarUpdate" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="emooc-settings-cont clearfix">
     <div class="emooc-setting-left l">
         <div class="emooc-avator-wapper">
             <div class="emooc-avator-mode">
-                <img class="emooc-avator-img" th:src="${user.avatar}" width="92" height="92">
+                <img class="emooc-avator-img" id="userAvatar" th:src="${user.avatar}" width="92" height="92">
                 <div class="emooc-update-avator" style="bottom: -30px;">
-                    <p><a href="javascript:void(0);" class="js-avator-link">更换头像</a></p>
+                    <p><a class="js-avator-link" data-toggle="modal" data-target="#userAvatarModal">更换头像</a></p>
                 </div>
             </div>
             <div class="emooc-des-mode">
@@ -149,47 +176,45 @@
                     <div class="emooc-common-title">
                         个人信息
                         <a href="javascript: void(0);" class="pull-right js-edit-info" data-toggle="modal"
-                           data-target="#userInfor"><i class="icon-note"></i>编辑</a>
+                           data-target="#userInforModal"><i class="icon-note"></i>编辑</a>
                     </div>
                     <div class="emooc-line"></div>
                     <div class="emooc-info-wapper">
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">昵称</label>
-                            <div class="pull-left" th:text="${user.username}">LinusTaylor</div>
+                            <div class="pull-left" th:text="${user.username}" id="username">LinusTaylor</div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">真实姓名</label>
-                            <div class="pull-left" th:text="${user.realname}"></div>
+                            <div class="pull-left" th:text="${user.realname}" id="realname"></div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">电话号码</label>
-                            <div class="pull-left" th:text="${user.telephone}"></div>
+                            <div class="pull-left" th:text="${user.telephone}" id="telephone"></div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">生日</label>
-                            <div class="pull-left" th:text="${#dates.format(user.birthday, 'yyyy-MM-dd')}"></div>
+                            <div class="pull-left" th:text="${#dates.format(user.birthday, 'yyyy-MM-dd')}"
+                                 id="birthday"></div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">性别</label>
-                            <div class="pull-left" th:text="${user.gender.name}">
-                                男
-                            </div>
+                            <div class="pull-left" th:text="${user.gender.name}" id="gender">男</div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">职位</label>
-                            <div class="pull-left" th:text="${user.position} eq null ? ${'没有设置'} : ${user.position}">
-                                学生
-                            </div>
+                            <div class="pull-left" id="position"
+                                 th:text="${user.position} eq null ? ${'没有设置'} : ${user.position}"></div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">城市</label>
-                            <div class="pull-left" th:text="${user.address} eq null ? ${'没有设置'} : ${user.address}">四川
-                            </div>
+                            <div class="pull-left" id="address"
+                                 th:text="${user.address} eq null ? ${'没有设置'} : ${user.address}"></div>
                         </div>
 
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">个性签名</label>
-                            <div class="pull-left" th:text="${user.signature}">未设置</div>
+                            <div class="pull-left" th:text="${user.signature}" id="signature">未设置</div>
                         </div>
                     </div>
                 </div>
@@ -198,15 +223,11 @@
         </div>
     </div>
 </div>
-<div hidden>
-    <form action="" enctype="multipart/form-data">
-        <input id="avatar" type="file" name="avatar"/>
-        <button id="upload" type="button">upload</button>
-    </form>
-</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/js/fileinput.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/js/locales/zh.min.js"></script>
 <script>
     $(document).ready(function () {
         //_csrf
@@ -221,7 +242,6 @@
                 url: '/user/rest/information',
                 type: 'PUT',
                 data: JSON.stringify({
-                    username: $('#chUsername').val(),
                     realname: $('#chRealname').val(),
                     telephone: $('#chTelephone').val(),
                     birthday: birthday,
@@ -234,7 +254,14 @@
                 contentType: 'application/json',
                 success: function (response) {
                     alert("success:" + response.message);
-
+                    $('#userInforModal').modal('hide');
+                    $('#realname').text($('#chRealname').val());
+                    $('#telephone').text($('#chTelephone').val());
+                    $('#birthday').text($('#chBirthday').val());
+                    $('#gender').text($('#chGender').find("option:selected").text());
+                    $('#position').text($('#chPosition').val());
+                    $('#address').text($('#chAddress').val());
+                    $('#signature').text($('#chSignature').val());
                 },
                 error: function (response) {
                     alert("error:" + response.message);
@@ -242,9 +269,9 @@
             })
         });
 
-        $("#upload").click(function () {
+        $("#userAvatarUpdate").click(function () {
             let formData = new FormData();
-            formData.append("avatar", $("#avatar")[0].files[0]);
+            formData.append("avatar", $("#chUserAvatar")[0].files[0]);
             $.ajax({
                 url: '/user/rest/avatar',
                 type: 'PUT',
@@ -253,13 +280,15 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    alert("success:" + response.message)
+                    alert("success:" + response.message);
+                    $('#userAvatarModal').modal('hide');
+                    $('#userAvatar').attr("src", response.data);
                 },
                 error: function (response) {
                     alert("error:" + response.message);
                 }
             })
-        })
+        });
     })
 </script>
 </html>

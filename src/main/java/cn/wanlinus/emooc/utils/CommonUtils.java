@@ -22,8 +22,13 @@ package cn.wanlinus.emooc.utils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,6 +59,33 @@ public final class CommonUtils {
             return requestAttributes.getRequest();
         }
         return null;
+    }
+
+    /**
+     * 保存文件
+     *
+     * @param multipartFile 上传的文件
+     * @param rootPath      root目录
+     * @param filePath      文件子目录
+     * @return 文件路径
+     * @throws IOException 读写异常
+     */
+    public static String saveFile(MultipartFile multipartFile, String rootPath, String filePath) throws IOException {
+        String filename = preFilename() + multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+        File file = new File(rootPath + filePath + filename);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        FileInputStream fs = (FileInputStream) multipartFile.getInputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fs.read(buffer)) != -1) {
+            fos.write(buffer, 0, len);
+        }
+        fos.close();
+        fs.close();
+        return filePath + filename;
     }
 
     /**

@@ -44,7 +44,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
@@ -67,6 +69,14 @@ public class UserServiceImpl implements UserService {
     private CollectionService collectionService;
     @Autowired
     private CommonService commonService;
+
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
+
+    @Value("${web.avatar-path}")
+    private String avatarPath;
+
 
     @Value("${emooc.host}")
     private String host;
@@ -324,7 +334,6 @@ public class UserServiceImpl implements UserService {
         ResultData<String> resultData = new ResultData<>();
         try {
             User user = getCurrentUser();
-            user.setUsername(dto.getUsername());
             user.setRealname(dto.getRealname());
             user.setTelephone(dto.getTelephone());
             user.setPosition(dto.getPosition());
@@ -341,4 +350,25 @@ public class UserServiceImpl implements UserService {
         }
         return resultData;
     }
+
+    @Override
+    @UserAnnotation(type = EmoocLogType.USER_CHANGE_AVATAR)
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> updateAvatar(MultipartFile userAvatar) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            String filename = saveFile(userAvatar, uploadPath, avatarPath);
+            User user = getCurrentUser();
+            user.setAvatar(filename);
+            resultData.setCode(true);
+            resultData.setMessage("更新成功");
+            resultData.setData(filename);
+        } catch (IOException e) {
+            resultData.setCode(false);
+            resultData.setMessage("更新失败");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
+
 }

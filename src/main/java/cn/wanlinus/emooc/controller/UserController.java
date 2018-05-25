@@ -29,13 +29,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import static cn.wanlinus.emooc.utils.CommonUtils.preFilename;
-
 /**
  * @author wanli
  * @date 2018-02-22 16:54
@@ -85,7 +78,6 @@ public class UserController extends BaseController {
         return userService.isCollectionCourse(courseId);
     }
 
-
     @PutMapping("rest/information")
     @ResponseBody
     public ResultData<String> changeInformation(@RequestBody UserInformationDTO dto) {
@@ -94,21 +86,7 @@ public class UserController extends BaseController {
 
     @PutMapping("rest/avatar")
     @ResponseBody
-    public ResultData<String> changeUserAvatar(@RequestParam("avatar") MultipartFile userAvatar) throws IOException {
-        String filename = preFilename() + userAvatar.getOriginalFilename().substring(userAvatar.getOriginalFilename().lastIndexOf("."));
-        File file = new File(uploadPath + avatarPath + filename);
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        FileOutputStream fos = new FileOutputStream(file);
-        FileInputStream fs = (FileInputStream) userAvatar.getInputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = fs.read(buffer)) != -1) {
-            fos.write(buffer, 0, len);
-        }
-        fos.close();
-        fs.close();
-        return new ResultData<>(true, "asd");
+    public ResultData<String> changeUserAvatar(@RequestParam("avatar") MultipartFile userAvatar) {
+        return userService.updateAvatar(userAvatar);
     }
 }
