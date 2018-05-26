@@ -24,12 +24,11 @@ import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Captcha;
 import cn.wanlinus.emooc.domain.Collection;
+import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.dto.GenderPieDTO;
-import cn.wanlinus.emooc.dto.UserDetailsDTO;
-import cn.wanlinus.emooc.dto.UserInformationDTO;
-import cn.wanlinus.emooc.dto.UserRegisterDTO;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.enums.EmoocLogType;
+import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.enums.Gender;
 import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.CaptchaRepository;
@@ -371,4 +370,37 @@ public class UserServiceImpl implements UserService {
         return resultData;
     }
 
+    @Override
+    public ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>> pageLog(Integer appointPage, Integer pageSize) {
+        ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>> resultData = new ResultData<>();
+        BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO> dto = new BootstrapPaginationDataDTO<>();
+        try {
+            String username = getCurrentUser().getUsername();
+            Integer totalPage = (logService.countUserLogs(username).intValue() - 1) / pageSize + 1;
+            appointPage = appointPage > totalPage ? totalPage : appointPage;
+            dto.setTotalPage(totalPage);
+            dto.setNextPage(appointPage < totalPage ? appointPage + 1 : totalPage);
+            dto.setPrePage(appointPage > 1 ? appointPage - 1 : 1);
+            dto.setCurrentPage(appointPage);
+            List<EmoocLog> logs = logService.pageRoleLogger(EmoocRole.ROLE_USER, appointPage - 1, pageSize, username);
+            List<BootstrapPaginationDataLogDTO> list = new ArrayList<>();
+            for (EmoocLog log : logs) {
+                BootstrapPaginationDataLogDTO logDTO = new BootstrapPaginationDataLogDTO();
+                logDTO.setType(log.getType().getDescription());
+                logDTO.setEquipment(log.getEquipment().substring(log.getEquipment().indexOf("(") + 1, log.getEquipment().indexOf(")")));
+                logDTO.setIp(log.getIp());
+                logDTO.setTime(dateFormatComplex(log.getTime()));
+                list.add(logDTO);
+            }
+            dto.setData(list);
+            resultData.setData(dto);
+            resultData.setCode(true);
+            resultData.setMessage("查询成功");
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("查询失败");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
 }

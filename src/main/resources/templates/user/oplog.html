@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>aaa</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/custom-style.css">
+    <link rel="stylesheet" th:href="@{/css/custom-style.css}">
+</head>
+<body>
+<header th:replace="course/layout::courseHeader"></header>
+<div class="emooc-settings-cont clearfix">
+    <div class="emooc-setting-left l">
+        <div class="emooc-avator-wapper">
+            <div class="emooc-avator-mode">
+                <img class="emooc-avator-img" id="userAvatar" th:src="${user.avatar}" width="92" height="92">
+                <div class="emooc-update-avator" style="bottom: -30px;">
+                    <p><a class="js-avator-link" data-toggle="modal" data-target="#userAvatarModal">更换头像</a></p>
+                </div>
+            </div>
+            <div class="emooc-des-mode">
+                <p th:text="${user.username}"></p>
+            </div>
+        </div>
+        <div class="emooc-list-wapper">
+            <h2>账户管理</h2>
+            <div class="emooc-line"></div>
+            <ul class="emooc-menu">
+                <li><a href="/user/setbindsns">账号绑定<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a></li>
+                <li><a href="/user/information">个人信息<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+                <li><a href="/user/oplog" class="on">操作记录<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+                <li><a href="/user/authenticate">实名认证<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+                <li><a href="/user/certificate">学籍认证<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+                <li><a href="/user/address">收件地址<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="emooc-setting-right">
+        <div class="emooc-setting-right-wrap emooc-wrap-boxes emooc-settings">
+
+            <div class="emooc-page-settings">
+                <div class="emooc-common-title">
+                    操作记录<span class="emooc-title-tips">通过查看操作类型、登录时间、登录地点和设备可以判断账号是否正常</span>
+                    <a href="javascript:void(0)" class="pull-right js-update-psw">不是我登录的？</a>
+                </div>
+                <div class="emooc-line"></div>
+                <div class="emooc-setting emooc-setting-height emooc-paddingBtoom">
+                    <div class="emooc-contentBox">
+                        <table class="emooc-oplog-list" id="tb_log">
+                            <thead>
+                            <tr>
+                                <th>类型</th>
+                                <th>登录时间</th>
+                                <th>城市</th>
+                                <th>IP</th>
+                                <th>登录设备</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="Page navigation" class="l">
+                        <ul class="pagination">
+                            <li>
+                                <div class="input-group" style="width: 260px;">
+                                    <input type="number" id="page_input" class="form-control" placeholder="跳转...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" id="page_btn" type="button">Go!</button>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <nav aria-label="Page navigation" class="r">
+                        <ul class="pagination" id="log_page">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="active"><a onclick="pagination(1)">1</a></li>
+                            <li><a onclick="pagination(2)">2</a></li>
+                            <li><a onclick="pagination(3)">3</a></li>
+                            <li><a onclick="pagination(4)">4</a></li>
+                            <li><a onclick="pagination(5)">5</a></li>
+                            <li>
+                                <a aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    const pagination = function (page) {
+        $.ajax({
+            url: '/user/rest/log?appointPage=' + page,
+            success: function (response) {
+                if (response.code) {
+                    //数据
+                    $("#tb_log").find("tbody").html("");
+                    console.log(response);
+                    for (let i = 0; i < response.data.data.length; i++) {
+                        $("#tb_log").find("tbody").append(`
+                            <tr>
+                                <td>` + response.data.data[i].type + `</td>
+                                <td>` + response.data.data[i].time + `</td>
+                                <td>自贡</td>
+                                <td>` + response.data.data[i].ip + `</td>
+                                <td>` + response.data.data[i].equipment + `</td>
+                            </tr>
+                        `)
+                    }
+                    //分页按钮
+                    $("#log_page").html("");
+                    $("#log_page").append(`<li><a aria-label="Previous" onclick="pagination(1)"><span aria-hidden="true">&laquo;</span></a></li>`);
+                    if (response.data.currentPage > 2) {
+                        $("#log_page").append(`
+                                <li><a onclick="pagination(` + (response.data.currentPage - 2) + `)">` + (response.data.currentPage - 2) + `</a></li>
+                                <li><a onclick="pagination(` + response.data.prePage + `)">` + (response.data.prePage) + `</a></li>`);
+                    } else {
+                        let tmp = response.data.currentPage;
+                        for (let i = tmp; i > 1; i--) {
+                            $("#log_page").append(`<li><a onclick="pagination(` + (response.data.currentPage - tmp + 1) + `)">` + (response.data.currentPage - tmp + 1) + `</a></li>`);
+                        }
+                    }
+                    //当前页
+                    $("#log_page").append(`<li class="active"><a onclick="pagination(` + response.data.currentPage + `)">` + response.data.currentPage + `</a></li>`);
+
+                    if (response.data.totalPage - response.data.currentPage > 2) {
+                        $("#log_page").append(`<li><a onclick="pagination(` + (response.data.currentPage + 1) + `)">` + (response.data.currentPage + 1) + `</a></li>`);
+                        $("#log_page").append(`<li><a onclick="pagination(` + (response.data.currentPage + 2) + `)">` + (response.data.currentPage + 2) + `</a></li>`);
+                    } else {
+                        for (let i = 0; i < response.data.totalPage - response.data.currentPage; i++) {
+                            $("#log_page").append(`<li><a onclick="pagination(` + (response.data.currentPage + i + 1) + `)">` + (response.data.currentPage + i + 1) + `</a></li>`);
+                        }
+                    }
+                    //末页
+                    $("#log_page").append(`<li><a aria-label="Next" onclick="pagination(` + response.data.totalPage + `)"><span aria-hidden="true">&raquo;</span></a></li>`);
+
+                }
+            }
+        })
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        pagination(1);
+        $("#page_btn").click(function () {
+            pagination($("#page_input").val());
+        });
+    })
+</script>
+</html>

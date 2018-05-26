@@ -20,11 +20,9 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.domain.User;
-import cn.wanlinus.emooc.dto.GenderPieDTO;
-import cn.wanlinus.emooc.dto.UserDetailsDTO;
-import cn.wanlinus.emooc.dto.UserInformationDTO;
-import cn.wanlinus.emooc.dto.UserRegisterDTO;
+import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -202,4 +200,13 @@ public interface UserService {
      * @return resultData
      */
     ResultData<String> updateAvatar(MultipartFile userAvatar);
+
+    /**
+     * 用户自管理界面日志分页数据
+     *
+     * @param appointPage 指定页数
+     * @param pageSize    没页数据量
+     * @return 分页数据
+     */
+    ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>> pageLog(Integer appointPage, Integer pageSize);
 }

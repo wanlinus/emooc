@@ -62,6 +62,17 @@ public interface EmoocLogService {
     LayuiPaginationDataDTO<LoggerDTO> pageRoleLogger(EmoocRole role, int page, Integer limit);
 
     /**
+     * 获取指定用户日志分页信息
+     *
+     * @param roleUser    用户身份
+     * @param appointPage 指定页数
+     * @param pageSize    没页数据量
+     * @param username    用户名
+     * @return 分页数据
+     */
+    List<EmoocLog> pageRoleLogger(EmoocRole roleUser, Integer appointPage, Integer pageSize, String username);
+
+    /**
      * 计数某日课程日志
      *
      * @param time 指定日期
@@ -156,4 +167,14 @@ public interface EmoocLogService {
      * @return 统计量
      */
     Long countScores(Date date);
+
+    /**
+     * 对指定用户日志进行计数
+     *
+     * @param userName 用户Id
+     * @return 统计量
+     */
+    Long countUserLogs(String userName);
+
+
 }

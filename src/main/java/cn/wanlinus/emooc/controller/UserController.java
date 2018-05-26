@@ -20,6 +20,9 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.domain.EmoocLog;
+import cn.wanlinus.emooc.dto.BootstrapPaginationDataDTO;
+import cn.wanlinus.emooc.dto.BootstrapPaginationDataLogDTO;
 import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author wanli
@@ -59,6 +64,11 @@ public class UserController extends BaseController {
         return "user/information";
     }
 
+    @GetMapping("oplog")
+    public String userOperation(Model model) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "user/oplog";
+    }
 
     @GetMapping("rest/collection/course/{courseId}")
     @ResponseBody
@@ -88,5 +98,12 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResultData<String> changeUserAvatar(@RequestParam("avatar") MultipartFile userAvatar) {
         return userService.updateAvatar(userAvatar);
+    }
+
+    @GetMapping("rest/log")
+    @ResponseBody
+    public ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>>
+    userLog(Integer appointPage, @RequestParam(defaultValue = "10") Integer pageSize) {
+        return userService.pageLog(appointPage, pageSize);
     }
 }

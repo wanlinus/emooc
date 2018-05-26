@@ -411,6 +411,7 @@ a:active, a:hover {
 
 .emooc-settings-cont {
     width: 75%;
+    /*min-width: 1600px;*/
     margin: 0 auto;
     padding: 30px 0;
 }
@@ -591,6 +592,56 @@ a:active, a:hover {
     margin-left: 8px;
     line-height: 20px;
     padding: 20px 0 20px 22px;
+    border-bottom: 1px solid #d9dde1;
+}
+
+.emooc-common-title .emooc-title-tips {
+    font-size: 12px;
+    color: #93999f;
+    margin-left: 18px;
+    font-weight: 400;
+}
+
+.emooc-oplog-list {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.emooc-contentBox table {
+    border-spacing: 0;
+}
+
+.emooc-contentBox table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.emooc-contentBox tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.emooc-contentBox tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.emooc-oplog-list th {
+    margin: 0;
+    padding: 0;
+    background-color: #f3f5f7;
+}
+
+.emooc-oplog-list td, .emooc-oplog-list th {
+    text-align: center;
+    line-height: 48px;
+}
+
+.emooc-oplog-list td {
     border-bottom: 1px solid #d9dde1;
 }
 

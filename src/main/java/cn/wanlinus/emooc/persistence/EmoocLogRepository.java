@@ -85,6 +85,18 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
     List<EmoocLog> pageRoleLogger(Integer role, int startIndex, Integer size);
 
     /**
+     * 获取指定身份指定用户名的日志信息
+     *
+     * @param roleUser    用户身份
+     * @param appointPage 指定索引
+     * @param pageSize    没页数据量
+     * @param username    用户名
+     * @return 日志数据
+     */
+    @Query(value = "SELECT * FROM TB_LOG AS log WHERE log.LOG_ROLE=?1 AND log.LOG_WHO=?4 ORDER BY LOG_TIME DESC LIMIT ?2,?3", nativeQuery = true)
+    List<EmoocLog> pageRoleLogger(Integer roleUser, Integer appointPage, Integer pageSize, String username);
+
+    /**
      * 查询某一时间段不同身份操作类型
      *
      * @param role 身份
@@ -123,4 +135,15 @@ public interface EmoocLogRepository extends BaseRepository<EmoocLog, String> {
      */
     @Query(value = "SELECT COUNT(*) FROM TB_LOG AS log WHERE log.LOG_TYPE = 5 AND log.LOG_RESULT = 1 AND DATE_FORMAT(log.LOG_TIME, '%Y-%m-%d') = DATE_FORMAT( ?1 , '%Y-%m-%d')", nativeQuery = true)
     Long countVideos(Date time);
+
+    /**
+     * 对用户日志进行计数
+     *
+     * @param userName 用户名
+     * @return 统计量
+     */
+    @Query(value = "SELECT count(*) FROM TB_LOG AS log WHERE log.LOG_WHO = ?1 AND log.LOG_ROLE = 0", nativeQuery = true)
+    Long countUserLogs(String userName);
+
+
 }

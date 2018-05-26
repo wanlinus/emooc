@@ -88,6 +88,11 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     }
 
     @Override
+    public List<EmoocLog> pageRoleLogger(EmoocRole roleUser, Integer appointPage, Integer pageSize, String username) {
+        return logRepository.pageRoleLogger(roleUser.ordinal(), appointPage * pageSize, pageSize, username);
+    }
+
+    @Override
     public Long countCourseLogs(Date time) {
         return logRepository.countCourses(time);
     }
@@ -145,5 +150,10 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     @Override
     public Long countScores(Date date) {
         return logRepository.countLogType(EmoocLogType.USER_ADD_SCORE.ordinal(), date);
+    }
+
+    @Override
+    public Long countUserLogs(String userName) {
+        return logRepository.countUserLogs(userName);
     }
 }
