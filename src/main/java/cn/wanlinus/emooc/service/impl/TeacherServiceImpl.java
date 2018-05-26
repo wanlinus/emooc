@@ -33,15 +33,19 @@ import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.service.*;
 import cn.wanlinus.emooc.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.getUsername;
+import static cn.wanlinus.emooc.utils.CommonUtils.saveFile;
 
 /**
  * @author wanli
@@ -59,6 +63,12 @@ public class TeacherServiceImpl implements TeacherService {
     private UserStudyService userStudyService;
     @Autowired
     private EmoocLogService logService;
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
+
+    @Value("${web.image-path}")
+    private String imgPath;
 
     /**
      * 获取当前教师
@@ -139,6 +149,20 @@ public class TeacherServiceImpl implements TeacherService {
     public Course addCourse(ThAddCourseDTO dto, String filename) {
         dto.setPath(filename);
         return courseService.saveCourse(getTeacher(), dto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
+    public String addCourse(ThAddCourseDTO dto, MultipartFile file) {
+        Course course = null;
+        try {
+            dto.setPath(saveFile(file, uploadPath, imgPath));
+            course = courseService.saveCourse(getTeacher(), dto);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return course == null ? null : course.getId();
     }
 
     @Override

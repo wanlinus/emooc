@@ -25,6 +25,7 @@ import cn.wanlinus.emooc.domain.CourseVideo;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -92,6 +93,15 @@ public interface TeacherService {
      * @return 添加的课程
      */
     Course addCourse(ThAddCourseDTO dto, String filename);
+
+    /**
+     * 添加课程
+     *
+     * @param dto  添加课程数据传输对象
+     * @param file 课程封面
+     * @return 添加的课程ID
+     */
+    String addCourse(ThAddCourseDTO dto, MultipartFile file);
 
     /**
      * 获取教师顶置课程
