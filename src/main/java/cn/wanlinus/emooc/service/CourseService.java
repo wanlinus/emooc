@@ -131,7 +131,7 @@ public interface CourseService {
     /**
      * 对所有课程Video计数
      *
-     * @return
+     * @return 统计量
      */
     Long countCourseSectionVideos();
 
