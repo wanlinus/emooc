@@ -65,6 +65,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String role = Objects.requireNonNull(CommonUtils.getRequest()).getParameter("role");
+        if (role == null) {
+            role = "USER";
+        }
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (EmoocRole.ROLE_ADMIN.getDesc().equals(role)) {
             Admin admin = adminRepository.findByName(username);

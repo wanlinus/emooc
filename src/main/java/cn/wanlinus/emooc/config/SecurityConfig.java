@@ -19,10 +19,8 @@
 
 package cn.wanlinus.emooc.config;
 
-import cn.wanlinus.emooc.service.impl.UserDetailsServiceImpl;
 import cn.wanlinus.emooc.service.impl.PasswordEncoderImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.wanlinus.emooc.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +40,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -80,8 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .and()
-//                .rememberMe()
-//                .and()
+                .rememberMe()
+                .tokenValiditySeconds(200000)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/css/*", "/fonts/*", "/images/*", "/js/*", "/layui/*", "/steps/*").permitAll()
