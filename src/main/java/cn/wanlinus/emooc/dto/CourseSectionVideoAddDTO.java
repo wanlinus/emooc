@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -34,6 +35,7 @@ public class CourseSectionVideoAddDTO implements Serializable {
     private Integer duration;
     private String sha1;
     private Date createTime;
+    @JSONField(serialize = false)
     private MultipartFile video;
     private String videoPath;
     private String sectionId;

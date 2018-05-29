@@ -19,6 +19,7 @@
 
 package cn.wanlinus.emooc.controller;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
@@ -33,13 +34,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.preFilename;
+import static cn.wanlinus.emooc.utils.CommonUtils.saveFile;
 
 /**
  * @author wanli
@@ -55,8 +53,6 @@ public class TeacherController {
     @Value("${web.image-path}")
     private String imgPath;
 
-    @Value("${web.video-path}")
-    private String videoPath;
 
     @Autowired
     private TeacherService teacherService;
@@ -88,8 +84,9 @@ public class TeacherController {
     }
 
     @PostMapping(value = "course/add")
-    public String addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic) {
-        return "redirect:/teacher/course/details/" + teacherService.addCourse(dto, pic);
+    public ResultData<String> addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic) throws IOException {
+        dto.setPath(saveFile(pic, uploadPath, imgPath));
+        return teacherService.addCourse(dto);
     }
 
     @GetMapping("course/details/{id}")
@@ -114,12 +111,9 @@ public class TeacherController {
 
     @PostMapping("course/section")
     @ResponseBody
-    public String addSection(SectionAddDTO dto) {
-        if (teacherService.addSection(dto) != null) {
-            return "成功";
-        } else {
-            return "失败";
-        }
+    public ResultData<String> addSection(SectionAddDTO dto) {
+        return teacherService.addSection(dto);
+
     }
 
     @GetMapping("course/section/video/{videoId}")
@@ -130,25 +124,8 @@ public class TeacherController {
 
     @PostMapping("course/section/video")
     @ResponseBody
-    public String addVideo(CourseSectionVideoAddDTO dto) throws IOException {
-
-        String filename = videoPath + preFilename() + dto.getVideo().getOriginalFilename().substring(dto.getVideo().getOriginalFilename().lastIndexOf("."));
-        File file = new File(uploadPath + filename);
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        FileOutputStream fos = new FileOutputStream(file);
-        FileInputStream fs = (FileInputStream) dto.getVideo().getInputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = fs.read(buffer)) != -1) {
-            fos.write(buffer, 0, len);
-        }
-        fos.close();
-        fs.close();
-        dto.setSha1(String.valueOf(file.hashCode()));
-        dto.setVideoPath(filename);
-        return teacherService.addSectionVideo(dto) != null ? "true" : "false";
+    public ResultData<String> addVideo(CourseSectionVideoAddDTO dto) {
+        return teacherService.addSectionVideo(dto);
     }
 }
 

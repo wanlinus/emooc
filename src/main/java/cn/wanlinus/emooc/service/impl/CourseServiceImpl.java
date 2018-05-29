@@ -19,7 +19,6 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.TeacherAnnotation;
 import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.*;
@@ -227,7 +226,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_SECTION)
     @Transactional(rollbackFor = Exception.class)
     public CourseSection addSection(SectionAddDTO dto) {
         CourseSection section = new CourseSection();

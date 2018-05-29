@@ -68,7 +68,7 @@ public class TeacherAspect {
         log.setIp(request.getRemoteAddr());
         log.setTime(new Date());
         log.setResult(true);
-        log.setComment(JSON.toJSONString(obj));
+        log.setComment(JSON.toJSONString(obj) + JSON.toJSONString(joinPoint.getArgs()));
         logRepository.save(log);
         return obj;
     }

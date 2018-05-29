@@ -21,6 +21,7 @@ package cn.wanlinus.emooc.service.impl;
 
 import cn.wanlinus.emooc.annotation.AdminAnnotation;
 import cn.wanlinus.emooc.annotation.TeacherAnnotation;
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Course;
 import cn.wanlinus.emooc.domain.CourseSection;
 import cn.wanlinus.emooc.domain.CourseVideo;
@@ -39,8 +40,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -69,6 +70,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Value("${web.image-path}")
     private String imgPath;
+
+    @Value("${web.video-path}")
+    private String videoPath;
 
     /**
      * 获取当前教师
@@ -146,23 +150,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
-    public Course addCourse(ThAddCourseDTO dto, String filename) {
-        dto.setPath(filename);
-        return courseService.saveCourse(getTeacher(), dto);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_COURSE)
-    public String addCourse(ThAddCourseDTO dto, MultipartFile file) {
-        Course course = null;
+    public ResultData<String> addCourse(ThAddCourseDTO dto) {
+        ResultData<String> resultData = new ResultData<>();
         try {
-            dto.setPath(saveFile(file, uploadPath, imgPath));
-            course = courseService.saveCourse(getTeacher(), dto);
-        } catch (IOException e) {
+            resultData.setData(courseService.saveCourse(getTeacher(), dto).getId());
+            resultData.setCode(true);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return course == null ? null : course.getId();
+        return resultData;
     }
 
     @Override
@@ -198,15 +194,43 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_SECTION)
     @Transactional(rollbackFor = Exception.class)
-    public CourseSection addSection(SectionAddDTO dto) {
-        return courseService.addSection(dto);
+    public ResultData<String> addSection(SectionAddDTO dto) {
+        ResultData<String> resultDate = new ResultData<>();
+        try {
+            if (courseService.addSection(dto) != null) {
+                resultDate.setCode(true);
+                resultDate.setMessage("成功");
+            } else {
+                resultDate.setCode(false);
+                resultDate.setMessage("保存失败");
+            }
+        } catch (Exception e) {
+            resultDate.setCode(false);
+            resultDate.setMessage("服务器错误");
+            e.printStackTrace();
+        }
+        return resultDate;
     }
 
     @Override
     @TeacherAnnotation(type = EmoocLogType.TEACHER_ADD_VIDEO)
-    public CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto) {
-        return courseService.addSectionVideo(dto);
+    public ResultData<String> addSectionVideo(CourseSectionVideoAddDTO dto) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            dto.setVideoPath(saveFile(dto.getVideo(), uploadPath, videoPath));
+            File file = new File(dto.getVideoPath());
+            dto.setSha1(String.valueOf(file.hashCode()));
+            courseService.addSectionVideo(dto);
+            resultData.setCode(true);
+            resultData.setMessage("保存成功");
+        } catch (IOException e) {
+            resultData.setCode(false);
+            resultData.setMessage("保存失败");
+            e.printStackTrace();
+        }
+        return resultData;
     }
 
     @Override

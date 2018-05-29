@@ -19,13 +19,12 @@
 
 package cn.wanlinus.emooc.service;
 
+import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.CourseSection;
 import cn.wanlinus.emooc.domain.CourseVideo;
 import cn.wanlinus.emooc.domain.Teacher;
 import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -84,24 +83,13 @@ public interface TeacherService {
      */
     Long countTeacherRegister(Date date);
 
-
     /**
      * 添加课程
      *
-     * @param dto      添加课程数据传输对象
-     * @param filename 课程封面
-     * @return 添加的课程
-     */
-    Course addCourse(ThAddCourseDTO dto, String filename);
-
-    /**
-     * 添加课程
-     *
-     * @param dto  添加课程数据传输对象
-     * @param file 课程封面
+     * @param dto 添加课程数据传输对象
      * @return 添加的课程ID
      */
-    String addCourse(ThAddCourseDTO dto, MultipartFile file);
+    ResultData<String> addCourse(ThAddCourseDTO dto);
 
     /**
      * 获取教师顶置课程
@@ -157,15 +145,15 @@ public interface TeacherService {
      * @param dto 添加章节数据传输对象
      * @return 添加的课程
      */
-    CourseSection addSection(SectionAddDTO dto);
+    ResultData<String> addSection(SectionAddDTO dto);
 
     /**
      * 添加课程视频
      *
      * @param dto 课程
-     * @return 课程章节视频对象
+     * @return resultData
      */
-    CourseVideo addSectionVideo(CourseSectionVideoAddDTO dto);
+    ResultData<String> addSectionVideo(CourseSectionVideoAddDTO dto);
 
     /**
      * 获取章节显示数据传输对象
