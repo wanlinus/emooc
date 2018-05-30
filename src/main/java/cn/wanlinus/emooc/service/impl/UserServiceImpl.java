@@ -156,6 +156,7 @@ public class UserServiceImpl implements UserService {
             user.setUserStatus(UserStatus.INACTIVE);
             user.setRegisterTime(new Date());
             user.setGender(Gender.UNDEFINED);
+            user.setBirthday(new Date());
             user.setAvatar("/data/teacher/img/emooc-29f0ca1c-c139-46e6-987d-2f489b3549af.jpg");
             User u = userRepository.save(user);
             if (u != null) {
@@ -336,7 +337,9 @@ public class UserServiceImpl implements UserService {
             user.setRealname(dto.getRealname());
             user.setTelephone(dto.getTelephone());
             user.setPosition(dto.getPosition());
-            user.setBirthday(dto.getBirthday());
+            if (dto.getBirthday() != null) {
+                user.setBirthday(dto.getBirthday());
+            }
             user.setAddress(dto.getAddress());
             user.setGender(Gender.valueOf(dto.getGender()));
             user.setSignature(dto.getSignature());

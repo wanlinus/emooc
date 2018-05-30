@@ -142,7 +142,7 @@ public class HomeController extends WebMvcConfigurerAdapter {
         if (errors.hasErrors()) {
             StringBuilder msg = new StringBuilder();
             for (Object o : errors.getAllErrors()) {
-                msg.append(o.toString().substring(o.toString().lastIndexOf("[") + 1, o.toString().lastIndexOf("]")));
+                msg.append(o.toString(), o.toString().lastIndexOf("[") + 1, o.toString().lastIndexOf("]"));
             }
             resultData.setCode(false);
             resultData.setMessage(msg.toString());
