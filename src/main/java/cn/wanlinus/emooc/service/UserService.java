@@ -20,7 +20,6 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.commons.ResultData;
-import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.domain.User;
 import cn.wanlinus.emooc.dto.*;
 import org.springframework.data.domain.Page;

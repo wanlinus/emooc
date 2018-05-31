@@ -20,7 +20,6 @@
 package cn.wanlinus.emooc.persistence;
 
 import cn.wanlinus.emooc.domain.EmoocLog;
-import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.enums.EmoocRole;
 import org.springframework.data.jpa.repository.Query;
 

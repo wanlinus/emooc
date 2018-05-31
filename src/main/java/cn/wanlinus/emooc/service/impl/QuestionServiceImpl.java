@@ -19,11 +19,8 @@
 
 package cn.wanlinus.emooc.service.impl;
 
-import cn.wanlinus.emooc.annotation.UserAnnotation;
 import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.Note;
 import cn.wanlinus.emooc.domain.Question;
-import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.persistence.QuestionRepository;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.NoteService;
@@ -34,7 +31,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static cn.wanlinus.emooc.utils.CommonUtils.nid;
 import static cn.wanlinus.emooc.utils.CommonUtils.qid;
 
 /**

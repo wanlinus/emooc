@@ -24,7 +24,6 @@ import cn.wanlinus.emooc.enums.UserStatus;
 import cn.wanlinus.emooc.persistence.custom.UserCustomPersistence;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Map;
 
 /**

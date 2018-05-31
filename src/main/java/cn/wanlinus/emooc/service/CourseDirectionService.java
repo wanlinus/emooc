@@ -19,7 +19,6 @@
 
 package cn.wanlinus.emooc.service;
 
-import cn.wanlinus.emooc.domain.CourseClassification;
 import cn.wanlinus.emooc.domain.CourseDirection;
 
 import java.util.List;

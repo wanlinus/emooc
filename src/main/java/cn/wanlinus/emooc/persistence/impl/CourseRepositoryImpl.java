@@ -27,7 +27,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.Query;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

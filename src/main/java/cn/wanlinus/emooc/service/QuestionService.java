@@ -20,7 +20,6 @@
 package cn.wanlinus.emooc.service;
 
 import cn.wanlinus.emooc.domain.Course;
-import cn.wanlinus.emooc.domain.Note;
 import cn.wanlinus.emooc.domain.Question;
 
 import java.util.Date;

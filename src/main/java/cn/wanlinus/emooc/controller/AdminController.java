@@ -84,6 +84,9 @@ public class AdminController {
         return "admin/information";
     }
 
+    /**
+     * 更改管理员密码界面
+     */
     @GetMapping("change-password")
     public String chgPassword() {
         return "admin/change-password";
@@ -141,7 +144,6 @@ public class AdminController {
         return "admin/tms/index";
     }
 
-
     /**
      * 教师信息
      *
@@ -153,6 +155,9 @@ public class AdminController {
         return teacherService.pageTeacher(dto);
     }
 
+    /**
+     * 添加教师界面
+     */
     @GetMapping("tms/add")
     public String addTeacherUI() {
         return "admin/tms/add";

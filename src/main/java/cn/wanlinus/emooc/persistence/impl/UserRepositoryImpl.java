@@ -24,7 +24,9 @@ import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 
 import javax.persistence.Query;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wanli

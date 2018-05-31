@@ -21,7 +21,6 @@ package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.dto.*;
-import cn.wanlinus.emooc.service.CourseClassificationService;
 import cn.wanlinus.emooc.service.CourseDirectionService;
 import cn.wanlinus.emooc.service.CourseTypeService;
 import cn.wanlinus.emooc.service.TeacherService;
@@ -53,15 +52,11 @@ public class TeacherController {
     @Value("${web.image-path}")
     private String imgPath;
 
-
     @Autowired
     private TeacherService teacherService;
 
     @Autowired
     private CourseDirectionService directionService;
-
-    @Autowired
-    private CourseClassificationService classificationService;
 
     @Autowired
     private CourseTypeService typeService;
@@ -75,6 +70,9 @@ public class TeacherController {
         return "teacher/index";
     }
 
+    /**
+     * 添加课程页面
+     */
     @GetMapping(value = "course/add")
     public String add(Model model) {
         model.addAttribute("directions", directionService.getDirections());
@@ -83,12 +81,26 @@ public class TeacherController {
         return "teacher/course/add";
     }
 
+    /**
+     * 添加课程
+     *
+     * @param dto 添加课程数据传输对象
+     * @param pic 课程封面
+     * @return ResutData
+     * @throws IOException io异常 由文件读写造成的
+     */
     @PostMapping(value = "course/add")
     public ResultData<String> addCourse(@ModelAttribute ThAddCourseDTO dto, @RequestParam("pic") MultipartFile pic) throws IOException {
         dto.setPath(saveFile(pic, uploadPath, imgPath));
         return teacherService.addCourse(dto);
     }
 
+    /**
+     * 获取课程详细信息
+     *
+     * @param courseId 课程ID
+     * @param model    model
+     */
     @GetMapping("course/details/{id}")
     public String courseDerails(@PathVariable("id") String courseId, Model model) {
         model.addAttribute("sections", teacherService.getSectionsDisplay(courseId));
@@ -96,12 +108,24 @@ public class TeacherController {
         return "teacher/course/details";
     }
 
+    /**
+     * 获取课程列表
+     *
+     * @param pageable 分页信息
+     * @return 课程列表
+     */
     @GetMapping("course/page")
     @ResponseBody
     public List<ThCourseDTO> courseList(Pageable pageable) {
         return teacherService.pageCourse(pageable);
     }
 
+    /**
+     * 添加课程章节界面
+     *
+     * @param courseId 课程ID
+     * @param model    model
+     */
     @GetMapping("course/section/{courseId}")
     public String addSectionUI(@PathVariable String courseId, Model model) {
         model.addAttribute("course", teacherService.getCourse(courseId));
@@ -109,19 +133,36 @@ public class TeacherController {
         return "teacher/course/section";
     }
 
+    /**
+     * 添加课程章节
+     *
+     * @param dto 章节数据传输对象
+     * @return ResultData
+     */
     @PostMapping("course/section")
     @ResponseBody
     public ResultData<String> addSection(SectionAddDTO dto) {
         return teacherService.addSection(dto);
-
     }
 
+    /**
+     * 课程视频播放页面
+     *
+     * @param videoId 视频ID
+     * @param model   model
+     */
     @GetMapping("course/section/video/{videoId}")
     public String play(@PathVariable() String videoId, Model model) {
         model.addAttribute("videoPath", teacherService.getCourseVideo(videoId).getPath());
         return "teacher/course/video";
     }
 
+    /**
+     * 添加课程
+     *
+     * @param dto 课程数据传输对象
+     * @return resultData
+     */
     @PostMapping("course/section/video")
     @ResponseBody
     public ResultData<String> addVideo(CourseSectionVideoAddDTO dto) {
