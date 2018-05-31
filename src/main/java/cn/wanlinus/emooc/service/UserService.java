@@ -226,4 +226,12 @@ public interface UserService {
      * @return resultData
      */
     ResultData<String> changePassword(String email, String password);
+
+    /**
+     * 修改密码
+     *
+     * @param dto 修改密码数据传输对象
+     * @return resultData
+     */
+    ResultData<String> changePassword(UserChangePasswordDTO dto);
 }

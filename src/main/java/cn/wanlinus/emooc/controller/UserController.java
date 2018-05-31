@@ -23,6 +23,7 @@ import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.EmoocLog;
 import cn.wanlinus.emooc.dto.BootstrapPaginationDataDTO;
 import cn.wanlinus.emooc.dto.BootstrapPaginationDataLogDTO;
+import cn.wanlinus.emooc.dto.UserChangePasswordDTO;
 import cn.wanlinus.emooc.dto.UserInformationDTO;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,11 @@ public class UserController extends BaseController {
     public ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>>
     userLog(Integer appointPage, @RequestParam(defaultValue = "10") Integer pageSize) {
         return userService.pageLog(appointPage, pageSize);
+    }
+
+    @PutMapping("rest/password")
+    @ResponseBody
+    public ResultData<String> changePassword(@RequestBody UserChangePasswordDTO dto) {
+        return userService.changePassword(dto);
     }
 }

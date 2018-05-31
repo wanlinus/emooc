@@ -437,7 +437,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultData<String> changePassword(String email, String password) {
         ResultData<String> resultData = new ResultData<>();
-
         try {
             User user = userRepository.findByEmail(email);
             user.setPassword(md5Encrypt(password));
@@ -457,6 +456,29 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统错误,请稍后重试");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
+
+    @Override
+    @UserAnnotation(type = EmoocLogType.USER_CHANGE_PASSWORD)
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> changePassword(UserChangePasswordDTO dto) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            User user = getCurrentUser();
+            if (user.getPassword().equals(md5Encrypt(dto.getOldPassword()))) {
+                user.setPassword(md5Encrypt(dto.getNewPassword()));
+                resultData.setCode(true);
+                resultData.setMessage("修改成功");
+            } else {
+                resultData.setCode(false);
+                resultData.setMessage("修改失败,老密码您忘记了吧!");
+            }
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("系统错误,修改失败");
             e.printStackTrace();
         }
         return resultData;

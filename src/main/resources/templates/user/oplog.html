@@ -13,6 +13,39 @@
 </head>
 <body>
 <header th:replace="course/layout::courseHeader"></header>
+<div class="modal fade" id="userChangePasswordModal" tabindex="-1" role="dialog"
+     aria-labelledby="userChangePasswordLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userChangePasswordLabel">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chOldPassword">请输入旧密码</label>
+                        <input type="password" class="form-control" name="oldPassword" id="chOldPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="chNewPassword">请输入新密码</label>
+                        <input type="password" class="form-control" required name="newPassword" id="chNewPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="chNewPassword2">请输入新密码</label>
+                        <input type="password" class="form-control" required name="newPassword2" id="chNewPassword2">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="changePasswordBtn" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="emooc-settings-cont clearfix">
     <div class="emooc-setting-left l">
         <div class="emooc-avator-wapper">
@@ -38,13 +71,6 @@
                 <li><a href="/user/oplog" class="on">操作记录<span class="arr"><i
                         class="glyphicon glyphicon-chevron-right"></i></span></a>
                 </li>
-                <li><a href="/user/authenticate">实名认证<span class="arr"><i
-                        class="glyphicon glyphicon-chevron-right"></i></span></a>
-                </li>
-                <li><a href="/user/certificate">学籍认证<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
-                </li>
-                <li><a href="/user/address">收件地址<span class="arr"><i
-                        class="glyphicon glyphicon-chevron-right"></i></span></a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +80,8 @@
             <div class="emooc-page-settings">
                 <div class="emooc-common-title">
                     操作记录<span class="emooc-title-tips">通过查看操作类型、登录时间、登录地点和设备可以判断账号是否正常</span>
-                    <a href="javascript:void(0)" class="pull-right js-update-psw">不是我登录的？</a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#userChangePasswordModal"
+                       class="pull-right js-update-psw">不是我登录的？</a>
                 </div>
                 <div class="emooc-line"></div>
                 <div class="emooc-setting emooc-setting-height emooc-paddingBtoom">
@@ -120,7 +147,6 @@
                 if (response.code) {
                     //数据
                     $("#tb_log").find("tbody").html("");
-                    console.log(response);
                     for (let i = 0; i < response.data.data.length; i++) {
                         $("#tb_log").find("tbody").append(`
                             <tr>
@@ -167,8 +193,39 @@
 <script>
     $(document).ready(function () {
         pagination(1);
+        //_csrf
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+
         $("#page_btn").click(function () {
             pagination($("#page_input").val());
+        });
+        $("#changePasswordBtn").click(function () {
+            let chNewPassword = $("#chNewPassword");
+            let chNewPassword2 = $("#chNewPassword2");
+            let chOldPassword = $("#chOldPassword");
+            if (chNewPassword.val() === chNewPassword2.val()) {
+                $.ajax({
+                    url: '/user/rest/password',
+                    type: 'PUT',
+                    data: JSON.stringify({
+                        oldPassword: chOldPassword.val(),
+                        newPassword: chNewPassword.val()
+                    }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert(response.message);
+                        if (response.code) {
+                            $("#userChangePasswordModal").modal('hide');
+                        }
+                    }
+                })
+            } else {
+                alert("两次密码不一致");
+            }
         });
     })
 </script>
