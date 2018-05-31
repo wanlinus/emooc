@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+
+<!--
+  ~ Copyright (C) 2018 - wanli <wanlinus@qq.com>
+  ~
+  ~ This file is part of emooc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
@@ -34,11 +54,6 @@
                         <label for="chRealname">真实姓名:</label>
                         <input type="text" class="form-control" th:value="${user.realname}" id="chRealname"
                                name="realname">
-                    </div>
-                    <div class="form-group">
-                        <label for="chTelephone">电话号码:</label>
-                        <input type="text" class="form-control" th:value="${user.telephone}" id="chTelephone"
-                               name="telephone">
                     </div>
                     <div class="form-group">
                         <label for="chBirthday">生日:</label>
@@ -159,13 +174,6 @@
                 </li>
                 <li><a href="/user/oplog">操作记录<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
                 </li>
-                <li><a href="/user/authenticate">实名认证<span class="arr"><i
-                        class="glyphicon glyphicon-chevron-right"></i></span></a>
-                </li>
-                <li><a href="/user/certificate">学籍认证<span class="arr"><i class="glyphicon glyphicon-chevron-right"></i></span></a>
-                </li>
-                <li><a href="/user/address">收件地址<span class="arr"><i
-                        class="glyphicon glyphicon-chevron-right"></i></span></a></li>
             </ul>
         </div>
     </div>
@@ -187,10 +195,6 @@
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">真实姓名</label>
                             <div class="pull-left" th:text="${user.realname}" id="realname"></div>
-                        </div>
-                        <div class="emooc-info-box clearfix">
-                            <label class="pull-left">电话号码</label>
-                            <div class="pull-left" th:text="${user.telephone}" id="telephone"></div>
                         </div>
                         <div class="emooc-info-box clearfix">
                             <label class="pull-left">生日</label>
@@ -243,7 +247,6 @@
                 type: 'PUT',
                 data: JSON.stringify({
                     realname: $('#chRealname').val(),
-                    telephone: $('#chTelephone').val(),
                     birthday: birthday,
                     gender: $('#chGender').val(),
                     position: $('#chPosition').val(),
@@ -256,7 +259,6 @@
                     alert("success:" + response.message);
                     $('#userInforModal').modal('hide');
                     $('#realname').text($('#chRealname').val());
-                    $('#telephone').text($('#chTelephone').val());
                     $('#birthday').text($('#chBirthday').val());
                     $('#gender').text($('#chGender').find("option:selected").text());
                     $('#position').text($('#chPosition').val());

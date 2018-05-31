@@ -21,10 +21,7 @@ package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
 import cn.wanlinus.emooc.domain.EmoocLog;
-import cn.wanlinus.emooc.dto.BootstrapPaginationDataDTO;
-import cn.wanlinus.emooc.dto.BootstrapPaginationDataLogDTO;
-import cn.wanlinus.emooc.dto.UserChangePasswordDTO;
-import cn.wanlinus.emooc.dto.UserInformationDTO;
+import cn.wanlinus.emooc.dto.*;
 import cn.wanlinus.emooc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,6 +68,12 @@ public class UserController extends BaseController {
         return "user/oplog";
     }
 
+    @GetMapping("setbindsns")
+    public String setbindsns(Model model) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "user/setbindsns";
+    }
+
     @GetMapping("rest/collection/course/{courseId}")
     @ResponseBody
     public ResultData<String> collection(@PathVariable String courseId) {
@@ -93,6 +96,18 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResultData<String> changeInformation(@RequestBody UserInformationDTO dto) {
         return userService.changeInformation(dto);
+    }
+
+    @PutMapping("rest/email")
+    @ResponseBody
+    public ResultData<String> changeEmail(@RequestBody UserNewEmailPhoneDTO newEmail) {
+        return userService.changeEmail(newEmail.getNewEmail());
+    }
+
+    @PutMapping("rest/phone")
+    @ResponseBody
+    public ResultData<String> changePhone(@RequestBody UserNewEmailPhoneDTO newPhone) {
+        return userService.changePhone(newPhone.getNewPhone());
     }
 
     @PutMapping("rest/avatar")

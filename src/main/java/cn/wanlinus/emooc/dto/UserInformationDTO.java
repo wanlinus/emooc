@@ -30,7 +30,6 @@ import java.util.Date;
  */
 public class UserInformationDTO implements Serializable {
     private String realname;
-    private String telephone;
     private Date birthday;
     private String position;
     private String address;
@@ -46,14 +45,6 @@ public class UserInformationDTO implements Serializable {
 
     public void setRealname(String realname) {
         this.realname = realname;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
     }
 
     public Date getBirthday() {
@@ -100,7 +91,6 @@ public class UserInformationDTO implements Serializable {
     public String toString() {
         return "UserInformationDTO{" +
                 "realname='" + realname + '\'' +
-                ", telephone='" + telephone + '\'' +
                 ", birthday=" + birthday +
                 ", position='" + position + '\'' +
                 ", address='" + address + '\'' +

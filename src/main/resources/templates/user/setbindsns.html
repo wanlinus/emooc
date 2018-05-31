@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (C) 2018 - wanli <wanlinus@qq.com>
+  ~
+  ~ This file is part of emooc
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>aaa</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/custom-style.css">
+    <link rel="stylesheet" th:href="@{/css/custom-style.css}">
+</head>
+<body>
+<header th:replace="course/layout::courseHeader"></header>
+<div class="modal fade" id="userChangePasswordModal" tabindex="-1" role="dialog"
+     aria-labelledby="userChangePasswordLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userChangePasswordLabel">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chOldPassword">请输入旧密码</label>
+                        <input type="password" class="form-control" name="oldPassword" id="chOldPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="chNewPassword">请输入新密码</label>
+                        <input type="password" class="form-control" required name="newPassword" id="chNewPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="chNewPassword2">请输入新密码</label>
+                        <input type="password" class="form-control" required name="newPassword2" id="chNewPassword2">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="changePasswordBtn" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="userChangeEmailModal" tabindex="-1" role="dialog"
+     aria-labelledby="userChangeEmailLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userChangeEmailLabel">修改邮箱</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chNewEmail">请输入新的邮箱地址</label>
+                        <input type="email" class="form-control" required id="chNewEmail">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="changeEmailBtn" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="userChangePhoneModal" tabindex="-1" role="dialog"
+     aria-labelledby="userChangePhoneLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="userChangePhoneLabel">修改电话号码</h4>
+            </div>
+            <div class="modal-body">
+                <div class="emooc-container">
+                    <div class="form-group">
+                        <label for="chNewEmail">请输入新的电话号码</label>
+                        <input type="email" class="form-control" required id="chNewPhone">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="changePhoneBtn" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="emooc-settings-cont clearfix">
+    <div class="emooc-setting-left l">
+        <div class="emooc-avator-wapper">
+            <div class="emooc-avator-mode">
+                <img class="emooc-avator-img" id="userAvatar" th:src="${user.avatar}" width="92" height="92">
+                <div class="emooc-update-avator" style="bottom: -30px;">
+                    <p><a class="js-avator-link" data-toggle="modal" data-target="#userAvatarModal">更换头像</a></p>
+                </div>
+            </div>
+            <div class="emooc-des-mode">
+                <p th:text="${user.username}"></p>
+            </div>
+        </div>
+        <div class="emooc-list-wapper">
+            <h2>账户管理</h2>
+            <div class="emooc-line"></div>
+            <ul class="emooc-menu">
+                <li><a href="/user/setbindsns" class="on">账号绑定<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a></li>
+                <li><a href="/user/information">个人信息<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+                <li><a href="/user/oplog">操作记录<span class="arr"><i
+                        class="glyphicon glyphicon-chevron-right"></i></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="emooc-setting-right">
+        <div class="emooc-setting-right-wrap emooc-wrap-boxes emooc-settings">
+            <div class="emooc-page-settings">
+                <div class="emooc-common-title">
+                    账号绑定 <span class="emooc-title-tips">完成<b class="color-red">3/3</b></span>
+                </div>
+                <div class="emooc-line"></div>
+                <div class="emooc-setting">
+                    <div class="emooc-contentBox">
+                        <div class="emooc-bingd">
+                            <div class="emooc-itemBox">
+                                <div class="left">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </div>
+                                <div class="center">
+                                    <p>
+                                        <span class="font1">邮箱</span>
+                                        <span class="font3"><input class="hide" id="jsMail" value="wanlinus@qq.com">已绑定</span>
+                                    </p>
+                                    <p class="font2">可用邮箱加密码登录慕课网，可用邮箱找回密码</p>
+                                </div>
+                                <div class="right">
+                                    <a href="javascript:;" data-toggle="modal" data-target="#userChangeEmailModal"
+                                       class="change js-change moco-btn moco-btn-normal">更改</a>
+                                </div>
+                            </div>
+                            <div class="emooc-itemBox">
+                                <div class="left"><i class="glyphicon glyphicon-phone"></i></div>
+                                <div class="center">
+                                    <p>
+                                        <span class="font1">手机</span>
+                                        <span class="font4" id="jsPhone" th:text="${user.telephone}"></span>
+                                    </p>
+                                    <p class="font2">可用手机号加密码登录慕课网，可通过手机号找回密码
+                                        <a class="font2" style="text-decoration: underline;">无法绑定</a>
+                                    </p>
+                                </div>
+                                <div class="right">
+                                    <a href="javascript:void(0);"
+                                       class="change js-change-phone moco-btn moco-btn-normal" data-toggle="modal"
+                                       data-target="#userChangePhoneModal">更改</a>
+                                    <input type="hidden" id="account" value="155******33">
+                                </div>
+                            </div>
+
+                            <div class="emooc-itemBox">
+                                <div class="left"><i class="glyphicon glyphicon-lock"></i></div>
+                                <div class="center">
+                                    <p><span class="font1">密码</span> 已设置</p>
+                                    <p class="font2">用于保护账号信息和登录安全</p>
+                                </div>
+                                <div class="right">
+                                    <a href="javascript:void(0);" class="moco-btn moco-btn-normal js-changePWD"
+                                       data-toggle="modal" data-target="#userChangePasswordModal">修改</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //_csrf
+        let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+
+        $("#changePasswordBtn").click(function () {
+            let chNewPassword = $("#chNewPassword");
+            let chNewPassword2 = $("#chNewPassword2");
+            let chOldPassword = $("#chOldPassword");
+            if (chNewPassword.val() === chNewPassword2.val()) {
+                $.ajax({
+                    url: '/user/rest/password',
+                    type: 'PUT',
+                    data: JSON.stringify({
+                        oldPassword: chOldPassword.val(),
+                        newPassword: chNewPassword.val()
+                    }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert(response.message);
+                        if (response.code) {
+                            $("#userChangePasswordModal").modal('hide');
+                        }
+                    }
+                })
+            } else {
+                alert("两次密码不一致");
+            }
+        });
+        $("#changeEmailBtn").click(function () {
+            $.ajax({
+                url: '/user/rest/email',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    newEmail: $("#chNewEmail").val()
+                }),
+                success: function (response) {
+                    alert(response.message);
+                    if (response.code) {
+                        $("#userChangeEmailModal").modal('hide');
+                    }
+                }
+            })
+        });
+        $("#changePhoneBtn").click(function () {
+            $.ajax({
+                url: '/user/rest/phone',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    newPhone: $("#chNewPhone").val()
+                }),
+                success: function (response) {
+                    alert(response.message);
+                    if (response.code) {
+                        $("#userChangePhoneModal").modal('hide');
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

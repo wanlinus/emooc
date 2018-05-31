@@ -335,7 +335,6 @@ public class UserServiceImpl implements UserService {
         try {
             User user = getCurrentUser();
             user.setRealname(dto.getRealname());
-            user.setTelephone(dto.getTelephone());
             user.setPosition(dto.getPosition());
             if (dto.getBirthday() != null) {
                 user.setBirthday(dto.getBirthday());
@@ -476,6 +475,42 @@ public class UserServiceImpl implements UserService {
                 resultData.setCode(false);
                 resultData.setMessage("修改失败,老密码您忘记了吧!");
             }
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("系统错误,修改失败");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
+
+    @Override
+    @UserAnnotation(type = EmoocLogType.USER_CHANGE_EMAIL)
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> changeEmail(String newEmail) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            User user = getCurrentUser();
+            user.setEmail(newEmail);
+            resultData.setCode(true);
+            resultData.setMessage("修改成功");
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("修改失败");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
+
+    @Override
+    @UserAnnotation(type = EmoocLogType.USER_CHANGE_PHONE)
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> changePhone(String newPhone) {
+        ResultData<String> resultData = new ResultData<>();
+        try {
+            User user = getCurrentUser();
+            user.setTelephone(newPhone);
+            resultData.setCode(true);
+            resultData.setMessage("修改成功");
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统错误,修改失败");

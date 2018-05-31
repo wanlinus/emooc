@@ -645,6 +645,60 @@ a:active, a:hover {
     border-bottom: 1px solid #d9dde1;
 }
 
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox {
+    height: 88px;
+    overflow: hidden;
+    margin: auto;
+    border-bottom: 1px solid #d9dde1;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .left {
+    width: 84px;
+    float: left;
+    font-size: 36px;
+    color: #d9dde1;
+    line-height: 98px;
+    padding-left: 24px;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .center {
+    padding-top: 22px;
+    width: 510px;
+    float: left;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox p {
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .font1 {
+    color: #2b333b;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .font3 {
+    color: #2b333b;
+    font-size: 14px;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .font2 {
+    color: #93999f;
+    font-size: 14px;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .right {
+    float: right;
+    padding-right: 12px;
+    margin-top: 28px;
+}
+
+.emooc-page-settings .emooc-setting .emooc-bingd .emooc-itemBox .right .moco-btn-normal {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .pull-right {
     float: right;
 }

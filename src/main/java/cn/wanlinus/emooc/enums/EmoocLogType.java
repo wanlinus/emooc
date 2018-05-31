@@ -45,6 +45,8 @@ public enum EmoocLogType {
     USER_CHANGE_AVATAR("修改头像"),
     USER_CHANGE_PASSWORD("修改密码"),
     USER_FORGET_AND_CHANGE_PASSWORD("忘记并重置密码"),
+    USER_CHANGE_EMAIL("修改邮箱地址"),
+    USER_CHANGE_PHONE("修改电话"),
     UNKNOWN("未知");
 
     private String description;

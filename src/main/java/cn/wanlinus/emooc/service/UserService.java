@@ -234,4 +234,20 @@ public interface UserService {
      * @return resultData
      */
     ResultData<String> changePassword(UserChangePasswordDTO dto);
+
+    /**
+     * 修改邮箱
+     *
+     * @param newEmail 新的邮箱
+     * @return resultData
+     */
+    ResultData<String> changeEmail(String newEmail);
+
+    /**
+     * 修改用户电话号码
+     *
+     * @param newPhone 新的电话号码
+     * @return resultData
+     */
+    ResultData<String> changePhone(String newPhone);
 }
