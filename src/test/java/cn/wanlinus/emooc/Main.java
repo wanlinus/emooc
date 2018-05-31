@@ -19,6 +19,9 @@
 
 package cn.wanlinus.emooc;
 
+import cn.wanlinus.emooc.utils.CommonUtils;
+import org.junit.Test;
+
 /**
  * @author wanli
  * @date 2018-04-01 01:19
@@ -32,5 +35,10 @@ public class Main {
 //        A.num = 20;
 //        System.out.println(JSON.toJSONString(a));
         System.out.println((int) (Math.random() * 5));
+    }
+
+    @Test
+    public void capt() {
+        System.out.println(CommonUtils.forgetPasswordCapt());
     }
 }

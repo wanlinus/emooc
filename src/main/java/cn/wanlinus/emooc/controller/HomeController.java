@@ -20,6 +20,7 @@
 package cn.wanlinus.emooc.controller;
 
 import cn.wanlinus.emooc.commons.ResultData;
+import cn.wanlinus.emooc.dto.ForgetPasswordDTO;
 import cn.wanlinus.emooc.dto.UserRegisterDTO;
 import cn.wanlinus.emooc.service.UserService;
 import cn.wanlinus.emooc.utils.AuthUtils;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import static cn.wanlinus.emooc.utils.AuthUtils.*;
@@ -100,6 +102,48 @@ public class HomeController extends WebMvcConfigurerAdapter {
         return page;
     }
 
+    @GetMapping("/forget/password/email")
+    @ResponseBody
+    public ResultData<String> forgetPassword(String email, String code, HttpSession session) {
+        ResultData<String> resultData = null;
+        if (code == null) {
+            resultData = userService.forgetPassword(email);
+            if (resultData.getData() != null) {
+                session.setAttribute("forgetCode", resultData.getData());
+                System.err.println(resultData.getData());
+                resultData.setData(null);
+            }
+        } else {
+            resultData = new ResultData<>();
+            String forgetCode = String.valueOf(session.getAttribute("forgetCode"));
+            if (forgetCode != null) {
+                if (code.equals(forgetCode)) {
+                    resultData.setCode(true);
+                } else {
+                    resultData.setCode(false);
+                    resultData.setMessage("验证码错误");
+                }
+            } else {
+                resultData.setCode(false);
+                resultData.setMessage("验证码为空");
+            }
+        }
+        return resultData;
+    }
+
+    @PostMapping("/password")
+    @ResponseBody
+    public ResultData<String> changePassword(@RequestBody ForgetPasswordDTO dto, HttpSession session) {
+        ResultData<String> resultData = new ResultData<>();
+        String code = String.valueOf(session.getAttribute("forgetCode"));
+        if (code.equals(dto.getCode())) {
+            resultData = userService.changePassword(dto.getEmail(), dto.getPassword());
+        } else {
+            resultData.setCode(false);
+            resultData.setMessage("验证码错误");
+        }
+        return resultData;
+    }
 
     @GetMapping("/register")
     public String registerUI() {

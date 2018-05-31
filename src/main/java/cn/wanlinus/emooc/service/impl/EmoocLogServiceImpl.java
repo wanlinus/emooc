@@ -156,4 +156,9 @@ public class EmoocLogServiceImpl implements EmoocLogService {
     public Long countUserLogs(String userName) {
         return logRepository.countUserLogs(userName);
     }
+
+    @Override
+    public void save(EmoocLog log) {
+        logRepository.save(log);
+    }
 }

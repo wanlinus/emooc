@@ -406,4 +406,59 @@ public class UserServiceImpl implements UserService {
         }
         return resultData;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultData<String> forgetPassword(String email) {
+        ResultData<String> resultData = new ResultData<>();
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            resultData.setCode(false);
+            resultData.setMessage("此邮箱没有注册");
+        } else {
+            Captcha captcha = new Captcha();
+            captcha.setId(capid());
+            captcha.setUser(user);
+            captcha.setTime(new Date());
+            //30分钟
+            captcha.setEffectiveTime(30 * 60 * 1000);
+            captcha.setStatus(true);
+            captchaRepository.save(captcha);
+            String code = forgetPasswordCapt();
+            String msg = "您的激活码是: " + code + "\n30分钟有效[EMOOC]";
+//            commonService.simpleSendMail("重置密码", email, msg);
+            resultData.setCode(true);
+            resultData.setData(code);
+            resultData.setMessage("请登录您的邮箱查看验证码");
+        }
+        return resultData;
+    }
+
+    @Override
+    public ResultData<String> changePassword(String email, String password) {
+        ResultData<String> resultData = new ResultData<>();
+
+        try {
+            User user = userRepository.findByEmail(email);
+            user.setPassword(md5Encrypt(password));
+            EmoocLog log = new EmoocLog();
+            log.setId(userLogId());
+            log.setWho(user.getUsername());
+            log.setResult(true);
+            log.setComment(email + password);
+            log.setRole(EmoocRole.ROLE_USER);
+            log.setType(EmoocLogType.USER_FORGET_AND_CHANGE_PASSWORD);
+            log.setIp(Objects.requireNonNull(getRequest()).getRemoteAddr());
+            log.setEquipment(getEquipment(getRequest()));
+            log.setTime(new Date());
+            logService.save(log);
+            resultData.setCode(true);
+            resultData.setMessage("修改成功");
+        } catch (Exception e) {
+            resultData.setCode(false);
+            resultData.setMessage("系统错误,请稍后重试");
+            e.printStackTrace();
+        }
+        return resultData;
+    }
 }

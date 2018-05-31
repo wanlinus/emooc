@@ -209,4 +209,21 @@ public interface UserService {
      * @return 分页数据
      */
     ResultData<BootstrapPaginationDataDTO<BootstrapPaginationDataLogDTO>> pageLog(Integer appointPage, Integer pageSize);
+
+    /**
+     * 忘记密码发送找回密码验证码
+     *
+     * @param email 指定邮箱
+     * @return resultData
+     */
+    ResultData<String> forgetPassword(String email);
+
+    /**
+     * 修改密码
+     *
+     * @param email    邮箱
+     * @param password 要修改的密码
+     * @return resultData
+     */
+    ResultData<String> changePassword(String email, String password);
 }

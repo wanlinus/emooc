@@ -177,4 +177,10 @@ public interface EmoocLogService {
     Long countUserLogs(String userName);
 
 
+    /**
+     * 保存日志
+     *
+     * @param log 日志对象
+     */
+    void save(EmoocLog log);
 }

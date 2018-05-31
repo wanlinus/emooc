@@ -10,6 +10,80 @@
     <link rel="stylesheet" th:href="@{/css/login-style.css}">
 </head>
 <body>
+<!--forget Password modal-->
+<div class="modal fade" id="forgetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgetPasswordLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="forgetPasswordLabel">找回密码</h4>
+            </div>
+            <div class="modal-body">
+                <div style="width: 75%;margin: auto;">
+                    <div class="row">
+                        <div class="input-group col-lg-12">
+                            <input type="text" id="fgEmail" class="form-control" placeholder="输入邮箱">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary"
+                                        style="height: 46px;border-bottom-right-radius: 18px;border-top-right-radius: 18px; "
+                                        id="fgEmailBtn" type="button">发送验证码</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" id="fgCaptDiv" style="padding-top: 10px" hidden="hidden">
+                        <div class="input-group col-lg-12">
+                            <input type="text" id="fgCapt" class="form-control"
+                                   placeholder="请输入收到的验证码">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary"
+                                        style="height: 46px;border-bottom-right-radius: 18px;border-top-right-radius: 18px; "
+                                        id="fgCaptBtn" type="button">验证身份</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row " id="fgPDiv" style="padding-top: 10px" hidden="hidden">
+                        <div class="input-group col-lg-12">
+                            <input type="password" id="fgPassword" class="form-control" style="border-radius: 18px"
+                                   placeholder="请输入密码">
+                        </div>
+                    </div>
+                    <div class="row" id="fgP2Div" style="padding-top: 10px;" hidden="hidden">
+                        <div class="input-group col-lg-12">
+                            <input type="password" id="fg2Password" class="form-control" style="border-radius: 18px"
+                                   placeholder="请重复密码">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="userPasswordUpdate" disabled class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="register-modal" role="dialog" aria-labelledby="reg_modal_title">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="reg_modal_title">信息确认</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">用户名: <span id="post_username"></span></div>
+                    <div class="row">邮箱: <span id="post_email"></span></div>
+                    <div class="row">密码: <span id="post_password"></span></div>
+                </div>
+                <button id="reg_post" class="btn btn=primary">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Top content -->
 <div class="top-content">
     <div class="inner-bg">
@@ -21,8 +95,7 @@
                         <small style="color: #FFFFFF;">Everyone's Massive Open Online Courses</small>
                     </h1>
                     <div class="description">
-                        <p>
-                            让更多热爱互联网的同学来慕课网学习，多年以后，圈子里一批技术牛说：我在
+                        <p> 让更多热爱互联网的同学来慕课网学习，多年以后，圈子里一批技术牛说：我在
                             <a href="http://wanlinus.cn"><strong>慕课网</strong></a>学习过，这就够了。
                         </p>
                     </div>
@@ -63,7 +136,8 @@
                                                             <input type="checkbox" name="remember-me"> 记住密码
                                                         </label>
                                                         <label class="pull-right">
-                                                            <a> 忘记密码？</a>
+                                                            <a data-toggle="modal"
+                                                               data-target="#forgetPasswordModal">忘记密码？</a>
                                                         </label>
                                                     </div>
                                                     <div class="form-group">
@@ -149,26 +223,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="register-modal" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="reg_modal_title">信息确认</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div class="form-group">用户名: <span id="post_username"></span></div>
-                    <div class="row">邮箱: <span id="post_email"></span></div>
-                    <div class="row">密码: <span id="post_password"></span></div>
-                </div>
-                <button id="reg_post" class="btn btn=primary">提交</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="backstretch"></div>
 <!-- Javascript -->
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -183,6 +238,12 @@
         let reg_email = $("#reg_email");
         let reg_user_msg = $("#reg_user_msg");
         let reg_email_msg = $("#reg_email_msg");
+        let fgCaptBtn = $("#fgCaptBtn");
+        let fgEmailBtn = $("#fgEmailBtn");
+        let fgEmail = $("#fgEmail");
+        let userPasswordUpdate = $("#userPasswordUpdate");
+        let fgPassword = $("#fgPassword");
+
         reg_username.blur(function () {
             if (reg_username.val() != null && reg_username.val() !== "") {
                 $.get({
@@ -241,6 +302,66 @@
                     }
                 }
             });
+        });
+
+        fgEmailBtn.click(function () {
+            if (fgEmail.val() !== null && fgEmail.val() !== "") {
+                $.ajax({
+                    url: '/forget/password/email?email=' + fgEmail.val(),
+                    type: 'GET',
+                    success: function (response) {
+                        if (!response.code) {
+                            alert(response.message);
+                            $("#fgCaptDiv").attr("hidden", "hidden");
+                            fgEmail.attr("disabled", true);
+                        } else {
+                            alert(response.message);
+                            $("#fgCaptDiv").attr("hidden", false);
+                            fgEmail.attr("disabled", false);
+                        }
+                    }
+                })
+            }
+        });
+        fgCaptBtn.click(function () {
+            if ($("#fgCapt").val() !== null) {
+                $.ajax({
+                    url: '/forget/password/email?email=' + fgEmail.val() + '&code=' + $("#fgCapt").val(),
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.code) {
+                            $("#fgPDiv").attr("hidden", false);
+                            $("#fgP2Div").attr("hidden", false);
+                            $("#userPasswordUpdate").attr("disabled", false);
+                            $("#fgCapt").attr("disabled", true);
+                        } else {
+                            $("#fgPDiv").attr("hidden", 'hidden');
+                            $("#fgP2Div").attr("hidden", 'hidden');
+                            $("#userPasswordUpdate").attr("disabled", true);
+                            $("#fgCapt").attr("disabled", false);
+                        }
+                    }
+                })
+            }
+        });
+        userPasswordUpdate.click(function () {
+            $.ajax({
+                url: '/password',
+                type: 'POST',
+                data: JSON.stringify({
+                    email: fgEmail.val(),
+                    code: $("#fgCapt").val(),
+                    password: fgPassword.val()
+                }),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.code) {
+                        $('#forgetPasswordModal').modal('hide');
+                    }
+                    alert(response.message);
+                }
+            })
         });
     })
 </script>

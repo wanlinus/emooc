@@ -315,5 +315,15 @@ public final class CommonUtils {
         return new Date(tmp.getTime() + 24 * 60 * 60 * 1000 - 1000);
     }
 
+    /**
+     * 忘记密码验证码
+     *
+     * @return 验证码
+     */
+    public static String forgetPasswordCapt() {
+        String capt = String.valueOf(System.currentTimeMillis());
+        return capt.substring(capt.length() - 5);
+    }
+
 
 }
