@@ -110,7 +110,6 @@ public class HomeController extends WebMvcConfigurerAdapter {
             resultData = userService.forgetPassword(email);
             if (resultData.getData() != null) {
                 session.setAttribute("forgetCode", resultData.getData());
-                System.err.println(resultData.getData());
                 resultData.setData(null);
             }
         } else {

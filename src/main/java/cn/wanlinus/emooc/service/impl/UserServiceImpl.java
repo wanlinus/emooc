@@ -426,7 +426,7 @@ public class UserServiceImpl implements UserService {
             captchaRepository.save(captcha);
             String code = forgetPasswordCapt();
             String msg = "您的激活码是: " + code + "\n30分钟有效[EMOOC]";
-//            commonService.simpleSendMail("重置密码", email, msg);
+            commonService.simpleSendMail("重置密码", email, msg);
             resultData.setCode(true);
             resultData.setData(code);
             resultData.setMessage("请登录您的邮箱查看验证码");
