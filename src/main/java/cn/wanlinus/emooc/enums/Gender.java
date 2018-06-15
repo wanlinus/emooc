@@ -42,10 +42,6 @@ public enum Gender {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public static Gender valueOf(int ordinal) {
         if (ordinal < 0 || ordinal >= values().length) {
             throw new IndexOutOfBoundsException("Invalid ordinal");

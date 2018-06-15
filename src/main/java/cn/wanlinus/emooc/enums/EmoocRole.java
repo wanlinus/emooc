@@ -44,16 +44,8 @@ public enum EmoocRole {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getCn() {
         return cn;
-    }
-
-    public void setCn(String cn) {
-        this.cn = cn;
     }
 
     @Override
