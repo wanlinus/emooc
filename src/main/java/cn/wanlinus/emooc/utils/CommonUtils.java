@@ -20,8 +20,6 @@
 package cn.wanlinus.emooc.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,8 +40,6 @@ import java.util.UUID;
  * @date 2018-02-22 11:43
  */
 public final class CommonUtils {
-
-    private static Logger logger = LoggerFactory.getLogger(CommonUtils.class);
 
     private CommonUtils() {
         throw new AssertionError();

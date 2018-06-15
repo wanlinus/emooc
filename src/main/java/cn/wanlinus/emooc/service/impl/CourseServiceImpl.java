@@ -27,6 +27,8 @@ import cn.wanlinus.emooc.enums.EmoocCourseGrade;
 import cn.wanlinus.emooc.enums.EmoocLogType;
 import cn.wanlinus.emooc.persistence.CourseRepository;
 import cn.wanlinus.emooc.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,6 +45,8 @@ import static cn.wanlinus.emooc.utils.CommonUtils.*;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     /**
      * 课程持久对象
@@ -97,12 +101,6 @@ public class CourseServiceImpl implements CourseService {
      */
     @Autowired
     private UserStudyService userStudyService;
-
-    /**
-     * 课程收藏服务对象
-     */
-    @Autowired
-    private CollectionService collectionService;
 
     /**
      * 评论服务对象
@@ -420,7 +418,7 @@ public class CourseServiceImpl implements CourseService {
             resultData.setMessage("提问成功");
             resultData.setData(dto);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             resultData.setCode(false);
             resultData.setMessage("提问失败");
         }
@@ -442,9 +440,9 @@ public class CourseServiceImpl implements CourseService {
             resultData.setMessage("添加成功");
             resultData.setData(re);
         } catch (Exception e) {
-            e.printStackTrace();
             resultData.setCode(false);
             resultData.setMessage("添加失败");
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -479,9 +477,9 @@ public class CourseServiceImpl implements CourseService {
             returnDto.setUsername(courseScore.getUser().getUsername());
             resultData.setData(returnDto);
         } catch (Exception e) {
-            e.printStackTrace();
             resultData.setCode(false);
             resultData.setMessage("评分出现错误");
+            logger.error(e.getMessage());
         }
         return resultData;
     }

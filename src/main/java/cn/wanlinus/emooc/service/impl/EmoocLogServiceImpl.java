@@ -27,6 +27,8 @@ import cn.wanlinus.emooc.enums.EmoocRole;
 import cn.wanlinus.emooc.persistence.EmoocLogRepository;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.utils.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,8 @@ import java.util.List;
  */
 @Service
 public class EmoocLogServiceImpl implements EmoocLogService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmoocLogServiceImpl.class);
 
     @Autowired
     private EmoocLogRepository logRepository;
@@ -82,7 +86,7 @@ public class EmoocLogServiceImpl implements EmoocLogService {
             dto.setMsg("");
         } catch (Exception e) {
             dto.setCode(1);
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return dto;
     }

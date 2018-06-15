@@ -33,6 +33,8 @@ import cn.wanlinus.emooc.enums.TeacherStatus;
 import cn.wanlinus.emooc.persistence.TeacherRepository;
 import cn.wanlinus.emooc.service.*;
 import cn.wanlinus.emooc.utils.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -54,6 +56,9 @@ import static cn.wanlinus.emooc.utils.CommonUtils.saveFile;
  */
 @Service
 public class TeacherServiceImpl implements TeacherService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherServiceImpl.class);
+
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
@@ -156,7 +161,7 @@ public class TeacherServiceImpl implements TeacherService {
             resultData.setData(courseService.saveCourse(getTeacher(), dto).getId());
             resultData.setCode(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -209,7 +214,7 @@ public class TeacherServiceImpl implements TeacherService {
         } catch (Exception e) {
             resultDate.setCode(false);
             resultDate.setMessage("服务器错误");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultDate;
     }
@@ -228,7 +233,7 @@ public class TeacherServiceImpl implements TeacherService {
         } catch (IOException e) {
             resultData.setCode(false);
             resultData.setMessage("保存失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }

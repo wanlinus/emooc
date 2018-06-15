@@ -37,6 +37,8 @@ import cn.wanlinus.emooc.service.CollectionService;
 import cn.wanlinus.emooc.service.CommonService;
 import cn.wanlinus.emooc.service.EmoocLogService;
 import cn.wanlinus.emooc.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -57,6 +59,8 @@ import static cn.wanlinus.emooc.utils.CommonUtils.*;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -177,9 +181,9 @@ public class UserServiceImpl implements UserService {
                 resultData.setMessage("注册出现错误");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             resultData.setCode(false);
             resultData.setMessage("注册出现错误");
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -347,7 +351,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统出现错误啦, 请稍后再试");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -367,7 +371,7 @@ public class UserServiceImpl implements UserService {
         } catch (IOException e) {
             resultData.setCode(false);
             resultData.setMessage("更新失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -401,7 +405,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("查询失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -455,7 +459,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统错误,请稍后重试");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -478,7 +482,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统错误,修改失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -496,7 +500,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("修改失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
@@ -514,7 +518,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             resultData.setCode(false);
             resultData.setMessage("系统错误,修改失败");
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return resultData;
     }
