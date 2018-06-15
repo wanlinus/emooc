@@ -20,6 +20,8 @@
 package cn.wanlinus.emooc.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +31,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -41,6 +42,8 @@ import java.util.UUID;
  * @date 2018-02-22 11:43
  */
 public final class CommonUtils {
+
+    private static Logger logger = LoggerFactory.getLogger(CommonUtils.class);
 
     private CommonUtils() {
         throw new AssertionError();
@@ -71,20 +74,20 @@ public final class CommonUtils {
      * @throws IOException 读写异常
      */
     public static String saveFile(MultipartFile multipartFile, String rootPath, String filePath) throws IOException {
-        String filename = preFilename() + multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+        String filename = null;
+        filename = preFilename() + multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf('.'));
         File file = new File(rootPath + filePath + filename);
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
+        try (FileOutputStream fos = new FileOutputStream(file);
+             FileInputStream fs = (FileInputStream) multipartFile.getInputStream()) {
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = fs.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+            }
         }
-        FileOutputStream fos = new FileOutputStream(file);
-        FileInputStream fs = (FileInputStream) multipartFile.getInputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = fs.read(buffer)) != -1) {
-            fos.write(buffer, 0, len);
-        }
-        fos.close();
-        fs.close();
         return filePath + filename;
     }
 
@@ -285,34 +288,6 @@ public final class CommonUtils {
      */
     public static String dateFormatComplex(Date date) {
         return dateFormatCustom(date, "yyyy-MM-dd HH:mm:ss");
-    }
-
-    /**
-     * 获取今日零点时间 如:现在是2018-4-21 12:51:32 转化后2018-4-21 00:00:00
-     *
-     * @param date 传入日期
-     * @return 当天第一秒钟
-     */
-    public static Date startDate(final Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
-        Date tmp = null;
-        try {
-            tmp = sdf.parse(sdf.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return tmp;
-    }
-
-    /**
-     * 返回传入日期当天最后一秒
-     *
-     * @param date 传入日期
-     * @return 当天最后一秒
-     */
-    public static Date endDate(final Date date) {
-        Date tmp = startDate(date);
-        return new Date(tmp.getTime() + 24 * 60 * 60 * 1000 - 1000);
     }
 
     /**
